@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-5-29 22:00:53 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.kanmenzhu.fsp.entity.LuOrder" table="lu_order" catalog="fsp">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="deptId" type="int">
+            <column name="DEPT_ID" not-null="true" />
+        </property>
+        <property name="createUserId" type="int">
+            <column name="CREATE_USER_ID" not-null="true" />
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="CREATE_TIME" length="19" not-null="true" />
+        </property>
+        <property name="submitTime" type="timestamp">
+            <column name="SUBMIT_TIME" length="19" />
+        </property>
+        <property name="status" type="int">
+            <column name="STATUS" not-null="true" />
+        </property>
+        <property name="auditUserId" type="java.lang.Integer">
+            <column name="AUDIT_USER_ID" />
+        </property>
+        <property name="auditTime" type="timestamp">
+            <column name="AUDIT_TIME" length="19" />
+        </property>
+        <property name="memo" type="string">
+            <column name="MEMO" length="1024" />
+        </property>
+        <property name="auditMemo" type="string">
+            <column name="AUDIT_MEMO" length="1024" />
+        </property>
+    </class>
+</hibernate-mapping>

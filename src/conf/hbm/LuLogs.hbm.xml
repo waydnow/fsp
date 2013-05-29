@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-5-29 22:00:53 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.kanmenzhu.system.security.entity.LuLogs" table="lu_logs" catalog="fsp">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="objId" type="java.lang.Integer">
+            <column name="OBJ_ID" />
+        </property>
+        <property name="operUserId" type="int">
+            <column name="OPER_USER_ID" not-null="true" />
+        </property>
+        <property name="type" type="int">
+            <column name="TYPE" not-null="true">
+                <comment>0:default 1:login 2: 10:modify good</comment>
+            </column>
+        </property>
+        <property name="operIp" type="string">
+            <column name="OPER_IP" length="128" />
+        </property>
+        <property name="operTime" type="timestamp">
+            <column name="OPER_TIME" length="19" not-null="true" />
+        </property>
+        <property name="operDesc" type="string">
+            <column name="OPER_DESC" length="256" />
+        </property>
+    </class>
+</hibernate-mapping>
