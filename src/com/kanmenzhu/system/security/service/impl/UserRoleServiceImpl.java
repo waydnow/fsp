@@ -1,7 +1,7 @@
 package com.kanmenzhu.system.security.service.impl;
 
 import com.kanmenzhu.system.security.dao.UserRoleDao;
-import com.kanmenzhu.system.security.entity.User;
+import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.system.security.service.UserRoleService;
 
 public class UserRoleServiceImpl implements UserRoleService {
@@ -10,7 +10,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 	
 
 	@Override
-	public void insert(User u) {
+	public void insert(LuUser u) {
 		userRoleDao.save(u);
 		
 	}

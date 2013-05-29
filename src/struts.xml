@@ -7,4 +7,6 @@
 	<!-- <include file="conf/struts/struts-default.xml" /> -->
 	<include file="conf/struts/mytest.xml"/>
 	
+	<include file="conf/struts/struts-system-security.xml"/>
+	
 </struts>
