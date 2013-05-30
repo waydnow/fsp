@@ -1,11 +1,12 @@
 package com.kanmenzhu.service.impl;
 
+import com.kanmenzhu.bean.BaseBean;
 import com.kanmenzhu.dao.BaseDao;
 import com.kanmenzhu.service.BaseService;
 
-public  abstract class BaseServiceImpl implements BaseService {
+public  abstract class BaseServiceImpl<T extends BaseBean>  implements BaseService<T> {
 	
-	protected BaseDao dao;
+	protected BaseDao<T> dao;
 	
 	@Override
 	public void save(Object o) {
@@ -31,11 +32,16 @@ public  abstract class BaseServiceImpl implements BaseService {
 		
 	}
 
-	public BaseDao getDao() {
+	public T get(Integer id,Class<T> clz){
+		return dao.get(id,clz);
+	}
+	
+	
+	public BaseDao<T> getDao() {
 		return dao;
 	}
 
-	public void setDao(BaseDao dao) {
+	public void setDao(BaseDao<T> dao) {
 		this.dao = dao;
 	}
 

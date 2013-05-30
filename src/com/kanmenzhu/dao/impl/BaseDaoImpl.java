@@ -2,9 +2,10 @@ package com.kanmenzhu.dao.impl;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import com.kanmenzhu.bean.BaseBean;
 import com.kanmenzhu.dao.BaseDao;
 
-public abstract class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
+public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSupport implements BaseDao<T> {
 
 	@Override
 	public void save(Object o) {
@@ -28,6 +29,10 @@ public abstract class BaseDaoImpl extends HibernateDaoSupport implements BaseDao
 	public void saveOrUpdate(Object o) {
 		getHibernateTemplate().saveOrUpdate(o);
 		
+	}
+	
+	public T get(Integer id,Class<T> clz){
+		return getHibernateTemplate().get(clz, id);
 	}
 
 }

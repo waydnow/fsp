@@ -7,8 +7,10 @@ import com.kanmenzhu.web.BaseAction;
 public class UserAction extends BaseAction {
 	private UserService userService;
 
+	private  LuUser user;
+	
 	public String add(){
-		LuUser user=new LuUser();
+		/*LuUser user=new LuUser();
 		user.setDeptId(123);
 		user.setEmail("xxx@xxx.com");
 		user.setHeadImg("xx.img");
@@ -18,7 +20,8 @@ public class UserAction extends BaseAction {
 		user.setPwd("password");
 		user.setPhone("0571");
 		userService.save(user);
-		logger.info("userid:"+user.getId());
+		logger.info("userid:"+user.getId());*/
+		user=(LuUser)userService.get(1, LuUser.class);
 		
 		return "success";
 	}
@@ -34,5 +37,25 @@ public class UserAction extends BaseAction {
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+
+
+
+
+
+
+	public LuUser getUser() {
+		return user;
+	}
+
+
+
+
+
+
+
+	public void setUser(LuUser user) {
+		this.user = user;
 	}
 }
