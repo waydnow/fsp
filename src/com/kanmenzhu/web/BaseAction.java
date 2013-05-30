@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class BaseAction {
+	public final String SUCC="success";
+	public final String FAIL="fail";
 	/***/
 	protected Logger logger=LoggerFactory.getLogger(getClass());
 }

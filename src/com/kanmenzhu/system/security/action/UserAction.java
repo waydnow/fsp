@@ -10,23 +10,15 @@ public class UserAction extends BaseAction {
 	private  LuUser user;
 	
 	public String add(){
-		/*LuUser user=new LuUser();
-		user.setDeptId(123);
-		user.setEmail("xxx@xxx.com");
-		user.setHeadImg("xx.img");
-		user.setLoginName("myfirst");
-		user.setMobile("186xxx");
-		user.setName("张三");
-		user.setPwd("password");
-		user.setPhone("0571");
-		userService.save(user);
-		logger.info("userid:"+user.getId());*/
 		user=(LuUser)userService.get(1, LuUser.class);
 		
 		return "success";
 	}
 	
-	
+	public String login(){
+		
+		return "success";
+	}
 	
 	
 	

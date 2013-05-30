@@ -10,7 +10,6 @@ import com.kanmenzhu.bean.BaseBean;
 public class LuRoleUser extends BaseBean {
 
 	private static final long serialVersionUID = 1L;
-	private Integer id;
 	private int uid;
 	private int rid;
 
@@ -22,13 +21,6 @@ public class LuRoleUser extends BaseBean {
 		this.rid = rid;
 	}
 
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public int getUid() {
 		return this.uid;
