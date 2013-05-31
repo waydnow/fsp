@@ -3,14 +3,15 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
     <struts>
- <package name="security" extends="struts-default">
+ <package name="security" extends="default-security">
 
   <action name="index">
     <result>/index.jsp</result>
   </action>
 		
   <action name="*UA" class="userAction" method="{1}">
-    <result name="success">/WEB-INF/jsp/hw.jsp</result>
+    <result name="success">/WEB-INF/jsp/main.jsp</result>
+    <result name="login">/WEB-INF/jsp/login.jsp</result>
   </action>
   </package>
 </struts>

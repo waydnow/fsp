@@ -19,5 +19,7 @@
 	<bean id="userDao" class="com.kanmenzhu.system.security.dao.impl.UserDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="randomImageAction" class="com.kanmenzhu.web.RandomImageAction">
+	</bean>
 
 </beans>

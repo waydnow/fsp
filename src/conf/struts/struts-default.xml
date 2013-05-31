@@ -3,6 +3,26 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="default" extends="struts-default">
+	<package name="default-security" extends="struts-default">
+		<interceptors>
+			<interceptor name="loginInterceptor"
+				class="com.kanmenzhu.system.security.interceptor.LoginInterceptor" />
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+				<!--  <interceptor-ref name="token"> <param name="includeMethods">save</param> 
+					</interceptor-ref> 
+				<interceptor-ref name="tokenSession">
+					<param name="includeMethods">save</param>
+				</interceptor-ref> -->
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="loginStack"></default-interceptor-ref>
+		<action name="randImage" class="randomImageAction">
+			<result type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
 	</package>
 </struts>
