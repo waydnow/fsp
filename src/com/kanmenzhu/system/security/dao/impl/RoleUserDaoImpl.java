@@ -27,4 +27,9 @@ public class RoleUserDaoImpl extends BaseDaoImpl<LuRoleUser> implements RoleUser
 		
 	}
 
+	@Override
+	public String getEntityName() {
+		return "LuRoleUser";
+	}
+
 }

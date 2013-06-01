@@ -5,4 +5,9 @@ import com.kanmenzhu.system.security.entity.LuLogs;
 
 public class LogsDaoImpl extends BaseDaoImpl<LuLogs> {
 
+	@Override
+	public String getEntityName() {
+		return "LuLogs";
+	}
+
 }

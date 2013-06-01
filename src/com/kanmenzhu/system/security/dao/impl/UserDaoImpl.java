@@ -16,5 +16,10 @@ public class UserDaoImpl extends BaseDaoImpl<LuUser> implements UserDao {
 			return (LuUser)lulist.get(0);
 		return null;
 	}
+
+	@Override
+	public String getEntityName() {
+		return "LuUser";
+	}
 	
 }

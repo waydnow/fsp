@@ -6,4 +6,9 @@ import com.kanmenzhu.system.security.entity.LuMenu;
 
 public class MenuDaoImpl extends BaseDaoImpl<LuMenu> implements MenuDao {
 
+	@Override
+	public String getEntityName() {
+		return "LuMenu";
+	}
+
 }

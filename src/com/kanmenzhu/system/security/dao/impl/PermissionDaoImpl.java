@@ -5,4 +5,9 @@ import com.kanmenzhu.system.security.entity.LuPermission;
 
 public class PermissionDaoImpl extends BaseDaoImpl<LuPermission> {
 
+	@Override
+	public String getEntityName() {
+		return "LuPermission";
+	}
+
 }

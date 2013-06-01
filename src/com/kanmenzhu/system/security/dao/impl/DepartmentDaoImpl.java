@@ -30,4 +30,9 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 		return dps;
 	}
 
+	@Override
+	public String getEntityName() {
+		return "LuDepartment";
+	}
+
 }

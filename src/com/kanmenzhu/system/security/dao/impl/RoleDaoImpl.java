@@ -6,4 +6,9 @@ import com.kanmenzhu.system.security.entity.LuRole;
 
 public class RoleDaoImpl extends BaseDaoImpl<LuRole> implements RoleDao {
 
+	@Override
+	public String getEntityName() {
+		return "LuRole";
+	}
+
 }
