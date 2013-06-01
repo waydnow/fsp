@@ -78,7 +78,8 @@ body {
       </tr>
     </table></td>
     <td>
-    <s:form action="loginUA.shtml">
+    <s:actionmessage/>
+    <s:form action="loginUA" >
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="31%" height="35" class="login-text02">用户名<br /></td>
@@ -91,7 +92,7 @@ body {
       <tr>
         <td height="35" class="login-text02">验证码<br /></td>
         <td><s:textfield name="verifyCode" id="imgCode" maxlength="4" onkeypress="if (window.event.keyCode == 13) checkSubmit();" cssStyle="width:60px;"></s:textfield>
-		          <img id="rndImgCode" title="验证码"/><a href="#"  id="getImgCode" class="login-text02">刷新验证码</a></td>
+		          <a href="#"  id="getImgCode" class="login-text02" title="刷新验证码"><img id="rndImgCode" title="点击刷新验证码"/></a></td>
       </tr>
       <tr>
         <td height="35">&nbsp;</td>

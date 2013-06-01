@@ -54,8 +54,11 @@ public class UserAction extends ActionSupport {
 				msg="验证码错误!";
 			}
 		}
-		if(null!=msg)
+		if(null!=msg){
+			verifyCode="";
+			clearMessages();
 			addActionMessage(msg);
+		}
 		return ERROR;
 	}
 	
