@@ -11,6 +11,7 @@ import com.kanmenzhu.bean.BaseBean;
  */
 public class LuOrderDetail extends BaseBean {
 	private static final long serialVersionUID = 1L;
+	/**订单id*/
 	private int goodId;
 	private int orderId;
 	private Date sendTime;
