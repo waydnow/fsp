@@ -81,4 +81,38 @@ public class UserAction extends ActionSupport {
 	public void setUser(LuUser user) {
 		this.user = user;
 	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public DepartmentService getDepartmentService() {
+		return departmentService;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public List<LuDepartment> getDps() {
+		return dps;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public void setDepartmentService(DepartmentService departmentService) {
+		this.departmentService = departmentService;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public void setDps(List<LuDepartment> dps) {
+		this.dps = dps;
+	}
+	
+	
 }

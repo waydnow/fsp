@@ -65,8 +65,17 @@ body {
 	
 	<s:form action="loginUA">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+        <td width="31%" height="35" class="login-text02">单位<br /></td>
+        <td width="69%">
+			<s:iterator value="dps" var="department">
+				<s:property value="name"/> <br/>
+			</s:iterator>
+			<a href="registDP.shtml">添加新单位</a>
+        </td>
+        </tr>
       <tr>
-        <td width="31%" height="35" class="login-text02">用户名<br /></td>
+        <td width="31%" height="35" class="login-text02">用户名2<br /></td>
         <td width="69%"><s:textfield name="loginName" id="loginName"/></td>
       </tr>
       <tr>

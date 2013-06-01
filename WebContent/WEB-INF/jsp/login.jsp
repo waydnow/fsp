@@ -78,7 +78,7 @@ body {
       </tr>
     </table></td>
     <td>
-    <s:form action="loginUA">
+    <s:form action="loginUA.shtml">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="31%" height="35" class="login-text02">用户名<br /></td>

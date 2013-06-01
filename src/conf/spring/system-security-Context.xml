@@ -21,6 +21,11 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	
+	<bean id="departmentAction" class="com.kanmenzhu.system.security.action.DepartmentAction" >
+		<property name="departmentService" ref="departmentService"></property>
+	</bean>
+	
 	<bean id="departmentService" class="com.kanmenzhu.system.security.service.impl.DepartmentServiceImpl">
 		<property name="dao" ref="departmentDao"></property>
 	</bean>
