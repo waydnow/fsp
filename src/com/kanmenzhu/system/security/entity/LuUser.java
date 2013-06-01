@@ -124,6 +124,14 @@ public class LuUser extends BaseBean {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+	/**
+	 * 密码比较
+	 * @param u 待比较的用户
+	 * @return
+	 */
+	public boolean pwdEquals(LuUser u){
+		return u.getPwd()==null?false:u.getPwd().equals(this.pwd);
+	}
 
 	@Override
 	public String toString() {

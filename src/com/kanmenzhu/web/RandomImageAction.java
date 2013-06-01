@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
@@ -60,17 +61,17 @@ public class RandomImageAction extends ActionSupport{
     	int x = 0;                      //坐标
     	int fontSize=18;				//最小字体
         String fontStyle = "";          //字体风格(斜体,粗体等)
-        String fontName = "";           //字体名称
+        /*String fontName = "";           //字体名称
         int lineNum = 0;				//干扰线条数
-
+*/
 
         try {
             x = 5;
             if(x > 5) x = 5;
-            lineNum = 5;
+//            lineNum = 5;
             fontSize = 18;
-            if(fontSize < 18) fontSize = 18;
-                fontName = "System";
+//            if(fontSize < 18) fontSize = 18;
+//                fontName = "System";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,7 +158,7 @@ public class RandomImageAction extends ActionSupport{
     	  }
     	  //将认证码存入session
     	  response.setHeader("P3P","CP=CAO PSA OUR IDC DSP COR ADM DEVi TAIi PSD IVAi IVDi CONi HIS IND CNT");
-    	  ActionContext.getContext().getSession().put(IMG_SESSION_NAME,sRand);
+    	  ServletActionContext.getRequest().getSession().setAttribute(IMG_SESSION_NAME,sRand);
           if (logger.isDebugEnabled())
               logger.debug("生成的验证码是： "+ ActionContext.getContext().getSession().get(IMG_SESSION_NAME));
 
@@ -259,5 +260,19 @@ public class RandomImageAction extends ActionSupport{
 	
 	public ByteArrayInputStream getInputStream() {
 		return inputStream;
+	}
+	/**
+	 * 校验验证码
+	 * @param session
+	 * @param verifyCode 待验证的验证码
+	 * @return
+	 */
+	public static boolean checkVerifyCode(HttpSession session,String verifyCode){
+		String vc=(String)session.getAttribute(IMG_SESSION_NAME);
+		if(verifyCode!=null&&verifyCode.equals(vc)){
+			session.removeAttribute(IMG_SESSION_NAME);
+			return true;
+		}
+		return false;
 	}
 }

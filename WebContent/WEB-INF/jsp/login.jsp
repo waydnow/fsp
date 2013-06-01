@@ -82,11 +82,11 @@ body {
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="31%" height="35" class="login-text02">用户名<br /></td>
-        <td width="69%"><s:textfield name="loginName" id="loginName"/></td>
+        <td width="69%"><s:textfield name="user.loginName" id="loginName"/></td>
       </tr>
       <tr>
         <td height="35" class="login-text02">密码<br /></td>
-        <td><s:password name="pwd" id="pwd"/></td>
+        <td><s:password name="user.pwd" id="pwd"/></td>
       </tr>
       <tr>
         <td height="35" class="login-text02">验证码<br /></td>

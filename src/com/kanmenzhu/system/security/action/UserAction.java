@@ -2,6 +2,9 @@ package com.kanmenzhu.system.security.action;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +12,9 @@ import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.UserService;
+import com.kanmenzhu.web.BaseAction;
+import com.kanmenzhu.web.RandomImageAction;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UserAction extends ActionSupport {
@@ -31,11 +37,26 @@ public class UserAction extends ActionSupport {
 	}
 	
 	public String login(){
-		user=new LuUser();
-		user.setLoginName("myfirst");
-		LuUser u=userService.findByLoginName(user.getLoginName());
-		logger.info(u.toString());
-		return SUCCESS;
+		String msg=null;
+		HttpSession session=ServletActionContext.getRequest().getSession();
+		if(user!=null){
+			if(RandomImageAction.checkVerifyCode(session, verifyCode)){
+				LuUser dbUser=userService.findByLoginName(user.getLoginName());
+				if(dbUser!=null&&dbUser.pwdEquals(user)){
+					ActionContext.getContext().getSession().put(BaseAction.SESSION_USER_INFO,user);
+					msg="登录成功!";
+					return SUCCESS;
+				}else{
+					msg="用户名错误或密码错误!";
+				}
+				
+			}else{
+				msg="验证码错误!";
+			}
+		}
+		if(null!=msg)
+			addActionMessage(msg);
+		return ERROR;
 	}
 	
 	public String welcome(){
