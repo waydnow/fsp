@@ -3,7 +3,6 @@ package com.kanmenzhu.system.security.service;
 import java.util.List;
 
 import com.kanmenzhu.service.BaseService;
-import com.kanmenzhu.system.security.dao.DepartmentDao;
 import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuUser;
 

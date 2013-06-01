@@ -14,10 +14,7 @@ public class DepartmentAction extends ActionSupport {
 
 	private DepartmentService departmentService;
 	
-	private String name;
-	private String address;
-	private String manager;
-	private String phone;
+	private LuDepartment department;
 	
 	public String regist(){
 		logger.info("####添加单位####");
@@ -25,58 +22,30 @@ public class DepartmentAction extends ActionSupport {
 	}
 	
 	public String add(){
-		LuDepartment department = new LuDepartment();
-		if (StringUtils.isNotBlank(name)&&StringUtils.isNotBlank(manager)) {
-			department.setName(name);
-			department.setManager(manager);
-			department.setAddress(address);
-			department.setPhone(phone);
-			departmentService.save(department);
-			return "success";
-		}else {
-			logger.info("单位名称或负责人为空！");
-			return "regist";
+		if(null!=department){
+			if (StringUtils.isNotBlank(department.getName())&&StringUtils.isNotBlank(department.getName())) {
+				departmentService.save(department);
+				return "success";
+			}
 		}
+		logger.info("单位名称或负责人为空！");
+		return "regist";
 	}
 	
-	public String getName() {
-		return name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public String getManager() {
-		return manager;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public void setManager(String manager) {
-		this.manager = manager;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public DepartmentService getDepartmentService() {
 		return departmentService;
 	}
 
 	public void setDepartmentService(DepartmentService departmentService) {
 		this.departmentService = departmentService;
+	}
+
+	public LuDepartment getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(LuDepartment department) {
+		this.department = department;
 	}
 	
 	
