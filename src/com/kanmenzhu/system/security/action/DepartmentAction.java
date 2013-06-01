@@ -1,23 +1,20 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.web.BaseAction;
-import com.opensymphony.xwork2.ActionSupport;
 
 public class DepartmentAction extends BaseAction {
 	
 	private DepartmentService departmentService;
 	
-	private String name;
-	private String address;
-	private String manager;
-	private String phone;
-	private String dpid;
+	private LuDepartment department;
+	
+	private List<LuDepartment> dplist;
 	
 	public String regist(){
 		logger.info("####添加单位####");
@@ -25,69 +22,33 @@ public class DepartmentAction extends BaseAction {
 	}
 	
 	public String add(){
-		LuDepartment department = new LuDepartment();
-		if (StringUtils.isNotBlank(name)&&StringUtils.isNotBlank(manager)) {
-			department.setName(name);
-			department.setManager(manager);
-			department.setAddress(address);
-			department.setPhone(phone);
-			departmentService.save(department);
-			return SUCC;
-		}else {
-			logger.info("单位名称或负责人为空！");
-			return "regist";
+		if(null!=department){
+			if (StringUtils.isNotBlank(department.getName())&&StringUtils.isNotBlank(department.getName())) {
+				departmentService.save(department);
+				return "success";
+			}
 		}
+		logger.info("单位名称或负责人为空！");
+		return "regist";
+	}
+	
+	public String show(){
+		if (null!=department) {
+			department = departmentService.get(department.getId(), LuDepartment.class);
+		}
+		return "show";
 	}
 	
 	public String update(){
-		if (StringUtils.isNotBlank(dpid)) {
-			Integer id = Integer.valueOf(dpid);
-			LuDepartment department = departmentService.get(id, LuDepartment.class);
-			if (StringUtils.isNotBlank(name)&&StringUtils.isNotBlank(manager)) {
-				department.setName(name);
-				department.setManager(manager);
-				department.setAddress(address);
-				department.setPhone(phone);
-				departmentService.save(department);
-				
-			}
-			return SUCC;
-		}else {
-			logger.info("单位ID为空！");
-			return "list";
+		if (null!=department) {
+			departmentService.update(department);
 		}
+		return "list";
 	}
 	
-	public String getName() {
-		return name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public String getManager() {
-		return manager;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public void setManager(String manager) {
-		this.manager = manager;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public String list(){
+		dplist = departmentService.getAll(-1, -1);
+		return "list";
 	}
 
 	public DepartmentService getDepartmentService() {
@@ -98,12 +59,20 @@ public class DepartmentAction extends BaseAction {
 		this.departmentService = departmentService;
 	}
 
-	public String getDpid() {
-		return dpid;
+	public LuDepartment getDepartment() {
+		return department;
 	}
 
-	public void setDpid(String dpid) {
-		this.dpid = dpid;
+	public void setDepartment(LuDepartment department) {
+		this.department = department;
+	}
+
+	public List<LuDepartment> getDplist() {
+		return dplist;
+	}
+
+	public void setDplist(List<LuDepartment> dplist) {
+		this.dplist = dplist;
 	}
 	
 	
