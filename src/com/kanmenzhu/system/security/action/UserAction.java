@@ -15,19 +15,12 @@ public class UserAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private Logger logger=LoggerFactory.getLogger(getClass());
 	
+	private String verifyCode;
 	
 	private UserService userService;
 	private DepartmentService departmentService;
 
-	private  LuUser user;
-	//登录名
-	private String loginName;
-	//密码
-	private String pwd;
-	//验证码
-	private String verifyCode;
-	//部门
-	private String department;
+	private LuUser user;
 	private List<LuDepartment> dps;
 	
 	
@@ -55,21 +48,6 @@ public class UserAction extends ActionSupport {
 		return "regist";
 	}
 
-	public String getLoginName() {
-		return loginName;
-	}
-	public String getPwd() {
-		return pwd;
-	}
-	public String getVerifyCode() {
-		return verifyCode;
-	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
 	public void setVerifyCode(String verifyCode) {
 		this.verifyCode = verifyCode;
 	}
@@ -90,10 +68,6 @@ public class UserAction extends ActionSupport {
 		return departmentService;
 	}
 
-	public String getDepartment() {
-		return department;
-	}
-
 	public List<LuDepartment> getDps() {
 		return dps;
 	}
@@ -104,10 +78,6 @@ public class UserAction extends ActionSupport {
 
 	public void setDepartmentService(DepartmentService departmentService) {
 		this.departmentService = departmentService;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
 	}
 
 	public void setDps(List<LuDepartment> dps) {
