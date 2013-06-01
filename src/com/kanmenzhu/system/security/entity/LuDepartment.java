@@ -61,4 +61,5 @@ public class LuDepartment extends BaseBean {
 		this.phone = phone;
 	}
 
+
 }

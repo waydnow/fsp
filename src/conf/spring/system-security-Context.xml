@@ -10,6 +10,7 @@
     
 	<bean id="userAction" class="com.kanmenzhu.system.security.action.UserAction" >
 		<property name="userService" ref="userService"></property>
+		<property name="departmentService" ref="departmentService"></property>
 	</bean>
 	
 	<bean id="userService" class="com.kanmenzhu.system.security.service.impl.UserServiceImpl">
@@ -19,6 +20,15 @@
 	<bean id="userDao" class="com.kanmenzhu.system.security.dao.impl.UserDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	
+	<bean id="departmentService" class="com.kanmenzhu.system.security.service.impl.DepartmentServiceImpl">
+		<property name="dao" ref="departmentDao"></property>
+	</bean>
+	
+	<bean id="departmentDao" class="com.kanmenzhu.system.security.dao.impl.DepartmentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<bean id="randomImageAction" class="com.kanmenzhu.web.RandomImageAction">
 	</bean>
 

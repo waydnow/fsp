@@ -1,11 +1,14 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuUser;
+import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.UserService;
-import com.kanmenzhu.web.BaseAction;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UserAction extends ActionSupport {
@@ -14,13 +17,18 @@ public class UserAction extends ActionSupport {
 	
 	
 	private UserService userService;
+	private DepartmentService departmentService;
 
 	private  LuUser user;
+	//登录名
 	private String loginName;
-	
+	//密码
 	private String pwd;
-	
+	//验证码
 	private String verifyCode;
+	//部门
+	private String department;
+	private List<LuDepartment> dps;
 	
 	
 	public String add(){
@@ -36,20 +44,15 @@ public class UserAction extends ActionSupport {
 		logger.info(u.toString());
 		return SUCCESS;
 	}
+	
 	public String welcome(){
-		logger.info("#########");
+		logger.info("####进入登录页面#####");
 		return "login";
 	}
 	
-	
-	
-	
-	
-	public UserService getUserService() {
-		return userService;
-	}
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	public String regist(){
+		dps = departmentService.getAll();
+		return "regist";
 	}
 
 	public String getLoginName() {
@@ -71,20 +74,9 @@ public class UserAction extends ActionSupport {
 		this.verifyCode = verifyCode;
 	}
 
-
-
-
-
-
 	public LuUser getUser() {
 		return user;
 	}
-
-
-
-
-
-
 
 	public void setUser(LuUser user) {
 		this.user = user;
