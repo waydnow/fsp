@@ -5,7 +5,11 @@ import java.util.List;
 import com.kanmenzhu.bean.BaseBean;
 import com.kanmenzhu.dao.BaseDao;
 import com.kanmenzhu.service.BaseService;
-
+/**
+ * 基础业务类
+ * @author ch_w 2013-6-1
+ *
+ */
 public  abstract class BaseServiceImpl<T extends BaseBean>  implements BaseService<T> {
 	
 	protected BaseDao<T> dao;
