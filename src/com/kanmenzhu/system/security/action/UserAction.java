@@ -2,6 +2,9 @@ package com.kanmenzhu.system.security.action;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,25 +12,21 @@ import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.UserService;
+import com.kanmenzhu.web.BaseAction;
+import com.kanmenzhu.web.RandomImageAction;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UserAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private Logger logger=LoggerFactory.getLogger(getClass());
 	
+	private String verifyCode;
 	
 	private UserService userService;
 	private DepartmentService departmentService;
 
-	private  LuUser user;
-	//登录名
-	private String loginName;
-	//密码
-	private String pwd;
-	//验证码
-	private String verifyCode;
-	//部门
-	private String department;
+	private LuUser user;
 	private List<LuDepartment> dps;
 	
 	
@@ -38,11 +37,29 @@ public class UserAction extends ActionSupport {
 	}
 	
 	public String login(){
-		user=new LuUser();
-		user.setLoginName("myfirst");
-		LuUser u=userService.findByLoginName(user.getLoginName());
-		logger.info(u.toString());
-		return SUCCESS;
+		String msg=null;
+		HttpSession session=ServletActionContext.getRequest().getSession();
+		if(user!=null){
+			if(RandomImageAction.checkVerifyCode(session, verifyCode)){
+				LuUser dbUser=userService.findByLoginName(user.getLoginName());
+				if(dbUser!=null&&dbUser.pwdEquals(user)){
+					ActionContext.getContext().getSession().put(BaseAction.SESSION_USER_INFO,user);
+					msg="登录成功!";
+					return SUCCESS;
+				}else{
+					msg="用户名错误或密码错误!";
+				}
+				
+			}else{
+				msg="验证码错误!";
+			}
+		}
+		if(null!=msg){
+			verifyCode="";
+			clearMessages();
+			addActionMessage(msg);
+		}
+		return ERROR;
 	}
 	
 	public String welcome(){
@@ -55,21 +72,6 @@ public class UserAction extends ActionSupport {
 		return "regist";
 	}
 
-	public String getLoginName() {
-		return loginName;
-	}
-	public String getPwd() {
-		return pwd;
-	}
-	public String getVerifyCode() {
-		return verifyCode;
-	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
 	public void setVerifyCode(String verifyCode) {
 		this.verifyCode = verifyCode;
 	}
@@ -90,10 +92,6 @@ public class UserAction extends ActionSupport {
 		return departmentService;
 	}
 
-	public String getDepartment() {
-		return department;
-	}
-
 	public List<LuDepartment> getDps() {
 		return dps;
 	}
@@ -104,10 +102,6 @@ public class UserAction extends ActionSupport {
 
 	public void setDepartmentService(DepartmentService departmentService) {
 		this.departmentService = departmentService;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
 	}
 
 	public void setDps(List<LuDepartment> dps) {

@@ -23,12 +23,6 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 		}
 	}
 
-	@Override
-	public List<LuDepartment> getAll() {
-		String hql = "from LuDepartment";
-		List<LuDepartment> dps = getHibernateTemplate().find(hql);
-		return dps;
-	}
 
 	@Override
 	public String getEntityName() {

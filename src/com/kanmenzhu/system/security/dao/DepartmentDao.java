@@ -10,5 +10,4 @@ public interface DepartmentDao extends BaseDao<LuDepartment> {
 	
 	public LuDepartment getDepartmentByUser(LuUser user);
 
-	public List<LuDepartment> getAll();
 }

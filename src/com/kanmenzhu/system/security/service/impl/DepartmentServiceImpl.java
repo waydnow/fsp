@@ -19,7 +19,7 @@ public class DepartmentServiceImpl extends BaseServiceImpl<LuDepartment> impleme
 
 	@Override
 	public List<LuDepartment> getAll() {
-		List<LuDepartment> departments = ((DepartmentDao)dao).getAll();
+		List<LuDepartment> departments = ((DepartmentDao)dao).getAll(-1,-1);
 		return departments;
 	}
 
