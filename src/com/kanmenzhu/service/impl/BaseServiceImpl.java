@@ -1,5 +1,7 @@
 package com.kanmenzhu.service.impl;
 
+import java.util.List;
+
 import com.kanmenzhu.bean.BaseBean;
 import com.kanmenzhu.dao.BaseDao;
 import com.kanmenzhu.service.BaseService;
@@ -36,6 +38,14 @@ public  abstract class BaseServiceImpl<T extends BaseBean>  implements BaseServi
 		return dao.get(id,clz);
 	}
 	
+	@Override
+	public List<T> findByHql(String hql,int startRow,int endRow,Object... params){
+		return dao.findByHql(hql, startRow, endRow, params);
+	}
+	@Override
+	public List<T> getAll(int startRow,int endRow){
+		return dao.getAll(startRow, endRow);
+	}
 	
 	public BaseDao<T> getDao() {
 		return dao;
