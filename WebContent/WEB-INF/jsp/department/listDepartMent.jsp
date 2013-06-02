@@ -116,7 +116,7 @@ function on_load(){
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
 					                  <tr>
-                    <td height="20" colspan="13" align="center" bgcolor="#EEEEEE"class="tablestyle_title"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 项目信息列表 &nbsp;</td>
+                    <td height="20" colspan="13" align="center" bgcolor="#EEEEEE"class="tablestyle_title">单位列表</td>
                     </tr>
                   <tr>
 				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
@@ -126,13 +126,13 @@ function on_load(){
                     <td width="5%" align="center" bgcolor="#EEEEEE">联系电话</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
-                  <s:iterator value="dpList" var="dp">
+                  <s:iterator value="dplist" var="dp">
                   <tr align="center">
 				   <td bgcolor="#FFFFFF"><input type="checkbox" name="dp.id"/></td>
-                    <td height="20" bgcolor="#FFFFFF"><a href="showDP.shtml"><s:property value="dp.name"/></a></td>
-                    <td bgcolor="#FFFFFF"><s:property value="dp.manager"/></td>
-                    <td bgcolor="#FFFFFF"><s:property value="dp.address"/></td>
-                    <td bgcolor="#FFFFFF"><s:property value="dp.phone"/></td>
+                    <td height="20" bgcolor="#FFFFFF"><a href="showDP.shtml?department.id=${dp.id}"><s:property value="#dp.name"/></a></td>
+                    <td bgcolor="#FFFFFF"><s:property value="#dp.manager"/></td>
+                    <td bgcolor="#FFFFFF"><s:property value="#dp.address"/></td>
+                    <td bgcolor="#FFFFFF"><s:property value="#dp.phone"/></td>
                     <td bgcolor="#FFFFFF"><a href="deleteDP.shtml">删除</a></td>
                   </tr>
 				  </s:iterator>

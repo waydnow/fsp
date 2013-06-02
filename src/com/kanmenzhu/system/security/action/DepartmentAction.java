@@ -15,6 +15,7 @@ public class DepartmentAction extends BaseAction {
 	private LuDepartment department;
 	
 	private List<LuDepartment> dplist;
+
 	
 	public String regist(){
 		logger.info("####添加单位####");
@@ -41,9 +42,18 @@ public class DepartmentAction extends BaseAction {
 	
 	public String update(){
 		if (null!=department) {
-			departmentService.update(department);
+			if (StringUtils.isNotBlank(department.getName())) {
+				departmentService.update(department);
+			}
 		}
-		return "list";
+		return list();
+	}
+	
+	public String edit(){
+		if (null!=department) {
+			department = departmentService.get(department.getId(), LuDepartment.class);
+		}
+		return "edit";
 	}
 	
 	public String list(){

@@ -28,34 +28,27 @@ body {
   <tr>
     <td>
 	
-	<s:form action="showDP.shtml">
+	<s:form action="updateDP.shtml">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
         <td width="31%" height="35" class="login-text02">单位名称<br /></td>
-        <td width="69%"><s:textfield name="department.name" id="name"/></td>
-      </tr>
-        <s:iterator>
-        
-        </s:iterator>
-      <tr>
-        <td width="31%" height="35" class="login-text02">单位名称<br /></td>
-        <td width="69%"><s:textfield name="department.name" id="name"/></td>
+        <td width="69%"><s:property value="department.name"/></td>
       </tr>
       <tr>
         <td height="35" class="login-text02">地址<br /></td>
-        <td><s:textfield name="department.address" id="address"/></td>
+        <td><s:property value="department.address" /></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">负责人<br /></td>
-        <td width="69%"><s:textfield name="department.manager" id="manager"/></td>
+        <td width="69%"><s:property value="department.manager"/></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">联系电话<br /></td>
-        <td width="69%"><s:textfield name="department.phone" id="phone"/></td>
+        <td width="69%"><s:property value="department.phone"/></td>
       </tr>
       <tr>
         <td height="35">&nbsp;</td>
-        <td><input type="button" value="保存" class="right-button02" onclick="checkSubmit();"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
+        <td><a href="editDP.shtml?department.id=${department.id}"><input type="button" value="修改" class="right-button02" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
       </tr>
     </table>
     </s:form>
