@@ -14,4 +14,12 @@ public interface MenuDao extends BaseDao<LuMenu> {
 	 * @return
 	 */
 	List<LuMenu> getPermissionByUid(Integer uid,Integer menuParentId);
+	
+	/**
+	 * 根据角色id查询到角色能访问到的菜单权限
+	 * @param uid
+	 * @param menuParentId 父级菜单id，为null/0查询一级主菜单
+	 * @return
+	 */
+	List<LuMenu> getPermissionByRid(Integer uid,Integer menuParentId);
 }

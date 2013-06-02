@@ -18,8 +18,19 @@ public class MenuDaoImpl extends BaseDaoImpl<LuMenu> implements MenuDao {
 	public List<LuMenu> getPermissionByUid(Integer uid, Integer menuParentId) {
 		//父级菜单
 		String mp=menuParentId==null?"":" and lm.PARENT_id="+menuParentId;
-		String sql="select * from LU_MEMU lm where exists(select 1 from LU_PERMISSSION lp left join " +
-				"LU_ROLE_USER lr on lu.ROLE_ID=lr.ID and lu.USER_ID="+uid+" and lm.id=lp.MENU_ID)" +mp+
+		String sql="select * from LU_MENU lm where exists(select 1 from LU_PERMISSION lp left join " +
+				"LU_ROLE_USER lr on lu.ROLE_ID=lr.ID where lu.USER_ID="+uid+" and lm.id=lp.MENU_ID)" +mp+
+						" order by lm.ORDER desc";
+		return relevanceSqlQuery(sql, LuMenu.class);
+	}
+
+
+	@Override
+	public List<LuMenu> getPermissionByRid(Integer rid, Integer menuParentId) {
+		//父级菜单
+		String mp=menuParentId==null?"":" and lm.PARENT_id="+menuParentId;
+		String sql="select * from LU_MENU lm where exists(select 1 from LU_PERMISSION lp where " +
+				"lp.ROLE_ID="+rid+" and lm.id=lp.MENU_ID)" +mp+
 						" order by lm.ORDER desc";
 		return relevanceSqlQuery(sql, LuMenu.class);
 	}

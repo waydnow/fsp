@@ -13,5 +13,10 @@ public class MenuServiceImpl extends BaseServiceImpl<LuMenu> implements MenuServ
 		// TODO Auto-generated method stub
 		return ((MenuDao)dao).getPermissionByUid(uid, menuParentId);
 	}
+
+	@Override
+	public List<LuMenu> getPermissionByRid(Integer rid, Integer menuParentId) {
+		return ((MenuDao)dao).getPermissionByRid(rid, menuParentId);
+	}
 	
 }
