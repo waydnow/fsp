@@ -23,5 +23,12 @@
     <result name="edit">/WEB-INF/jsp/department/editDepartMent.jsp</result>
   </action>
   
+  <action name="*RO" class="roleAction" method="{1}">
+    <result name="regist">/WEB-INF/jsp/role/addRole.jsp</result>
+    <result name="show">/WEB-INF/jsp/role/showRole.jsp</result>
+    <result name="list">/WEB-INF/jsp/role/listRole.jsp</result>
+    <result name="edit">/WEB-INF/jsp/role/editRole.jsp</result>
+  </action>
+  
   </package>
 </struts>
