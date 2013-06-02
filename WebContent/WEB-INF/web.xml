@@ -11,6 +11,7 @@
 					classpath:/conf/spring/applicationContext.xml
 					<!-- classpath:/conf/spring/qxglContext.xml -->
 					<!-- classpath:/conf/spring/action-Context.xml -->
+					classpath:/conf/spring/business-Context.xml
 					classpath:/conf/spring/system-security-Context.xml
 		</param-value>
 	</context-param>

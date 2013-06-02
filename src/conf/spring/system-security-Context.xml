@@ -12,6 +12,7 @@
 		<property name="userService" ref="userService"></property>
 		<property name="departmentService" ref="departmentService"></property>
 		<property name="roleService" ref="roleService"></property>
+		<property name="ruService" ref="roleUserService"></property>
 	</bean>
 	<bean id="userService" class="com.kanmenzhu.system.security.service.impl.UserServiceImpl">
 		<property name="dao" ref="userDao"></property>

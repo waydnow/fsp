@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuRole;
+import com.kanmenzhu.system.security.entity.LuRoleUser;
 import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.RoleService;
+import com.kanmenzhu.system.security.service.RoleUserService;
 import com.kanmenzhu.system.security.service.UserService;
 import com.kanmenzhu.web.BaseAction;
 import com.kanmenzhu.web.RandomImageAction;
@@ -33,6 +35,7 @@ public class UserAction extends ActionSupport {
 	private List<LuRole> roleList;
 	private RoleService roleService;
 	private String roleids;
+	private RoleUserService ruService;
 	
 	private List<LuDepartment> dps;
 	private LuDepartment department;
@@ -47,9 +50,17 @@ public class UserAction extends ActionSupport {
 			}else {
 				LuDepartment department = departmentService.get(user.getDeptId(), LuDepartment.class);
 				if (null!=department) {
-					logger.info(roleids);
 					user.setDeptId(department.getId());
 					userService.save(user);
+					//用户绑定角色
+					String[] ids = roleids.split(",");
+					for (String id : ids) {
+						LuRoleUser ru = new LuRoleUser();
+						ru.setRid(Integer.valueOf(id));
+						ru.setUid(user.getId());
+						ruService.save(ru);
+					}
+					logger.info("注册用户"+user.getLoginName()+",ID="+user.getId()+"绑定角色ID={"+roleids+"}");
 					return "success";
 				}else {
 					msg = "没有选择正确的单位信息";
@@ -168,6 +179,14 @@ public class UserAction extends ActionSupport {
 
 	public void setRoleids(String roleids) {
 		this.roleids = roleids;
+	}
+
+	public RoleUserService getRuService() {
+		return ruService;
+	}
+
+	public void setRuService(RoleUserService ruService) {
+		this.ruService = ruService;
 	}
 	
 	
