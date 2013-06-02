@@ -29,11 +29,33 @@ public class UserAction extends ActionSupport {
 	private LuUser user;
 	private List<LuDepartment> dps;
 	
+	private LuDepartment department;
 	
 	public String add(){
-		user=userService.get(1, LuUser.class);
-		
-		return "success";
+		String msg = null;
+		if (null!=user) {
+			//TODO 需要添加判断是否已经存在该用户名的用户
+			LuUser olduser = userService.findByLoginName(user.getLoginName());
+			if (null!=olduser) {
+				msg="用户名"+olduser.getLoginName()+"已经被注册！";
+			}else {
+				LuDepartment department = departmentService.get(user.getDeptId(), LuDepartment.class);
+				if (null!=department) {
+					user.setDeptId(department.getId());
+					userService.save(user);
+					return "success";
+				}else {
+					msg = "没有选择正确的单位信息";
+				}
+			}
+		}else {
+			msg = "用户注册失败！"; 
+		}
+		if (null!=msg) {
+			clearMessages();
+			addActionMessage(msg);
+		}
+		return "regist";
 	}
 	
 	public String login(){
@@ -106,6 +128,14 @@ public class UserAction extends ActionSupport {
 
 	public void setDps(List<LuDepartment> dps) {
 		this.dps = dps;
+	}
+
+	public LuDepartment getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(LuDepartment department) {
+		this.department = department;
 	}
 	
 	

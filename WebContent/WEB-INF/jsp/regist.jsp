@@ -19,24 +19,6 @@ body {
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script language="javascript">
-	var isGetImgCode =  false;
-	$(document).ready(function(){
-	   $("#rndImgCode").hide();
-		//点击时，切换图片
-		$("#getImgCode").click(function(){
-			isGetImgCode = true;
-			$("#rndImgCode").show();
-			$("#rndImgCode").attr("src","randImage.shtml?rnd="+Math.random());
-			});//click end
-		$("#imgCode").focus(function(){
-			if(isGetImgCode){
-				return null;
-				}
-			isGetImgCode = true;
-			$("#rndImgCode").show();
-			$("#rndImgCode").attr("src","randImage.shtml?rnd="+Math.random());
-			});//focus end
-		});//ready end
 	function checkSubmit(){
 		if($("#loginName").val()==""){
 			alert("请输入用户名!");
@@ -58,54 +40,48 @@ body {
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td bgcolor="#4AA3D8"></td>
+    <td bgcolor="#4AA3D8"><s:actionmessage/></td>
   </tr>
   <tr>
     <td>
 	
-	<s:form action="loginUA">
+	<s:form action="addUA.shtml">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
         <td width="31%" height="35" class="login-text02">单位<br /></td>
         <td width="69%">
-			<s:iterator value="dps" var="department">
-				<s:property value="name"/> <br/>
-			</s:iterator>
+        	<s:select list="dps" var="department" listValue="name" listKey="id" name="user.deptId">
+        	</s:select>
 			<a href="registDP.shtml">添加新单位</a>
         </td>
         </tr>
       <tr>
-        <td width="31%" height="35" class="login-text02">用户名2<br /></td>
-        <td width="69%"><s:textfield name="loginName" id="loginName"/></td>
+        <td width="31%" height="35" class="login-text02">用户名<br /></td>
+        <td width="69%"><s:textfield name="user.loginName" id="loginName"/></td>
       </tr>
       <tr>
         <td height="35" class="login-text02">密码<br /></td>
-        <td><s:password name="pwd" id="pwd"/></td>
+        <td><s:password name="user.pwd" id="pwd"/></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">联系电话<br /></td>
-        <td width="69%"><s:textfield name="loginName" id="phone"/></td>
+        <td width="69%"><s:textfield name="user.phone" id="phone"/></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">手机<br /></td>
-        <td width="69%"><s:textfield name="loginName" id="mobile"/></td>
+        <td width="69%"><s:textfield name="user.mobile" id="mobile"/></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">联系邮箱<br /></td>
-        <td width="69%"><s:textfield name="loginName" id="email"/></td>
+        <td width="69%"><s:textfield name="user.email" id="email"/></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">联系人<br /></td>
-        <td width="69%"><s:textfield name="loginName" id="name"/></td>
-      </tr>
-      <tr>
-        <td height="35" class="login-text02">验证码<br /></td>
-        <td><s:textfield name="verifyCode" id="imgCode" maxlength="4" onkeypress="if (window.event.keyCode == 13) checkSubmit();" cssStyle="width:60px;"></s:textfield>
-		          <img id="rndImgCode" title="验证码"/><a href="#"  id="getImgCode" class="login-text02">刷新验证码</a></td>
+        <td width="69%"><s:textfield name="user.name" id="name"/></td>
       </tr>
       <tr>
         <td height="35">&nbsp;</td>
-        <td><input type="button" value="保存" class="right-button02" onclick="checkSubmit();"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
+        <td><input type="button" value="注册" class="right-button02" onclick="checkSubmit();"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
       </tr>
     </table>
     </s:form>
