@@ -31,7 +31,10 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 	@Override
 	public List<T> findByHql(String hql,int startRow,int endRow,Object... params){
 		Session session=getSession();
-		Query query=session.createQuery(" from "+getEntityName()+" s order by s.id desc");
+		Query query=session.createQuery(hql);
+		for (int i = 0; i < params.length; i++) {
+			query.setParameter(i, params[i]);
+		}
 		if(startRow>0)
 			query.setFirstResult(startRow);
 		if(endRow>startRow)
