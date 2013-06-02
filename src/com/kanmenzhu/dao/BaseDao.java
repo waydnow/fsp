@@ -26,5 +26,12 @@ public interface BaseDao<T extends BaseBean> {
 	 * @return
 	 */
 	public List<T> getAll(int startRow,int endRow);
+	/**
+	 * 根据原生SQL查询返回实体list，用于多表关联查询返回其中一个或多个实体	
+	 * @param sql 原生sql
+	 * @param clz 返回的实体class
+	 * @return
+	 */
+	public List<T> relevanceSqlQuery(String sql,Class<T>... entityClzs);
 	
 }
