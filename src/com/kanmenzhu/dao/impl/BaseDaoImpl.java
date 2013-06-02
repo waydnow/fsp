@@ -50,6 +50,22 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 	}
 
 	/**
+	 * 根据原生SQL查询返回实体list，用于多表关联查询返回其中一个或多个实体	
+	 * @param sql 原生sql
+	 * @param clz 返回的实体class
+	 * @return
+	 */
+	public List<T> relevanceSqlQuery(String sql,Class<T>... entityClzs){
+		Session session=getSession();
+		Query query=session.createSQLQuery(sql).addEntity(entityClzs[0]);
+		/*int i=0;
+		for(Class<T> clz:entityClzs){
+			query.sete
+		}*/
+		return (List<T>)query.list();
+	}
+	
+	/**
 	 * 获取实体类名
 	 * @return
 	 */
