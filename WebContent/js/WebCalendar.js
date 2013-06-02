@@ -1,24 +1,24 @@
 <!--
 var cal;
-var isFocus=false; //ÊÇ·ñÎª½¹µã
-//2006-06-25 Ìí¼ÓµÄ±äÁ¿
+var isFocus=false; //æ˜¯å¦ä¸ºç„¦ç‚¹
+//2006-06-25 æ·»åŠ çš„å˜é‡
 
-//Ñ¡ÔñÈÕÆÚ ¡ú 2006-06-25 Ìí¼Ó
+//é€‰æ‹©æ—¥æœŸ â†’ 2006-06-25 æ·»åŠ 
 function SelectDate(obj,strFormat)
 {
     var date = new Date();
-    var by = date.getFullYear()-50;  //×îĞ¡Öµ ¡ú 50 ÄêÇ°
-    var ey = date.getFullYear()+50;  //×î´óÖµ ¡ú 50 Äêºó
-    //cal = new Calendar(by, ey,1,strFormat);    //³õÊ¼»¯Ó¢ÎÄ°æ£¬0 ÎªÖĞÎÄ°æ
-    cal = (cal==null) ? new Calendar(by, ey, 0) : cal;    //²»ÓÃÃ¿´Î¶¼³õÊ¼»¯ 2006-12-03 ĞŞÕı
+    var by = date.getFullYear()-50;  //æœ€å°å€¼ â†’ 50 å¹´å‰
+    var ey = date.getFullYear()+50;  //æœ€å¤§å€¼ â†’ 50 å¹´å
+    //cal = new Calendar(by, ey,1,strFormat);    //åˆå§‹åŒ–è‹±æ–‡ç‰ˆï¼Œ0 ä¸ºä¸­æ–‡ç‰ˆ
+    cal = (cal==null) ? new Calendar(by, ey, 0) : cal;    //ä¸ç”¨æ¯æ¬¡éƒ½åˆå§‹åŒ– 2006-12-03 ä¿®æ­£
     cal.dateFormatStyle = strFormat;
     cal.show(obj);
 }
 /**//**//**//**
- * ·µ»ØÈÕÆÚ
+ * è¿”å›æ—¥æœŸ
  * @param d the delimiter
  * @param p the pattern of your date
- 2006-06-25 ĞŞ¸ÄÎª¸ù¾İÓÃ»§Ö¸¶¨µÄ style À´È·¶¨£»
+ 2006-06-25 ä¿®æ”¹ä¸ºæ ¹æ®ç”¨æˆ·æŒ‡å®šçš„ style æ¥ç¡®å®šï¼›
  */
 //String.prototype.toDate = function(x, p) {
 String.prototype.toDate = function(style) {
@@ -35,9 +35,9 @@ String.prototype.toDate = function(style) {
   if(isNaN(d)) d = 1;
   return new Date(y, m, d);
   */
-  var y = this.substring(style.indexOf('y'),style.lastIndexOf('y')+1);//Äê
-  var m = this.substring(style.indexOf('M'),style.lastIndexOf('M')+1);//ÔÂ
-  var d = this.substring(style.indexOf('d'),style.lastIndexOf('d')+1);//ÈÕ
+  var y = this.substring(style.indexOf('y'),style.lastIndexOf('y')+1);//å¹´
+  var m = this.substring(style.indexOf('M'),style.lastIndexOf('M')+1);//æœˆ
+  var d = this.substring(style.indexOf('d'),style.lastIndexOf('d')+1);//æ—¥
   if(isNaN(y)) y = new Date().getFullYear();
   if(isNaN(m)) m = new Date().getMonth();
   if(isNaN(d)) d = new Date().getDate();
@@ -47,7 +47,7 @@ String.prototype.toDate = function(style) {
 }
 
 /**//**//**//**
- * ¸ñÊ½»¯ÈÕÆÚ
+ * æ ¼å¼åŒ–æ—¥æœŸ
  * @param   d the delimiter
  * @param   p the pattern of your date
  * @author  meizz
@@ -59,7 +59,7 @@ Date.prototype.format = function(style) {
     "h+" : this.getHours(),     //hour
     "m+" : this.getMinutes(),   //minute
     "s+" : this.getSeconds(),   //second
-    "w+" : "ÌìÒ»¶şÈıËÄÎåÁù".charAt(this.getDay()),   //week
+    "w+" : "å¤©ä¸€äºŒä¸‰å››äº”å…­".charAt(this.getDay()),   //week
     "q+" : Math.floor((this.getMonth() + 3) / 3),  //quarter
     "S"  : this.getMilliseconds() //millisecond
   }
@@ -78,10 +78,10 @@ Date.prototype.format = function(style) {
 };
 
 /**//**//**//**
- * ÈÕÀúÀà
+ * æ—¥å†ç±»
  * @param   beginYear 1990
  * @param   endYear   2010
- * @param   lang      0(ÖĞÎÄ)|1(Ó¢Óï) ¿É×ÔÓÉÀ©³ä
+ * @param   lang      0(ä¸­æ–‡)|1(è‹±è¯­) å¯è‡ªç”±æ‰©å……
  * @param   dateFormatStyle  "yyyy-MM-dd";
  * @version 2006-04-01
  * @author  KimSoft (jinqinghua [at] gmail.com)
@@ -90,7 +90,7 @@ Date.prototype.format = function(style) {
 function Calendar(beginYear, endYear, lang, dateFormatStyle) {
   this.beginYear = 1990;
   this.endYear = 2010;
-  this.lang = 0;            //0(ÖĞÎÄ) | 1(Ó¢ÎÄ)
+  this.lang = 0;            //0(ä¸­æ–‡) | 1(è‹±æ–‡)
   this.dateFormatStyle = "yyyy-MM-dd";
 
   if (beginYear != null && endYear != null){
@@ -116,19 +116,19 @@ function Calendar(beginYear, endYear, lang, dateFormatStyle) {
 
 
   this.colors = {
-  "cur_word"      : "#FFFFFF",  //µ±ÈÕÈÕÆÚÎÄ×ÖÑÕÉ«
-  "cur_bg"        : "#00FF00",  //µ±ÈÕÈÕÆÚµ¥Ôª¸ñ±³Ó°É«
-  "sel_bg"        : "#FFCCCC",  //ÒÑ±»Ñ¡ÔñµÄÈÕÆÚµ¥Ôª¸ñ±³Ó°É« 2006-12-03 Ìí¼Ó
-  "sun_word"      : "#FF0000",  //ĞÇÆÚÌìÎÄ×ÖÑÕÉ«
-  "sat_word"      : "#0000FF",  //ĞÇÆÚÁùÎÄ×ÖÑÕÉ«
-  "td_word_light" : "#333333",  //µ¥Ôª¸ñÎÄ×ÖÑÕÉ«
-  "td_word_dark"  : "#CCCCCC",  //µ¥Ôª¸ñÎÄ×Ö°µÉ«
-  "td_bg_out"     : "#EFEFEF",  //µ¥Ôª¸ñ±³Ó°É«
-  "td_bg_over"    : "#FFCC00",  //µ¥Ôª¸ñ±³Ó°É«
-  "tr_word"       : "#FFFFFF",  //ÈÕÀúÍ·ÎÄ×ÖÑÕÉ«
-  "tr_bg"         : "#666666",  //ÈÕÀúÍ·±³Ó°É«
-  "input_border"  : "#CCCCCC",  //input¿Ø¼şµÄ±ß¿òÑÕÉ«
-  "input_bg"      : "#EFEFEF"   //input¿Ø¼şµÄ±³Ó°É«
+  "cur_word"      : "#FFFFFF",  //å½“æ—¥æ—¥æœŸæ–‡å­—é¢œè‰²
+  "cur_bg"        : "#00FF00",  //å½“æ—¥æ—¥æœŸå•å…ƒæ ¼èƒŒå½±è‰²
+  "sel_bg"        : "#FFCCCC",  //å·²è¢«é€‰æ‹©çš„æ—¥æœŸå•å…ƒæ ¼èƒŒå½±è‰² 2006-12-03 æ·»åŠ 
+  "sun_word"      : "#FF0000",  //æ˜ŸæœŸå¤©æ–‡å­—é¢œè‰²
+  "sat_word"      : "#0000FF",  //æ˜ŸæœŸå…­æ–‡å­—é¢œè‰²
+  "td_word_light" : "#333333",  //å•å…ƒæ ¼æ–‡å­—é¢œè‰²
+  "td_word_dark"  : "#CCCCCC",  //å•å…ƒæ ¼æ–‡å­—æš—è‰²
+  "td_bg_out"     : "#EFEFEF",  //å•å…ƒæ ¼èƒŒå½±è‰²
+  "td_bg_over"    : "#FFCC00",  //å•å…ƒæ ¼èƒŒå½±è‰²
+  "tr_word"       : "#FFFFFF",  //æ—¥å†å¤´æ–‡å­—é¢œè‰²
+  "tr_bg"         : "#666666",  //æ—¥å†å¤´èƒŒå½±è‰²
+  "input_border"  : "#CCCCCC",  //inputæ§ä»¶çš„è¾¹æ¡†é¢œè‰²
+  "input_bg"      : "#EFEFEF"   //inputæ§ä»¶çš„èƒŒå½±è‰²
   }
 
   this.draw();
@@ -139,26 +139,26 @@ function Calendar(beginYear, endYear, lang, dateFormatStyle) {
 }
 
 /**//**//**//**
- * ÈÕÀúÀàÊôĞÔ£¨ÓïÑÔ°ü£¬¿É×ÔÓÉÀ©Õ¹£©
+ * æ—¥å†ç±»å±æ€§ï¼ˆè¯­è¨€åŒ…ï¼Œå¯è‡ªç”±æ‰©å±•ï¼‰
  */
 Calendar.language = {
   "year"   : [[""], [""]],
-  "months" : [["Ò»ÔÂ","¶şÔÂ","ÈıÔÂ","ËÄÔÂ","ÎåÔÂ","ÁùÔÂ","ÆßÔÂ","°ËÔÂ","¾ÅÔÂ","Ê®ÔÂ","Ê®Ò»ÔÂ","Ê®¶şÔÂ"],
+  "months" : [["ä¸€æœˆ","äºŒæœˆ","ä¸‰æœˆ","å››æœˆ","äº”æœˆ","å…­æœˆ","ä¸ƒæœˆ","å…«æœˆ","ä¹æœˆ","åæœˆ","åä¸€æœˆ","åäºŒæœˆ"],
         ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]
          ],
-  "weeks"  : [["ÈÕ","Ò»","¶ş","Èı","ËÄ","Îå","Áù"],
+  "weeks"  : [["æ—¥","ä¸€","äºŒ","ä¸‰","å››","äº”","å…­"],
         ["SUN","MON","TUR","WED","THU","FRI","SAT"]
          ],
-  "clear"  : [["Çå¿Õ"], ["CLS"]],
-  "today"  : [["½ñÌì"], ["TODAY"]],
-  "close"  : [["¹Ø±Õ"], ["CLOSE"]]
+  "clear"  : [["æ¸…ç©º"], ["CLS"]],
+  "today"  : [["ä»Šå¤©"], ["TODAY"]],
+  "close"  : [["å…³é—­"], ["CLOSE"]]
 }
 
 Calendar.prototype.draw = function() {
   calendar = this;
 
   var mvAry = [];
-  //mvAry[mvAry.length]  = '  <form name="calendarForm" style="margin: 0px;">'; //Òò <form> ²»ÄÜÇ¶Ì×£¬ 2006-12-01 ¸ÄÓÃ Div
+  //mvAry[mvAry.length]  = '  <form name="calendarForm" style="margin: 0px;">'; //å›  <form> ä¸èƒ½åµŒå¥—ï¼Œ 2006-12-01 æ”¹ç”¨ Div
   mvAry[mvAry.length]  = '  <div name="calendarForm" style="margin: 0px;">';
   mvAry[mvAry.length]  = '    <table width="100%" border="0" cellpadding="0" cellspacing="1">';
   mvAry[mvAry.length]  = '      <tr>';
@@ -196,7 +196,7 @@ Calendar.prototype.draw = function() {
   mvAry[mvAry.length]  = '  </div>';
   this.panel.innerHTML = mvAry.join("");
   
-  /**//******** ÒÔÏÂ´úÂë 2006-12-01 Ìí¼Ó **********/
+  /**//******** ä»¥ä¸‹ä»£ç  2006-12-01 æ·»åŠ  **********/
   var obj = this.getElementById("prevMonth");
   obj.onclick = function () {calendar.goPrevMonth(calendar);}
   obj.onblur = function () {calendar.onblur();}
@@ -241,7 +241,7 @@ Calendar.prototype.draw = function() {
     calendar.hide();
   }
   this.calendarToday = obj;
-  /**//******** ÒÔÉÏ´úÂë 2006-12-01 Ìí¼Ó **********/
+  /**//******** ä»¥ä¸Šä»£ç  2006-12-01 æ·»åŠ  **********/
   
   /**//*
   //this.form = document.forms["calendarForm"];   
@@ -272,27 +272,27 @@ Calendar.prototype.draw = function() {
 */
 }
 
-//Äê·İÏÂÀ­¿ò°ó¶¨Êı¾İ
+//å¹´ä»½ä¸‹æ‹‰æ¡†ç»‘å®šæ•°æ®
 Calendar.prototype.bindYear = function() {
   //var cy = this.form.calendarYear;
-  var cy = this.calendarYear;//2006-12-01 ĞŞ¸Ä
+  var cy = this.calendarYear;//2006-12-01 ä¿®æ”¹
   cy.length = 0;
   for (var i = this.beginYear; i <= this.endYear; i++){
     cy.options[cy.length] = new Option(i + Calendar.language["year"][this.lang], i);
   }
 }
 
-//ÔÂ·İÏÂÀ­¿ò°ó¶¨Êı¾İ
+//æœˆä»½ä¸‹æ‹‰æ¡†ç»‘å®šæ•°æ®
 Calendar.prototype.bindMonth = function() {
   //var cm = this.form.calendarMonth;
-  var cm = this.calendarMonth;//2006-12-01 ĞŞ¸Ä
+  var cm = this.calendarMonth;//2006-12-01 ä¿®æ”¹
   cm.length = 0;
   for (var i = 0; i < 12; i++){
     cm.options[cm.length] = new Option(Calendar.language["months"][this.lang][i], i);
   }
 }
 
-//ÏòÇ°Ò»ÔÂ
+//å‘å‰ä¸€æœˆ
 Calendar.prototype.goPrevMonth = function(e){
   if (this.year == this.beginYear && this.month == 0){return;}
   this.month--;
@@ -305,7 +305,7 @@ Calendar.prototype.goPrevMonth = function(e){
   this.bindData();
 }
 
-//ÏòºóÒ»ÔÂ
+//å‘åä¸€æœˆ
 Calendar.prototype.goNextMonth = function(e){
   if (this.year == this.endYear && this.month == 11){return;}
   this.month++;
@@ -318,11 +318,11 @@ Calendar.prototype.goNextMonth = function(e){
   this.bindData();
 }
 
-//¸Ä±äSELECTÑ¡ÖĞ×´Ì¬
+//æ”¹å˜SELECTé€‰ä¸­çŠ¶æ€
 Calendar.prototype.changeSelect = function() {
   //var cy = this.form.calendarYear;
   //var cm = this.form.calendarMonth;
-  var cy = this.calendarYear;//2006-12-01 ĞŞ¸Ä
+  var cy = this.calendarYear;//2006-12-01 ä¿®æ”¹
   var cm = this.calendarMonth;
   for (var i= 0; i < cy.length; i++){
     if (cy.options[i].value == this.date.getFullYear()){
@@ -338,18 +338,18 @@ Calendar.prototype.changeSelect = function() {
   }
 }
 
-//¸üĞÂÄê¡¢ÔÂ
+//æ›´æ–°å¹´ã€æœˆ
 Calendar.prototype.update = function (e){
   //this.year  = e.form.calendarYear.options[e.form.calendarYear.selectedIndex].value;
   //this.month = e.form.calendarMonth.options[e.form.calendarMonth.selectedIndex].value;
-  this.year  = e.calendarYear.options[e.calendarYear.selectedIndex].value;//2006-12-01 ĞŞ¸Ä
+  this.year  = e.calendarYear.options[e.calendarYear.selectedIndex].value;//2006-12-01 ä¿®æ”¹
   this.month = e.calendarMonth.options[e.calendarMonth.selectedIndex].value;
   this.date = new Date(this.year, this.month, 1);
   this.changeSelect();
   this.bindData();
 }
 
-//°ó¶¨Êı¾İµ½ÔÂÊÓÍ¼
+//ç»‘å®šæ•°æ®åˆ°æœˆè§†å›¾
 Calendar.prototype.bindData = function () {
   var calendar = this;
   var dateArray = this.getMonthViewArray(this.date.getYear(), this.date.getMonth());
@@ -389,10 +389,10 @@ Calendar.prototype.bindData = function () {
         tds[i].onmouseout = function () {
           this.style.backgroundColor = calendar.colors["cur_bg"];
         }
-        //continue; //Èô²»Ïëµ±Ììµ¥Ôª¸ñµÄ±³¾°±»ÏÂÃæµÄ¸²¸Ç£¬ÇëÈ¡Ïû×¢ÊÍ ¡ú  2006-12-03 Ìí¼Ó
+        //continue; //è‹¥ä¸æƒ³å½“å¤©å•å…ƒæ ¼çš„èƒŒæ™¯è¢«ä¸‹é¢çš„è¦†ç›–ï¼Œè¯·å–æ¶ˆæ³¨é‡Š â†’  2006-12-03 æ·»åŠ 
       }//end if
       
-      //ÉèÖÃÒÑ±»Ñ¡ÔñµÄÈÕÆÚµ¥Ôª¸ñ±³Ó°É« 2006-12-03 Ìí¼Ó
+      //è®¾ç½®å·²è¢«é€‰æ‹©çš„æ—¥æœŸå•å…ƒæ ¼èƒŒå½±è‰² 2006-12-03 æ·»åŠ 
       if (calendar.dateControl != null && calendar.dateControl.value == new Date(calendar.date.getFullYear(),
                    calendar.date.getMonth(),
                    dateArray[i]).format(calendar.dateFormatStyle)) {
@@ -408,7 +408,7 @@ Calendar.prototype.bindData = function () {
   }
 }
 
-//¸ù¾İÄê¡¢ÔÂµÃµ½ÔÂÊÓÍ¼Êı¾İ(Êı×éĞÎÊ½)
+//æ ¹æ®å¹´ã€æœˆå¾—åˆ°æœˆè§†å›¾æ•°æ®(æ•°ç»„å½¢å¼)
 Calendar.prototype.getMonthViewArray = function (y, m) {
   var mvArray = [];
   var dayOfFirstDay = new Date(y, m, 1).getDay();
@@ -422,7 +422,7 @@ Calendar.prototype.getMonthViewArray = function (y, m) {
   return mvArray;
 }
 
-//À©Õ¹ document.getElementById(id) ¶àä¯ÀÀÆ÷¼æÈİĞÔ from meizz tree source
+//æ‰©å±• document.getElementById(id) å¤šæµè§ˆå™¨å…¼å®¹æ€§ from meizz tree source
 Calendar.prototype.getElementById = function(id){
   if (typeof(id) != "string" || id == "") return null;
   if (document.getElementById) return document.getElementById(id);
@@ -430,13 +430,13 @@ Calendar.prototype.getElementById = function(id){
   try {return eval(id);} catch(e){ return null;}
 }
 
-//À©Õ¹ object.getElementsByTagName(tagName)
+//æ‰©å±• object.getElementsByTagName(tagName)
 Calendar.prototype.getElementsByTagName = function(object, tagName){
   if (document.getElementsByTagName) return document.getElementsByTagName(tagName);
   if (document.all) return document.all.tags(tagName);
 }
 
-//È¡µÃHTML¿Ø¼ş¾ø¶ÔÎ»ÖÃ
+//å–å¾—HTMLæ§ä»¶ç»å¯¹ä½ç½®
 Calendar.prototype.getAbsPoint = function (e){
   var x = e.offsetLeft;
   var y = e.offsetTop;
@@ -447,7 +447,7 @@ Calendar.prototype.getAbsPoint = function (e){
   return {"x": x, "y": y};
 }
 
-//ÏÔÊ¾ÈÕÀú
+//æ˜¾ç¤ºæ—¥å†
 Calendar.prototype.show = function (dateObj, popControl) {
   if (dateObj == null){
     throw new Error("arguments[0] is necessary")
@@ -456,8 +456,8 @@ Calendar.prototype.show = function (dateObj, popControl) {
   
   //if (dateObj.value.length > 0){
   //this.date = new Date(dateObj.value.toDate());
-  //this.date = new Date(dateObj.value.toDate(this.dateFormatStyle));//´øÈëÓÃ»§Ö¸¶¨µÄ style  
-  this.date = (dateObj.value.length > 0) ? new Date(dateObj.value.toDate(this.dateFormatStyle)) : new Date() ;//2006-12-03 Ìí¼Ó ¡ú ÈôÎª¿ÕÔòÏÔÊ¾µ±Ç°ÔÂ·İ
+  //this.date = new Date(dateObj.value.toDate(this.dateFormatStyle));//å¸¦å…¥ç”¨æˆ·æŒ‡å®šçš„ style  
+  this.date = (dateObj.value.length > 0) ? new Date(dateObj.value.toDate(this.dateFormatStyle)) : new Date() ;//2006-12-03 æ·»åŠ  â†’ è‹¥ä¸ºç©ºåˆ™æ˜¾ç¤ºå½“å‰æœˆä»½
   this.year = this.date.getFullYear();
   this.month = this.date.getMonth();
   this.changeSelect();
@@ -470,7 +470,7 @@ Calendar.prototype.show = function (dateObj, popControl) {
   this.panel.style.left = xy.x -25 + "px";
   this.panel.style.top = (xy.y + dateObj.offsetHeight) + "px";
   
-  //2006-06-25 ĞŞ¸Ä ¡ú °Ñ visibility ±äÎª display£¬²¢Ìí¼ÓÊ§È¥½¹µãµÄÊÂ¼ş
+  //2006-06-25 ä¿®æ”¹ â†’ æŠŠ visibility å˜ä¸º displayï¼Œå¹¶æ·»åŠ å¤±å»ç„¦ç‚¹çš„äº‹ä»¶
   //this.setDisplayStyle("select", "hidden");
   //this.panel.style.visibility = "visible";
   //this.container.style.visibility = "visible";
@@ -482,7 +482,7 @@ Calendar.prototype.show = function (dateObj, popControl) {
   this.container.onmouseout = function(){isFocus=false;}
 }
 
-//Òş²ØÈÕÀú
+//éšè—æ—¥å†
 Calendar.prototype.hide = function() {
   //this.setDisplayStyle("select", "visible");
   //this.panel.style.visibility = "hidden";
@@ -492,14 +492,14 @@ Calendar.prototype.hide = function() {
   isFocus=false;
 }
 
-//½¹µã×ªÒÆÊ±Òş²ØÈÕÀú ¡ú  2006-06-25 Ìí¼Ó
+//ç„¦ç‚¹è½¬ç§»æ—¶éšè—æ—¥å† â†’  2006-06-25 æ·»åŠ 
 Calendar.prototype.onblur = function() {
     if(!isFocus){this.hide();}
 }
 
-//ÒÔÏÂ 2006-06-25 ĞŞ¸Ä ¡ú ÓÃ<iframe> ÕÚ×¡ IE µÄÏÂÀ­¿ò
+//ä»¥ä¸‹ 2006-06-25 ä¿®æ”¹ â†’ ç”¨<iframe> é®ä½ IE çš„ä¸‹æ‹‰æ¡†
 /**//**//**//*
-//ÉèÖÃ¿Ø¼şÏÔÊ¾»òÒş²Ø
+//è®¾ç½®æ§ä»¶æ˜¾ç¤ºæˆ–éšè—
 Calendar.prototype.setDisplayStyle = function(tagName, style) {
   var tags = this.getElementsByTagName(null, tagName)
   for(var i = 0; i < tags.length; i++) {
@@ -524,6 +524,6 @@ document.write('left:expression(this.previousSibling.offsetLeft);top:expression(
 document.write('display:expression(this.previousSibling.style.display);" scrolling="no" frameborder="no"></iframe>');
 }
 document.write('</div>');
-//var calendar = new Calendar();  //´Ë¾ä±»×¢ÊÍ£¬·ñÔò IE ½«±¨´í
-//µ÷ÓÃcalendar.show(dateControl, popControl);
+//var calendar = new Calendar();  //æ­¤å¥è¢«æ³¨é‡Šï¼Œå¦åˆ™ IE å°†æŠ¥é”™
+//è°ƒç”¨calendar.show(dateControl, popControl);
 //-->
