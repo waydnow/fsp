@@ -9,7 +9,6 @@ import com.kanmenzhu.bean.BaseBean;
  */
 public class LuRole  extends BaseBean {
 
-	private Integer id;
 	private String name;
 	private Integer deltag;
 	private Integer parentId;
