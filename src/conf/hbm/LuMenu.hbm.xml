@@ -1,24 +1,25 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2013-5-29 22:00:53 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.kanmenzhu.system.security.entity.LuMenu" table="lu_menu" catalog="fsp">
-        <id name="id" type="java.lang.Integer">
-            <column name="ID" />
-            <generator class="identity" />
-        </id>
-        <property name="name" type="string">
-            <column name="NAME" length="64" not-null="true" />
-        </property>
-        <property name="link" type="string">
-            <column name="LINK" length="128" />
-        </property>
-        <property name="parentId" type="java.lang.Integer">
-            <column name="PARENT_ID" />
-        </property>
-        <property name="isdisplay" type="java.lang.Integer">
-            <column name="ISDISPLAY" />
-        </property>
-    </class>
+ <class catalog="fsp" name="com.kanmenzhu.system.security.entity.LuMenu" table="lu_menu">
+  <id name="id" type="java.lang.Integer">
+   <column name="ID"/>
+   <generator class="identity"/>
+  </id>
+  <property generated="never" lazy="false" name="name" type="string">
+   <column length="64" name="NAME" not-null="true"/>
+  </property>
+  <property generated="never" lazy="false" name="link" type="string">
+   <column length="128" name="LINK"/>
+  </property>
+  <property generated="never" lazy="false" name="parentId" type="java.lang.Integer">
+   <column name="PARENT_ID"/>
+  </property>
+  <property generated="never" lazy="false" name="isdisplay" type="java.lang.Integer">
+   <column name="ISDISPLAY"/>
+  </property>
+  <property column="order" name="order" type="integer" length="3"/>
+ </class>
 </hibernate-mapping>

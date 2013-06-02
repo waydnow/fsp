@@ -13,6 +13,7 @@ public class LuMenu  extends BaseBean  {
 	private String link;
 	private Integer parentId;
 	private Integer isdisplay;
+	private Integer order;
 
 	public LuMenu() {
 	}
@@ -58,6 +59,14 @@ public class LuMenu  extends BaseBean  {
 
 	public void setIsdisplay(Integer isdisplay) {
 		this.isdisplay = isdisplay;
+	}
+
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
 	}
 
 }
