@@ -29,11 +29,6 @@
     <result name="list">/WEB-INF/jsp/role/listRole.jsp</result>
     <result name="edit">/WEB-INF/jsp/role/editRole.jsp</result>
   </action>
-  <!--权限相关  -->
-  <action name="*PA" class="permissionAction" method="{1}">
-    <result name="success">/WEB-INF/jsp/permission/roleAndPermission.jsp</result>
-    <result name="init">/WEB-INF/jsp/permission/roleAndPermission.jsp</result>
-  </action>
   
   </package>
 </struts>
