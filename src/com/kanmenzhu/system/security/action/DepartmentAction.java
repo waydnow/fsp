@@ -1,20 +1,21 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.service.DepartmentService;
-import com.opensymphony.xwork2.ActionSupport;
+import com.kanmenzhu.web.BaseAction;
 
-public class DepartmentAction extends ActionSupport {
+public class DepartmentAction extends BaseAction {
 	
-	private Logger logger=LoggerFactory.getLogger(getClass());
-
 	private DepartmentService departmentService;
 	
 	private LuDepartment department;
+	
+	private List<LuDepartment> dplist;
+
 	
 	public String regist(){
 		logger.info("####添加单位####");
@@ -32,6 +33,34 @@ public class DepartmentAction extends ActionSupport {
 		return "regist";
 	}
 	
+	public String show(){
+		if (null!=department) {
+			department = departmentService.get(department.getId(), LuDepartment.class);
+		}
+		return "show";
+	}
+	
+	public String update(){
+		if (null!=department) {
+			if (StringUtils.isNotBlank(department.getName())) {
+				departmentService.update(department);
+			}
+		}
+		return list();
+	}
+	
+	public String edit(){
+		if (null!=department) {
+			department = departmentService.get(department.getId(), LuDepartment.class);
+		}
+		return "edit";
+	}
+	
+	public String list(){
+		dplist = departmentService.getAll(-1, -1);
+		return "list";
+	}
+
 	public DepartmentService getDepartmentService() {
 		return departmentService;
 	}
@@ -46,6 +75,14 @@ public class DepartmentAction extends ActionSupport {
 
 	public void setDepartment(LuDepartment department) {
 		this.department = department;
+	}
+
+	public List<LuDepartment> getDplist() {
+		return dplist;
+	}
+
+	public void setDplist(List<LuDepartment> dplist) {
+		this.dplist = dplist;
 	}
 	
 	

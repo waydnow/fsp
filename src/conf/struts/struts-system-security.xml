@@ -18,7 +18,9 @@
   
   <action name="*DP" class="departmentAction" method="{1}">
     <result name="regist">/WEB-INF/jsp/department/addDepartMent.jsp</result>
-    <result name="back">/WEB-INF/jsp/login.jsp</result>
+    <result name="show">/WEB-INF/jsp/department/showDepartMent.jsp</result>
+    <result name="list">/WEB-INF/jsp/department/listDepartMent.jsp</result>
+    <result name="edit">/WEB-INF/jsp/department/editDepartMent.jsp</result>
   </action>
   
   </package>

@@ -102,6 +102,14 @@ body {
         <td height="35">&nbsp;</td>
         <td><a href="registUA.shtml">添加用户</a></td>
       </tr>
+      <tr>
+        <td height="35">&nbsp;</td>
+        <td><a href="listDP.shtml">单位列表</a></td>
+      </tr>
+      <tr>
+        <td height="35">&nbsp;</td>
+        <td><a href="showDP.shtml">单位</a></td>
+      </tr>
     </table>
     </s:form>
     </td>
