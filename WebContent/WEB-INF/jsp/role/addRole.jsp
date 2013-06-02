@@ -24,11 +24,7 @@ body {
 			alert("请输入角色名称!");
 			return false;
 			}
-		if($("#manager").val()==""){
-			alert("请输入负责人!");
-			return false;
-			}
-		document.addDP.submit();
+		document.addRO.submit();
 		}
 </script>
 </head>
@@ -41,12 +37,8 @@ body {
   <tr>
     <td>
 	
-	<s:form action="addDP.shtml">
+	<s:form action="addRO.shtml">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-        <td width="31%" height="35" class="login-text02">父角色<br /></td>
-        <td width="69%"><s:textfield name="role.name" id="name"/></td>
-      </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">角色名称<br /></td>
         <td width="69%"><s:textfield name="role.name" id="name"/></td>

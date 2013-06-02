@@ -11,6 +11,7 @@
 	<bean id="userAction" class="com.kanmenzhu.system.security.action.UserAction" scope="request">
 		<property name="userService" ref="userService"></property>
 		<property name="departmentService" ref="departmentService"></property>
+		<property name="roleService" ref="roleService"></property>
 	</bean>
 	
 	<bean id="userService" class="com.kanmenzhu.system.security.service.impl.UserServiceImpl">
@@ -31,6 +32,27 @@
 	</bean>
 	
 	<bean id="departmentDao" class="com.kanmenzhu.system.security.dao.impl.DepartmentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="roleAction" class="com.kanmenzhu.system.security.action.RoleAction" >
+		<property name="roleService" ref="roleService"></property>
+		<property name="ruService" ref="roleUserService"></property>
+	</bean>
+	
+	<bean id="roleService" class="com.kanmenzhu.system.security.service.impl.RoleServiceImpl">
+		<property name="dao" ref="roleDao"></property> 
+	</bean>
+	
+	<bean id="roleUserService" class="com.kanmenzhu.system.security.service.impl.RoleUserServiceImpl">
+		<property name="dao" ref="roleUserDao"></property>
+	</bean>
+	
+	<bean id="roleDao" class="com.kanmenzhu.system.security.dao.impl.RoleDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="roleUserDao" class="com.kanmenzhu.system.security.dao.impl.RoleUserDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
