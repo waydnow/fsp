@@ -9,8 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.kanmenzhu.system.security.entity.LuDepartment;
+import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.system.security.service.DepartmentService;
+import com.kanmenzhu.system.security.service.RoleService;
 import com.kanmenzhu.system.security.service.UserService;
 import com.kanmenzhu.web.BaseAction;
 import com.kanmenzhu.web.RandomImageAction;
@@ -27,8 +29,12 @@ public class UserAction extends ActionSupport {
 	private DepartmentService departmentService;
 
 	private LuUser user;
-	private List<LuDepartment> dps;
 	
+	private List<LuRole> roleList;
+	private RoleService roleService;
+	private String roleids;
+	
+	private List<LuDepartment> dps;
 	private LuDepartment department;
 	
 	public String add(){
@@ -41,6 +47,7 @@ public class UserAction extends ActionSupport {
 			}else {
 				LuDepartment department = departmentService.get(user.getDeptId(), LuDepartment.class);
 				if (null!=department) {
+					logger.info(roleids);
 					user.setDeptId(department.getId());
 					userService.save(user);
 					return "success";
@@ -91,6 +98,7 @@ public class UserAction extends ActionSupport {
 	
 	public String regist(){
 		dps = departmentService.getAll();
+		roleList = roleService.getAll(-1, -1);
 		return "regist";
 	}
 
@@ -136,6 +144,30 @@ public class UserAction extends ActionSupport {
 
 	public void setDepartment(LuDepartment department) {
 		this.department = department;
+	}
+
+	public List<LuRole> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<LuRole> roleList) {
+		this.roleList = roleList;
+	}
+
+	public RoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	public String getRoleids() {
+		return roleids;
+	}
+
+	public void setRoleids(String roleids) {
+		this.roleids = roleids;
 	}
 	
 	

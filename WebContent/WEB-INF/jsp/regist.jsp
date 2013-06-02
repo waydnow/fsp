@@ -28,10 +28,6 @@ body {
 			alert("请输入密码!");
 			return false;
 			}
-		if($("#imgCode").val()==""){
-			alert("请输入验证码!");
-			return false;
-			}
 		document.addUA.submit();
 		}
 </script>
@@ -62,6 +58,12 @@ body {
       <tr>
         <td height="35" class="login-text02">密码<br /></td>
         <td><s:password name="user.pwd" id="pwd"/></td>
+      </tr>
+      <tr>
+        <td width="31%" height="35" class="login-text02">用户角色<br /></td>
+        <td width="69%">
+			<s:select name="roleids" list="roleList"  var="role" listKey="id" listValue="name" multiple="true"></s:select>
+		</td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">联系电话<br /></td>

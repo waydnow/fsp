@@ -35,6 +35,15 @@ public class RoleAction {
 		rolelist = roleService.getAll(-1, -1);
 		return "list";
 	}
+	
+	public String show(){
+		if (null!=role) {
+			if (null!=role.getId()) {
+				role = roleService.get(role.getId(), LuRole.class);
+			}
+		}
+		return "show";
+	}
 
 	public RoleUserService getRuService() {
 		return ruService;
