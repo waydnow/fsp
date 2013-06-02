@@ -2,17 +2,12 @@ package com.kanmenzhu.system.security.dao.impl;
 
 import java.util.List;
 
-import javax.management.relation.Role;
-
-import org.apache.struts2.components.If;
-
 import com.kanmenzhu.dao.impl.BaseDaoImpl;
-import com.kanmenzhu.system.security.entity.LuRole;
+import com.kanmenzhu.system.security.dao.RoleUserDao;
 import com.kanmenzhu.system.security.entity.LuRoleUser;
 import com.kanmenzhu.system.security.entity.LuUser;
-import com.kanmenzhu.system.security.service.RoleUserService;
 
-public class RoleUserDaoImpl extends BaseDaoImpl<LuRoleUser> implements RoleUserService{
+public class RoleUserDaoImpl extends BaseDaoImpl<LuRoleUser> implements RoleUserDao{
 
 	@Override
 	public List<LuRoleUser> getRoleByUser(LuUser user) {
