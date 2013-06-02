@@ -5,4 +5,5 @@ import com.kanmenzhu.system.security.entity.LuPermission;
 
 public interface PermissionDao extends BaseDao<LuPermission> {
 
+	
 }
