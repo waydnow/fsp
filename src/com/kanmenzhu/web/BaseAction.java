@@ -14,12 +14,17 @@ import com.kanmenzhu.system.security.entity.LuUser;
 public class BaseAction {
 	public final String SUCC="success";
 	public final String FAIL="fail";
+	private LuUser currentUser;
 	/**用户登录信息*/
 	public static final String SESSION_USER_INFO="session_user";
 	/***/
 	protected Logger logger=LoggerFactory.getLogger(getClass());
 	/**获取当前登录的用户*/
 	public LuUser getCurrentUser() {
-		return (LuUser)ServletActionContext.getRequest().getSession().getAttribute(SESSION_USER_INFO);
+		//return (LuUser)ServletActionContext.getRequest().getSession().getAttribute(SESSION_USER_INFO);
+		return currentUser;
+	}
+	public void setCurrentUser(LuUser currentUser) {
+		this.currentUser = currentUser;
 	}
 }

@@ -83,7 +83,7 @@ public class UserAction extends ActionSupport {
 			if(RandomImageAction.checkVerifyCode(session, verifyCode)){
 				LuUser dbUser=userService.findByLoginName(user.getLoginName());
 				if(dbUser!=null&&dbUser.pwdEquals(user)){
-					ActionContext.getContext().getSession().put(BaseAction.SESSION_USER_INFO,user);
+					ActionContext.getContext().getSession().put(BaseAction.SESSION_USER_INFO,dbUser);
 					msg="登录成功!";
 					return SUCCESS;
 				}else{

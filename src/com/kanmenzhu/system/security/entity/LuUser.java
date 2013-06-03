@@ -135,7 +135,7 @@ public class LuUser extends BaseBean {
 
 	@Override
 	public String toString() {
-		return "LuUser [name=" + name + ", loginName=" + loginName + ", pwd="
+		return super.toString()+"LuUser [name=" + name + ", loginName=" + loginName + ", pwd="
 				+ pwd + ", deptId=" + deptId + ", phone=" + phone + ", mobile="
 				+ mobile + ", email=" + email + ", deltag=" + deltag + "]";
 	}

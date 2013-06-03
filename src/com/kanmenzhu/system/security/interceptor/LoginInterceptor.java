@@ -1,9 +1,16 @@
 package com.kanmenzhu.system.security.interceptor;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.kanmenzhu.system.security.entity.LuUser;
+import com.kanmenzhu.web.BaseAction;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 
@@ -14,6 +21,18 @@ public class LoginInterceptor implements Interceptor {
 	@Override
 	public String intercept(ActionInvocation arg0) throws Exception {
 		logger.info(ServletActionContext.getRequest().getSession().getId());
+		Map<String, Object> session=ActionContext.getContext().getSession();
+		LuUser user=(LuUser)session.get(BaseAction.SESSION_USER_INFO);
+		if(null==user){
+			logger.warn("未登录");
+		}else{
+			logger.info("已登录,user:"+user);
+			Object action= arg0.getAction();
+			if(BaseAction.class.equals(action.getClass())){
+				((BaseAction)action).setCurrentUser(user);
+			}
+		}
+		
 		logger.info("进了我的拦截器");
 		return arg0.invoke();
 	}
