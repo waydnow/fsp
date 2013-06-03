@@ -61,7 +61,7 @@ public class UserAction extends ActionSupport {
 						ruService.save(ru);
 					}
 					logger.info("注册用户"+user.getLoginName()+",ID="+user.getId()+"绑定角色ID={"+roleids+"}");
-					return "success";
+					return welcome();
 				}else {
 					msg = "没有选择正确的单位信息";
 				}

@@ -35,5 +35,9 @@
     <result name="init">/WEB-INF/jsp/permission/roleAndPermission.jsp</result>
   </action>
   
+  <action name="*MU" class="menuAction" method="{1}">
+    <result name="list">/WEB-INF/jsp/menu/listMenu.jsp</result>
+  </action>
+  
   </package>
 </struts>

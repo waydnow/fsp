@@ -32,7 +32,9 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
-	
+	<bean id="menuAction" class="com.kanmenzhu.system.security.action.MenuAction">
+		<property name="menuService" ref="menuService"></property>
+	</bean>
 	<bean id="menuService" class="com.kanmenzhu.system.security.service.impl.MenuServiceImpl">
 		<property name="dao" ref="menuDao"></property>
 	</bean>
