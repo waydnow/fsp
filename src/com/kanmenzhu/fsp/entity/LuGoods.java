@@ -19,6 +19,7 @@ public class LuGoods extends BaseBean {
 	private int createUserId;
 	private Date createTime;
 	private String memo;
+	private String deptName;
 
 	public LuGoods() {
 	}
@@ -96,5 +97,15 @@ public class LuGoods extends BaseBean {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+	
+	
 
 }

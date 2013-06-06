@@ -26,10 +26,10 @@
 		</action>
 		
 		<action name="*GD" class="goodsAction" method="{1}">
-    		<result name="regist">/WEB-INF/jsp/department/addGoods.jsp</result>
-    		<result name="show">/WEB-INF/jsp/department/showGoods.jsp</result>
-  			<result name="list">/WEB-INF/jsp/department/listGoods.jsp</result>
-   			<result name="edit">/WEB-INF/jsp/department/editGoods.jsp</result>
+    		<result name="regist">/WEB-INF/jsp/goods/addGoods.jsp</result>
+    		<result name="show">/WEB-INF/jsp/goods/showGoods.jsp</result>
+  			<result name="list">/WEB-INF/jsp/goods/listGoods.jsp</result>
+   			<result name="edit">/WEB-INF/jsp/goods/editGoods.jsp</result>
   		</action>
 	</package>
 </struts>

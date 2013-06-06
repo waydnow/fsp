@@ -40,9 +40,9 @@ html { overflow-x: auto; overflow-y: auto; border:0;}
 -->
 </style>
 
-<link href="../css/css.css" rel="stylesheet" type="text/css" />
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../js/xiangmu.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/xiangmu.js"></script>
 </head>
 <SCRIPT language="JavaScript">
 function sousuo(){
@@ -67,6 +67,10 @@ function unselectAll(){
 	}
 }
 
+function addGD() {
+	window.location.href = "registGD.shtml";
+}
+
 function on_load(){
 	var loadingmsg=document.getElementById("loadingmsg");
 	var mainpage=document.getElementById("mainpage");
@@ -79,17 +83,17 @@ function on_load(){
 </SCRIPT>
 
 <body onload="on_load()">
-<s:form action="listDP.shtml">
+<s:form action="listGDshtml">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
 
   <tr>
     <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td height="62" background="../images/nav04.gif">
+        <td height="62" background="images/nav04.gif">
           
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
-			<td width="21"><img src="../images/ico07.gif" width="20" height="18" /></td>
+			<td width="21"><img src="images/ico07.gif" width="20" height="18" /></td>
 			<td width="550">查看内容：按时间：
               <input name="textfield" type="text" size="12" readonly="readonly"/><span class="newfont06">至</span>
 			 <input name="textfield" type="text" size="12" readonly="readonly"/>	
@@ -109,26 +113,31 @@ function on_load(){
 
           	 <tr>
                <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
-	              <input name="Submit" type="button" class="right-button08" value="删除所选项目信息" />
-	              <input name="Submit2" type="button" class="right-button08" value="添加项目" onclick="link();"/></td>
+	              <input name="Submit" type="button" class="right-button08" value="删除" />
+	              <input name="Submit2" type="button" class="right-button08" value="添加" onclick="addGD();"/></td>
           	 </tr>
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
 					                  <tr>
-                    <td height="20" colspan="13" align="center" bgcolor="#EEEEEE"class="tablestyle_title">角色列表</td>
+                    <td height="20" colspan="13" align="center" bgcolor="#EEEEEE" class="tablestyle_title">物品列表</td>
                     </tr>
                   <tr>
 				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">角色名称</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">负责人</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">物品名称</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">价格</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">供应商</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
-                  <s:iterator value="rolelist" var="ro">
+                  <s:iterator value="goodsList" var="gd">
                   <tr align="center">
-				   <td bgcolor="#FFFFFF"><input type="checkbox" name="ro.id"/></td>
-                    <td height="20" bgcolor="#FFFFFF"><a href="showRO.shtml?role.id=${ro.id}"><s:property value="#ro.name"/></a></td>
-                    <td bgcolor="#FFFFFF"><s:property value="#ro.memo"/></td>
-                    <td bgcolor="#FFFFFF"><a href="deleteRO.shtml">删除</a></td>
+				   <td bgcolor="#FFFFFF"><input type="checkbox" name="gd.id"/></td>
+                    <td height="20" bgcolor="#FFFFFF"><a href="showGD.shtml?goods.id=${gd.id}"><s:property value="#gd.name"/></a></td>
+                  	<td bgcolor="#FFFFFF"><s:property value="#gd.price"/>/<s:property value="#gd.unit"/></td>
+                   	<td bgcolor="#FFFFFF"><s:property value="#gd.deptName"/></td>
+                    <td bgcolor="#FFFFFF"><s:property value="#gd.memo"/></td>
+                    <td bgcolor="#FFFFFF"><a href="deleteGD.shtml">删除</a></td>
                   </tr>
 				  </s:iterator>
                   
@@ -139,7 +148,7 @@ function on_load(){
       </table>
       <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
-          <td height="6"><img src="../images/spacer.gif" width="1" height="1" /></td>
+          <td height="6"><img src="images/spacer.gif" width="1" height="1" /></td>
         </tr>
         <tr>
           <td height="33"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">

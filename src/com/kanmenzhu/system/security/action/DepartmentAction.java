@@ -24,9 +24,9 @@ public class DepartmentAction extends BaseAction {
 	
 	public String add(){
 		if(null!=department){
-			if (StringUtils.isNotBlank(department.getName())&&StringUtils.isNotBlank(department.getName())) {
+			if (StringUtils.isNotBlank(department.getName())&&StringUtils.isNotBlank(department.getManager())) {
 				departmentService.save(department);
-				return "success";
+				return list();
 			}
 		}
 		logger.info("单位名称或负责人为空！");
