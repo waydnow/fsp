@@ -10,6 +10,7 @@
     
 	<bean name="goodsAction" class="com.kanmenzhu.fsp.action.GoodsAction">
 		<property name="goodsService" ref="goodsService"></property>
+		<property name="departmentService" ref="departmentService"></property>
 	</bean>
 	
 	<bean name="goodsService" class="com.kanmenzhu.fsp.service.impl.GoodsServiceImpl">

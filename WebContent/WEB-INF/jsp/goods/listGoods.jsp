@@ -67,6 +67,10 @@ function unselectAll(){
 	}
 }
 
+function addGD() {
+	window.location.href = "registGD.shtml";
+}
+
 function on_load(){
 	var loadingmsg=document.getElementById("loadingmsg");
 	var mainpage=document.getElementById("mainpage");
@@ -109,28 +113,29 @@ function on_load(){
 
           	 <tr>
                <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
-	              <input name="Submit" type="button" class="right-button08" value="删除所选项目信息" />
-	              <input name="Submit2" type="button" class="right-button08" value="添加项目" onclick="link();"/></td>
+	              <input name="Submit" type="button" class="right-button08" value="删除" />
+	              <input name="Submit2" type="button" class="right-button08" value="添加" onclick="addGD();"/></td>
           	 </tr>
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
 					                  <tr>
-                    <td height="20" colspan="13" align="center" bgcolor="#EEEEEE"class="tablestyle_title">物品列表</td>
+                    <td height="20" colspan="13" align="center" bgcolor="#EEEEEE" class="tablestyle_title">物品列表</td>
                     </tr>
                   <tr>
 				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">物品名称</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">单价</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">单位</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">价格</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">供应商</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
                   <s:iterator value="goodsList" var="gd">
                   <tr align="center">
 				   <td bgcolor="#FFFFFF"><input type="checkbox" name="gd.id"/></td>
                     <td height="20" bgcolor="#FFFFFF"><a href="showGD.shtml?goods.id=${gd.id}"><s:property value="#gd.name"/></a></td>
-                  	<td bgcolor="#FFFFFF"><s:property value="#gd.price"/></td>
-                   	<td bgcolor="#FFFFFF"><s:property value="#gd.unit"/></td>
+                  	<td bgcolor="#FFFFFF"><s:property value="#gd.price"/>/<s:property value="#gd.unit"/></td>
+                   	<td bgcolor="#FFFFFF"><s:property value="#gd.deptName"/></td>
                     <td bgcolor="#FFFFFF"><s:property value="#gd.memo"/></td>
                     <td bgcolor="#FFFFFF"><a href="deleteGD.shtml">删除</a></td>
                   </tr>
