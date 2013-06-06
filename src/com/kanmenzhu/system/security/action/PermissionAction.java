@@ -44,7 +44,7 @@ public class PermissionAction extends BaseAction {
 				alreadySelected.add(lm.getId());
 			}
 		}
-		logger.info(getCurrentUser().toString());
+		//logger.info(getCurrentUser().toString());
 		initMenu=setZtreeData(allMenu, alreadySelected);
 		
 		logger.info(initMenu);

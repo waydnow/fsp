@@ -23,80 +23,64 @@ body {
 <script type="text/javascript" src="js/ztree/jquery.ztree.excheck-3.5.js"></script>
 <script language="javascript">
 
-	var setting = {
+var setting = {
 		check: {
-			enable: true,
-			chkboxType: {"Y":"", "N":""}
-		},
-		view: {
-			dblClickExpand: false
+			enable: true
 		},
 		data: {
 			simpleData: {
 				enable: true
 			}
-		},
-		callback: {
-			beforeClick: beforeClick,
-			onCheck: onCheck
 		}
 	};
-	var zNodes =[{id:5,pId:1,name:"第一个的子菜单2",checked:true},{id:4,pId:2,name:"第二个的子菜单"},{id:3,pId:1,name:"第一个的子菜单"},{id:2,pId:0,name:"第二个测试菜单"},{id:1,pId:0,name:"第一个测试菜单",checked:true},];
-	function beforeClick(treeId, treeNode) {
-		var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-		zTree.checkNode(treeNode, !treeNode.checked, null, true);
-		return false;
-	}
-	function onCheck(e, treeId, treeNode) {
-		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-		nodes = zTree.getCheckedNodes(true),
-		v = "";
-		for (var i=0, l=nodes.length; i<l; i++) {
-			v += nodes[i].name + ",";
-		}
-		if (v.length > 0 ) v = v.substring(0, v.length-1);
-		alert(v);
-		/* var cityObj = $("#citySel");
-		cityObj.attr("value", v); */
-	}
-	/* var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-	nodes = zTree.getCheckedNodes(true),
-	v = "";
-	for (var i=0, l=nodes.length; i<l; i++) {
-		v += nodes[i].name + ",";
-	} */
-	function showMenu() {
-		var cityObj = $("#citySel");
-		var cityOffset = $("#citySel").offset();
-		$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
-
-		$("body").bind("mousedown", onBodyDown);
-	}
-	function hideMenu() {
-		$("#menuContent").fadeOut("fast");
-		$("body").unbind("mousedown", onBodyDown);
-	}
-	function onBodyDown(event) {
-		if (!(event.target.id == "menuBtn" || event.target.id == "citySel" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
-			hideMenu();
-		}
-	}
-
-	$(document).ready(function(){
-		$.fn.zTree.init($("#treeDemo"), setting, zNodes);
-	});
+	
+var zNodes =[
+ 			{ id:1, pId:0, name:"随意勾选 1", open:true},
+ 			{ id:11, pId:1, name:"随意勾选 1-1", open:true},
+ 			{ id:111, pId:11, name:"随意勾选 1-1-1"},
+ 			{ id:112, pId:11, name:"随意勾选 1-1-2"},
+ 			{ id:12, pId:1, name:"随意勾选 1-2", open:true},
+ 			{ id:121, pId:12, name:"随意勾选 1-2-1"},
+ 			{ id:122, pId:12, name:"随意勾选 1-2-2"},
+ 			{ id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
+ 			{ id:21, pId:2, name:"随意勾选 2-1"},
+ 			{ id:22, pId:2, name:"随意勾选 2-2", open:true},
+ 			{ id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+ 			{ id:222, pId:22, name:"随意勾选 2-2-2"},
+ 			{ id:23, pId:2, name:"随意勾选 2-3"}
+ 		];
+ 		
+ 		
+ 		
+ 		$(document).ready(function(){
+ 			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+ 			zTree.setting.check.chkboxType = { "Y" : "ps", "N" : "ps" };
+ 		});
 </script>
 </head>
 <body>
+<h1>Checkbox 勾选操作</h1>
+<h6>[ 文件路径: excheck/checkbox.html ]</h6>
+<div class="content_wrap">
 	<div class="zTreeDemoBackground left">
-		<ul class="list">
-			<li class="title">&nbsp;&nbsp;<span class="highlight_red">勾选 checkbox 或者 点击节点 进行选择</span></li>
-			<li class="title">&nbsp;&nbsp;Test: <input id="citySel" type="text" readonly value="" style="width:120px;" onclick="showMenu();" />
-		&nbsp;<a id="menuBtn" href="#" onclick="showMenu(); return false;">select</a></li>
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、setting 配置信息说明</h2>
+				<ul class="list">
+				<li class="highlight_red">使用 checkbox，必须设置 setting.check 中的各个属性，详细请参见 API 文档中的相关内容</li>
+				<li><p>父子关联关系：<br/>
+						被勾选时：<input type="checkbox" id="py" class="checkbox first" checked /><span>关联父</span>
+						<input type="checkbox" id="sy" class="checkbox first" checked /><span>关联子</span><br/>
+						取消勾选时：<input type="checkbox" id="pn" class="checkbox first" checked /><span>关联父</span>
+						<input type="checkbox" id="sn" class="checkbox first" checked /><span>关联子</span><br/>
+						<ul id="code" class="log" style="height:20px;"></ul></p>
+				</li>
+				</ul>
+			</li>
 		</ul>
 	</div>
-	<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
-	<ul id="treeDemo" class="ztree" style="margin-top:0; width:180px; height: 300px;"></ul>
 </div>
 </body>
 </html>
