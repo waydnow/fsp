@@ -28,7 +28,7 @@ public class LoginInterceptor implements Interceptor {
 		}else{
 			logger.info("已登录,user:"+user);
 			Object action= arg0.getAction();
-			if(BaseAction.class.equals(action.getClass())){
+			if(action instanceof BaseAction){
 				((BaseAction)action).setCurrentUser(user);
 			}
 		}

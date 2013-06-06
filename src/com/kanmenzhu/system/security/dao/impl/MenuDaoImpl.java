@@ -19,7 +19,7 @@ public class MenuDaoImpl extends BaseDaoImpl<LuMenu> implements MenuDao {
 		//父级菜单
 		String mp=menuParentId==null?"":" and lm.PARENT_id="+menuParentId;
 		String sql="select * from LU_MENU lm where exists(select 1 from LU_PERMISSION lp left join " +
-				"LU_ROLE_USER lr on lu.ROLE_ID=lr.ID where lu.USER_ID="+uid+" and lm.id=lp.MENU_ID)" +mp+
+				"LU_ROLE_USER lr on lp.ROLE_ID=lr.RID where lr.UID="+uid+" and lm.id=lp.MENU_ID)" +mp+
 						" order by lm.ORDER desc";
 		return relevanceSqlQuery(sql, LuMenu.class);
 	}
