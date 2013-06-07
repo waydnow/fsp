@@ -49,7 +49,9 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 			query.setFirstResult(startRow);
 		if(endRow>startRow)
 			query.setMaxResults(endRow);
-		return (List<T>)query.list();
+		List<T> rt=(List<T>)query.list();
+		session.close();
+		return rt;
 	}
 
 	/**
@@ -65,7 +67,9 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 		for(Class<T> clz:entityClzs){
 			query.sete
 		}*/
-		return (List<T>)query.list();
+		List<T> rt=(List<T>)query.list();
+		session.close();
+		return rt;
 	}
 	
 	/**
