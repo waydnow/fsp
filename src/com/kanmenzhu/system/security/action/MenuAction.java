@@ -1,5 +1,7 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,13 +39,11 @@ public class MenuAction extends BaseAction {
 	}
 	
 	public String list(){
+		menuMap=new HashMap<Integer, List<LuMenu>>();
 		menuList = menuService.getPermissionByUid(getCurrentUser().getId(), 0);
 		for (LuMenu mu : menuList) {
-			if (null == submenuList) {
-				submenuList = menuService.getPermissionByUid(getCurrentUser().getId(), menu.getId());
-			}else {
-				submenuList.addAll(menuService.getPermissionByUid(getCurrentUser().getId(), menu.getId()));
-			}
+			submenuList=new ArrayList<LuMenu>(5);
+			submenuList = menuService.getPermissionByUid(getCurrentUser().getId(), mu.getId());
 			menuMap.put(mu.getId(), submenuList);
 		}
 		user = getCurrentUser();

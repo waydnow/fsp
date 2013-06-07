@@ -39,6 +39,9 @@
 		<property name="password">
 			<value>${jdbc.password}</value>
 		</property>
+		<property name="maxActive">
+			<value>10</value>
+		</property>
 	</bean>
 
 	<context:component-scan base-package="com.kanmenzhu.com.system" />
@@ -75,6 +78,7 @@
 				<prop key="delete*">PROPAGATION_REQUIRED</prop>
 				<prop key="save*">PROPAGATION_REQUIRED</prop>
 				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="get*">PROPAGATION_NOT_SUPPORTED</prop>
 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
 			</props>
 		</property>
