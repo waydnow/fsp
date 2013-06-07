@@ -1,20 +1,26 @@
 package com.kanmenzhu.system.security.action;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.kanmenzhu.system.security.entity.LuMenu;
+import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.system.security.service.MenuService;
+import com.kanmenzhu.system.security.service.UserService;
 import com.kanmenzhu.web.BaseAction;
 
 public class MenuAction extends BaseAction {
 	
 	private MenuService menuService;
+	private UserService userService;
 	
 	private List<LuMenu> menuList;
 	private List<LuMenu> submenuList;
+	private Map<Integer, List<LuMenu>> menuMap;
 	private LuMenu menu;
+	private LuUser user;
 
 	public String regist(){
 		logger.info("####添加单位####");
@@ -31,7 +37,16 @@ public class MenuAction extends BaseAction {
 	}
 	
 	public String list(){
-		menuList = menuService.getPermissionByUid(getCurrentUser().getId(), null);
+		menuList = menuService.getPermissionByUid(getCurrentUser().getId(), 0);
+		for (LuMenu mu : menuList) {
+			if (null == submenuList) {
+				submenuList = menuService.getPermissionByUid(getCurrentUser().getId(), menu.getId());
+			}else {
+				submenuList.addAll(menuService.getPermissionByUid(getCurrentUser().getId(), menu.getId()));
+			}
+			menuMap.put(mu.getId(), submenuList);
+		}
+		user = getCurrentUser();
 		return "list";
 	}
 
@@ -66,6 +81,29 @@ public class MenuAction extends BaseAction {
 	public void setSubmenuList(List<LuMenu> submenuList) {
 		this.submenuList = submenuList;
 	}
-	
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public LuUser getUser() {
+		return user;
+	}
+
+	public void setUser(LuUser user) {
+		this.user = user;
+	}
+
+	public Map<Integer, List<LuMenu>> getMenuMap() {
+		return menuMap;
+	}
+
+	public void setMenuMap(Map<Integer, List<LuMenu>> menuMap) {
+		this.menuMap = menuMap;
+	}
 	
 }

@@ -31,5 +31,12 @@
   			<result name="list">/WEB-INF/jsp/goods/listGoods.jsp</result>
    			<result name="edit">/WEB-INF/jsp/goods/editGoods.jsp</result>
   		</action>
+  		
+  		<action name="*OD" class="orderAction" method="{1}">
+    		<result name="regist">/WEB-INF/jsp/order/addOrder.jsp</result>
+    		<result name="show">/WEB-INF/jsp/order/showOrder.jsp</result>
+  			<result name="list">/WEB-INF/jsp/order/listOrder.jsp</result>
+   			<result name="edit">/WEB-INF/jsp/order/editOrder.jsp</result>
+  		</action>
 	</package>
 </struts>

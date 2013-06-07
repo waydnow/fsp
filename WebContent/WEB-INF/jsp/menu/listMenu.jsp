@@ -13,7 +13,7 @@ body {
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
-	background-image: url(../images/left.gif);
+	background-image: url(images/left.gif);
 }
 -->
 </style>
@@ -42,9 +42,8 @@ function list(idstr){
 	var name2="img"+idstr;
 	var objectobj=document.all(name1);
 	var imgobj=document.all(name2);
-	
 	if(objectobj.style.display=="none"){
-		for(i=1;i<10;i++){
+		for(i=1;i<${};i++){
 			var name3="img"+i;
 			var name="subtree"+i;
 			var o=document.all(name);
@@ -77,10 +76,10 @@ function list(idstr){
 						<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
 							  <tr>
 									<td width="25%" rowspan="2"><img src="images/ico02.gif" width="35" height="35" /></td>
-									<td width="75%" height="22" class="left-font01">hello！<span class="left-font02">king</span></td>
+									<td width="75%" height="22" class="left-font01">hello！<span class="left-font02">${user.name}</span></td>
 							  </tr>
 							  <tr>
-									<td height="22" class="left-font01">[&nbsp;<a href="loginUA.shtml" target="_top" class="left-font01">退出</a>&nbsp;]</td>
+									<td height="22" class="left-font01">[&nbsp;<a href="logoutUA.shtml" target="_top" class="left-font01">退出</a>&nbsp;]</td>
 							</tr>
 						</table>
 						</td>
@@ -92,8 +91,8 @@ function list(idstr){
             <td height="29">
 				<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
 					<tr>
-						<td width="8%"><img name="img8" id="img8" src="images/ico04.gif" width="8" height="11" /></td>
-						<td width="92%"><a href="javascript:" target="mainFrame" class="left-font03" onClick="list('${mu.id}');" ><s:property value="#mu.name"/></a></td>
+						<td width="8%"><img name="img${mu.id}" id="img${mu.id}'" src="images/ico04.gif" width="8" height="11" /></td>
+						<td width="92%"><a href="javascript:" target="mainFrame" class="left-font03" onClick="list('${mu.id}');"><s:property value="#mu.name"/></a></td>
 					</tr>
 				</table>
 			</td>

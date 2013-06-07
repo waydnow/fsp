@@ -21,6 +21,17 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean name="orderAction" class="com.kanmenzhu.fsp.action.OrderAction">
+		<property name="orderService" ref="orderService"></property>
+		<property name="departmentService" ref="departmentService"></property>
+	</bean>
 	
+	<bean name="orderService" class="com.kanmenzhu.fsp.service.impl.OrderServiceImpl">
+		<property name="dao" ref="orderDao"></property>
+	</bean>
+	
+	<bean name="orderDao" class="com.kanmenzhu.fsp.dao.impl.OrderDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	
 </beans>

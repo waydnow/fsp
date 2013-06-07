@@ -108,6 +108,7 @@ public class UserAction extends ActionSupport {
 	}
 	
 	public String regist(){
+		user = null;
 		dps = departmentService.getAll();
 		roleList = roleService.getAll(-1, -1);
 		return "regist";
