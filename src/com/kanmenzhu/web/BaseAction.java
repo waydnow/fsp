@@ -1,5 +1,10 @@
 package com.kanmenzhu.web;
 
+import java.io.IOException;
+import java.io.PrintStream;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,5 +43,19 @@ public class BaseAction {
 	}
 	public void setCurrentUser(LuUser currentUser) {
 		this.currentUser = currentUser;
+	}
+	/**
+	 * ajax 响应
+	 * @param respBody
+	 */
+	protected String ajaxResp(String respBody){
+		HttpServletResponse resp=ServletActionContext.getResponse();
+		resp.setContentType("text/html;charset=utf-8");//解决中文乱码
+		try {
+			resp.getWriter().write(respBody);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
