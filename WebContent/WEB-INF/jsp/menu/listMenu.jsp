@@ -25,7 +25,7 @@ body {
 function tupian(idt){
     var nametu="xiaotu"+idt;
     var tp = document.getElementById(nametu);
-    tp.src="images/ico05.gif";//鍥剧墖ico04涓虹櫧鑹茬殑姝ｆ柟褰?
+    tp.src="images/ico05.gif";
 	
 	for(var i=1;i<30;i++)
 	{
@@ -35,7 +35,7 @@ function tupian(idt){
 	  {
 	    var tp2=document.getElementById('xiaotu'+i);
 		if(tp2!=undefined)
-	    {tp2.src="images/ico06.gif";}//鍥剧墖ico06涓鸿摑鑹茬殑姝ｆ柟褰?
+	    {tp2.src="images/ico06.gif";}
 	  }
 	}
 }
@@ -109,7 +109,7 @@ function list(idstr){
 				<s:iterator value="subList" var="submu">
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu${submu.id}" src="images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%"><a href="addrenwu.htm" target="mainFrame" class="left-font03" onClick="tupian('${submu.id}');">${submu.name}</a></td>
+				  <td width="91%"><a href="${submu.link}" target="mainFrame" class="left-font03" onClick="tupian('${submu.id}');">${submu.name}</a></td>
 				</tr>
 				</s:iterator>	  
      			</table>
