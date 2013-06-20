@@ -1,7 +1,10 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.kanmenzhu.system.security.entity.LuMenu;
 import com.kanmenzhu.system.security.service.MenuService;
@@ -20,7 +23,7 @@ public class PermissionAction extends BaseAction {
 	/**供ztree用的数组*/
 	private String initMenu;
 	/**角色id*/
-	private String rid;
+	private Integer rid;
 	/**选择的菜单id*/
 	private String selectMenuId;
 	
@@ -33,10 +36,17 @@ public class PermissionAction extends BaseAction {
 		
 		return SUCC;
 	}
-	
+	/**
+	 * 初始展示
+	 * @return
+	 */
 	public String init(){
+		//#########################测试代码
+		rid=rid==null?1:rid;
+		//####################
+		
 		List<LuMenu> allMenu=menuService.getAll(-1, -1);
-		List<LuMenu> alreadySelectList=menuService.getPermissionByRid(1, null);
+		List<LuMenu> alreadySelectList=menuService.getPermissionByRid(rid, null);
 		
 		HashSet<Integer> alreadySelected=new HashSet<Integer>();
 		if(null!=alreadySelectList){
@@ -47,11 +57,23 @@ public class PermissionAction extends BaseAction {
 		//logger.info(getCurrentUser().toString());
 		initMenu=setZtreeData(allMenu, alreadySelected);
 		
-		logger.info(initMenu);
+		//logger.info(initMenu);
 		
 		return "init";
 	}
-
+	/**
+	 * 保存
+	 * @return
+	 */
+	public String save(){
+		
+		if(StringUtils.isNotBlank(selectMenuId)){
+			String selectIds[]=selectMenuId.split(",");
+			logger.info(Arrays.toString(selectIds));
+		}
+		return null;
+		
+	}
 	public void setMenuService(MenuService menuService) {
 		this.menuService = menuService;
 	}
@@ -83,6 +105,15 @@ public class PermissionAction extends BaseAction {
 		}
 		sb.append("]");
 		return sb.toString();
+	}
+	public void setSelectMenuId(String selectMenuId) {
+		this.selectMenuId = selectMenuId;
+	}
+	public Integer getRid() {
+		return rid;
+	}
+	public void setRid(Integer rid) {
+		this.rid = rid;
 	}
 	
 	
