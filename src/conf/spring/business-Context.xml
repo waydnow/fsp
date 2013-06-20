@@ -24,13 +24,22 @@
 	<bean name="orderAction" class="com.kanmenzhu.fsp.action.OrderAction">
 		<property name="orderService" ref="orderService"></property>
 		<property name="departmentService" ref="departmentService"></property>
+		<property name="odetailService" ref="orderDetailService"></property>
 	</bean>
 	
 	<bean name="orderService" class="com.kanmenzhu.fsp.service.impl.OrderServiceImpl">
 		<property name="dao" ref="orderDao"></property>
 	</bean>
 	
+	<bean name="orderDetailService" class="com.kanmenzhu.fsp.service.impl.OrderDetailServiceImpl">
+		<property name="dao" ref="orderDetailDao"></property>
+	</bean>
+	
 	<bean name="orderDao" class="com.kanmenzhu.fsp.dao.impl.OrderDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean name="orderDetailDao" class="com.kanmenzhu.fsp.dao.impl.OrderDetailDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	

@@ -21,9 +21,51 @@ body {
 </style>
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 </head>
-<SCRIPT language=JavaScript>
+<SCRIPT language="JavaScript">
+function tupian(idt){
+    var nametu="xiaotu"+idt;
+    var tp = document.getElementById(nametu);
+    tp.src="images/ico05.gif";
+	
+	for(var i=1;i<30;i++)
+	{
+	  
+	  var nametu2="xiaotu"+i;
+	  if(i!=idt*1)
+	  {
+	    var tp2=document.getElementById('xiaotu'+i);
+		if(tp2!=undefined)
+	    {tp2.src="images/ico06.gif";}
+	  }
+	}
+}
 
-
+function list(idstr){
+	var name1="subtree"+idstr;
+	var name2="img"+idstr;
+	var objectobj=document.all(name1);
+	var imgobj=document.all(name2);
+	
+	if(objectobj.style.display=="none"){
+		for(i=1;i<10;i++){
+			var name3="img"+i;
+			var name="subtree"+i;
+			var o=document.all(name);
+			if(o!=undefined){
+				o.style.display="none";
+				var image=document.all(name3);
+				//alert(image);
+				image.src="images/ico04.gif";
+			}
+		}
+		objectobj.style.display="";
+		imgobj.src="images/ico03.gif";
+	}
+	else{
+		objectobj.style.display="none";
+		imgobj.src="images/ico04.gif";
+	}
+}
 
 </SCRIPT>
 
@@ -58,17 +100,19 @@ body {
 					</tr>
 				</table>
 			</td>
+			</tr>
+			<tr>
 			<td>
-			<s:set value="menuMap[#mu.id]" var="subList"/>
-			<s:iterator value="subList" var="submu">
-				<table id="subtree${submu.id}" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" 
+				<table id="subtree${mu.id}" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" 
 				cellspacing="0" class="left-table02">
+				<s:set value="menuMap[#mu.id]" var="subList"/>
+				<s:iterator value="subList" var="submu">
 				<tr>
-				  <td width="9%" height="20" ><img id="xiaotu20" src="images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%"><a href="addrenwu.htm" target="mainFrame" class="left-font03" onClick="tupian('${submu.id}');">${submu.name}</a></td>
+				  <td width="9%" height="20" ><img id="xiaotu${submu.id}" src="images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%"><a href="${submu.link}" target="mainFrame" class="left-font03" onClick="tupian('${submu.id}');">${submu.name}</a></td>
 				</tr>
+				</s:iterator>	  
      			</table>
-     			</s:iterator>	  
 			</td>
           </tr>	
         </TABLE>

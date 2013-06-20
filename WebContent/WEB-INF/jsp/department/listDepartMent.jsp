@@ -43,8 +43,9 @@ html { overflow-x: auto; overflow-y: auto; border:0;}
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/xiangmu.js"></script>
-</head>
-<SCRIPT language="JavaScript">
+<script language="javascript" src="js/jquery-1.10.0.min.js"></script>
+
+<script language="javascript">
 function sousuo(){
 	window.open("gaojisousuo.htm","","depended=0,alwaysRaised=1,width=800,height=510,location=0,menubar=0,resizable=0,scrollbars=0,status=0,toolbar=0");
 }
@@ -66,6 +67,19 @@ function unselectAll(){
 		}
 	}
 }
+	function doDelete(id){
+		if(confirm("是否真要删除?")){
+			$.post("deleteDP.shtml?id="+id,function(data){
+				if(0==data){
+					alert("删除成功!");
+					$("#tr"+id).remove();
+				}else{
+					alert("删除成功!");
+				}
+			});
+		}
+		
+	}
 
 function on_load(){
 	var loadingmsg=document.getElementById("loadingmsg");
@@ -76,8 +90,8 @@ function on_load(){
 	loadingmsg.style.display="none";
 	mainpage.style.display="";
 }
-</SCRIPT>
-
+</script>
+</head>
 <body onload="on_load()">
 <s:form action="listDP.shtml">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -127,13 +141,13 @@ function on_load(){
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
                   <s:iterator value="dplist" var="dp">
-                  <tr align="center">
+                  <tr align="center" id="tr${dp.id}">
 				   <td bgcolor="#FFFFFF"><input type="checkbox" name="dp.id"/></td>
                     <td height="20" bgcolor="#FFFFFF"><a href="showDP.shtml?department.id=${dp.id}"><s:property value="#dp.name"/></a></td>
                     <td bgcolor="#FFFFFF"><s:property value="#dp.manager"/></td>
                     <td bgcolor="#FFFFFF"><s:property value="#dp.address"/></td>
                     <td bgcolor="#FFFFFF"><s:property value="#dp.phone"/></td>
-                    <td bgcolor="#FFFFFF"><a href="deleteDP.shtml">删除</a></td>
+                    <td bgcolor="#FFFFFF"><a id="${dp.id}" href="javascript:doDelete(${dp.id});">删除</a></td>
                   </tr>
 				  </s:iterator>
                   
@@ -144,7 +158,7 @@ function on_load(){
       </table>
       <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
-          <td height="6"><img src="../images/spacer.gif" width="1" height="1" /></td>
+          <td height="6"><img src="images/spacer.gif" width="1" height="1" /></td>
         </tr>
         <tr>
           <td height="33"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">
@@ -167,7 +181,7 @@ function on_load(){
 </s:form>
 
 <div id="loadingmsg" style="width:100px; height:18px; top:0px; display:none;">
-	<img src="nn.gif" />
+	<img src="images/nn.gif" />
 </div>
 
 </body>

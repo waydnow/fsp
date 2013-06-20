@@ -15,8 +15,9 @@ public class DepartmentAction extends BaseAction {
 	private LuDepartment department;
 	
 	private List<LuDepartment> dplist;
-
 	
+	private Integer id;
+
 	public String regist(){
 		logger.info("####添加单位####");
 		return "regist";
@@ -48,7 +49,15 @@ public class DepartmentAction extends BaseAction {
 		}
 		return list();
 	}
-	
+	public String delete(){
+		if(null!=id){
+			LuDepartment ld=departmentService.get(id, LuDepartment.class);
+			if(null!=ld){
+				departmentService.delete(ld);
+			}
+		}
+		return ajaxResp("0");
+	}
 	public String edit(){
 		if (null!=department) {
 			department = departmentService.get(department.getId(), LuDepartment.class);
@@ -83,6 +92,10 @@ public class DepartmentAction extends BaseAction {
 
 	public void setDplist(List<LuDepartment> dplist) {
 		this.dplist = dplist;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 	
