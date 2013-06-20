@@ -39,6 +39,7 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 			query.setFirstResult(startRow);
 		if(endRow>startRow)
 			query.setMaxResults(endRow);
+		session.close();
 		return (List<T>)query.list();
 	}
 	

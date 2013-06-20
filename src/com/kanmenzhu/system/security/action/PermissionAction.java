@@ -66,10 +66,13 @@ public class PermissionAction extends BaseAction {
 	 * @return
 	 */
 	public String save(){
-		
+		//#########################测试代码
+				rid=rid==null?1:rid;
+				//####################
 		if(StringUtils.isNotBlank(selectMenuId)){
 			String selectIds[]=selectMenuId.split(",");
 			logger.info(Arrays.toString(selectIds));
+			permissionService.savePremission(rid, selectIds);
 		}
 		return null;
 		
