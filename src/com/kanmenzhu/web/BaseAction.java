@@ -1,7 +1,6 @@
 package com.kanmenzhu.web;
 
 import java.io.IOException;
-import java.io.PrintStream;
 
 import javax.servlet.http.HttpServletResponse;
 

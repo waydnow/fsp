@@ -4,7 +4,7 @@
     
     <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
        <layout class="org.apache.log4j.PatternLayout"> 
-          <param name="ConversionPattern" value="%d %p [%t] %c:%L - %m%n"/> 
+          <param name="ConversionPattern" value="%d  %p [%t] %C{1}:%L - %m%n"/> 
        </layout> 
     </appender>
  
@@ -20,7 +20,7 @@
    <!-- for all other loggers log only debug and above log messages -->
      <root>
         <priority value="INFO"/> 
-        <appender-ref ref="STDOUT" />  
+        <appender-ref ref="STDOUT" /> 
      </root> 
-    
+
 </log4j:configuration> 

@@ -53,34 +53,33 @@ var zNodes =[
  		
  		
  		$(document).ready(function(){
+ 			zNodes=${initMenu};
  			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
- 			zTree.setting.check.chkboxType = { "Y" : "ps", "N" : "ps" };
+ 			//$.fn.zTree.setting.check.chkboxType = { "Y" : "ps", "N" : "ps" };
+ 			//$.fn.zTree.expandAll(true);
+ 			var treeObj = $.fn.zTree.getZTreeObj("treeDemo"); 
+ 			treeObj.expandAll(true); 
  		});
+ 		function check(){
+				var treeObj = $.fn.zTree.getZTreeObj("treeDemo"); 
+				var nodes=treeObj.getCheckedNodes(true);
+				var submitNodes="";
+				$.each(nodes,function(idx,node){
+					submitNodes=submitNodes+node.id+",";
+				});
+				$("#selectMenuId").val(submitNodes);
+			}
 </script>
 </head>
 <body>
-<h1>Checkbox 勾选操作</h1>
-<h6>[ 文件路径: excheck/checkbox.html ]</h6>
 <div class="content_wrap">
 	<div class="zTreeDemoBackground left">
 		<ul id="treeDemo" class="ztree"></ul>
 	</div>
-	<div class="right">
-		<ul class="info">
-			<li class="title"><h2>1、setting 配置信息说明</h2>
-				<ul class="list">
-				<li class="highlight_red">使用 checkbox，必须设置 setting.check 中的各个属性，详细请参见 API 文档中的相关内容</li>
-				<li><p>父子关联关系：<br/>
-						被勾选时：<input type="checkbox" id="py" class="checkbox first" checked /><span>关联父</span>
-						<input type="checkbox" id="sy" class="checkbox first" checked /><span>关联子</span><br/>
-						取消勾选时：<input type="checkbox" id="pn" class="checkbox first" checked /><span>关联父</span>
-						<input type="checkbox" id="sn" class="checkbox first" checked /><span>关联子</span><br/>
-						<ul id="code" class="log" style="height:20px;"></ul></p>
-				</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
 </div>
+<s:form action="savePA" onsubmit="return check();">
+	<s:hidden id="selectMenuId" name="selectMenuId"/>
+	<s:submit value="确认"/>
+</s:form>
 </body>
 </html>

@@ -44,7 +44,7 @@ html { overflow-x: auto; overflow-y: auto; border:0;}
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/xiangmu.js"></script>
 </head>
-<SCRIPT language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 function sousuo(){
 	window.open("gaojisousuo.htm","","depended=0,alwaysRaised=1,width=800,height=510,location=0,menubar=0,resizable=0,scrollbars=0,status=0,toolbar=0");
 }
@@ -80,7 +80,7 @@ function on_load(){
 	loadingmsg.style.display="none";
 	mainpage.style.display="";
 }
-</SCRIPT>
+</script>
 
 <body onload="on_load()">
 <s:form action="listGDshtml">
