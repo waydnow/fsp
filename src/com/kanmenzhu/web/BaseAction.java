@@ -45,11 +45,17 @@ public class BaseAction {
 	}
 	/**
 	 * ajax 响应
+	 * 
 	 * @param respBody
+	 * @param type 0:text/html,1:json
 	 */
-	protected String ajaxResp(String respBody){
+	protected String ajaxResp(String respBody,int type){
 		HttpServletResponse resp=ServletActionContext.getResponse();
-		resp.setContentType("text/html;charset=utf-8");//解决中文乱码
+		if(type==0){
+			resp.setContentType("text/html;charset=utf-8");//解决中文乱码
+		}else{//
+			resp.setContentType("application/json;charset=utf-8");//解决中文乱码
+		}
 		try {
 			resp.getWriter().write(respBody);
 		} catch (IOException e) {

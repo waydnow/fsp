@@ -19,76 +19,9 @@ body {
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<script language="javascript" type="text/javascript">
-var i = 0;
-var b = 0;
-    function addRow() {
-        var root = document.getElementById("table1");
-
-        var newRow = root.insertRow();
-
-        var cell1 = newRow.insertCell();
-        cell1.innerHTML = '<input type=checkbox name="materialDetaillist[' + i + '].id">';
-
-        var cell2 = newRow.insertCell();
-        cell2.innerHTML = '<input type=text name="materialDetaillist[' + i + '].name">';
-
-        var cell3 = newRow.insertCell();
-        cell3.innerHTML = '<input type=text name="materialDetaillist[' + i + '].unit">';
-
-        var cell4 = newRow.insertCell();
-        cell4.innerHTML = '<input type=text name="materialDetaillist[' + i + '].charge">';
-
-        var cell5 = newRow.insertCell();
-        cell5.innerHTML = '<input type=text name="materialDetaillist[' + i + '].liechtenstein">';
-
-        var cell6 = newRow.insertCell();
-        cell6.innerHTML = '<input type=text name="materialDetaillist[' + i + '].price">';
-
-        var cell7 = newRow.insertCell();
-        cell7.innerHTML = '<input type=text name="materialDetaillist[' + i + '].amount">';
-
-        i = i + 1;
-        b++;
-
-    }
-    
-    function deleteLines() {
-
-        var arr = document.getElementsByName("ch1");
-
-        var strIds = "";
-        var count = 0;
-        for ( var i = 0; i < arr.length; i++) {
-            if (arr[i].checked == true) {
-
-                if (null == arr[i].value || "" == arr[i].value) {
-                    document.all("tbo").deleteRow(i);
-                    i = i - 1;
-                } else {
-                    strIds = strIds + ':' + arr[i].value;
-                    count = 1;
-                }
-            }
-        }
-        if (count == 0) {
-            alert('请选择要删除的行');
-            return false;
-        }
-        var oForm = document.getElementById('materialDetailupdateform');
-        oForm.action = "/contract/materialDetailDelete.do?strID=" + strIds;
-        oForm.submit();
-    }
-
-    function deleteRow() {
-        if (i == 1) {
-            return;
-        }
-        var root = document.getElementById("table1");
-        root.deleteRow(i);
-        i = i - 1;
-    }
-
+<script language="javascript" type="text/javascript"  id="mainjs" >
+ var i= 0;
+ var name = "odetail";
 	function checkSubmit(){
 		if($("#memo").val()==""){
 			alert("请输入订单描述!");
@@ -100,6 +33,51 @@ var b = 0;
 			}
 		document.addOD.submit();
 		}
+	
+	$(document).ready(function(){
+		$("#del").attr("style","display:none");
+		$.post("getdepGD.shtml?goodid="+$("#goodid").val(),function(data){
+			  $("#price").text(data.price);
+			  $("#dep").text(data.name);
+			  });
+		  $("#goodid").change(function(){
+		  $.post("getdepGD.shtml?goodid="+$("#goodid").val(),function(data){
+			  $("#price").text(data.price);
+			  $("#dep").text(data.name);
+			  });
+		  });
+		});
+	
+
+	function addLine(){
+		$("#odetail").clone().insertAfter($("#"+name));
+		i++;
+		name = "odetail-"+i;
+        $("#odetail:last-child").attr("id",name);
+        $("#"+name+" #goodid").attr("id","goodid-"+i);
+        $("#"+name+" #price").attr("id","price-"+i);
+        $("#"+name+" #dep").attr("id","dep-"+i);
+        $("#"+name+" #del").attr("id","del-"+i);
+        $("#del-"+i).removeAttr("style");
+			
+		$.post("getdepGD.shtml?goodid="+$("#goodid-"+i).val(),function(data){
+			  $("#price-"+i).text(data.price);
+			  $("#dep-"+i).text(data.name);
+			  });
+		var js = '$("#goodid-'+i+'").change(function(){'+
+	  		  '$.post("getdepGD.shtml?goodid="+$("#goodid-'+i+'").val(),function(data){'+
+	  			 ' $("#price-'+i+'").text(data.price);'+
+	  			  '$("#dep-'+i+'").text(data.name);'+
+	  			  '});'+
+	  		  '});'+
+	  		  '';
+		$("<scri"+"pt>"+js+"</scr"+"ipt>").attr({id:'js'+i,type:'text/javascript'}).insertAfter($("#mainjs"));
+      
+     	 $("#del-"+i).click(function(){
+     	 	$(this).closest("td").closest("tr").remove();
+  	    });
+    }//end addLine()
+
 </script>
 </head>
 <body>
@@ -109,21 +87,14 @@ var b = 0;
     <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
 
         <tr>
-          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-
-          	 <tr>
-               <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
-	              <input name="Submit" type="button" class="right-button08" value="删除" />
-	              <input name="add" type="button" value="添加" onClick="addRow()" /></td>
-          	 </tr>
+          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" id="odtable">
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
-					                  <tr>
-                    <td height="20" colspan="13" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单列表</td>
+					 <tr>
+                    <td height="20" colspan="7" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单列表</td>
                     </tr>
                   <tr>
-				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">物品</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">物品单价</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">物品数量</td>
@@ -132,29 +103,36 @@ var b = 0;
                     <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
-                  <s:iterator value="odetailList" id="odetail" status="status" >
-                  <tr align="center">
-				   <td bgcolor="#FFFFFF"><input type="checkbox" /></td>
+                  <s:iterator value="odetailList"  status="status" >
+                  <tr align="center" id="odetail">
 				   <td height="20" bgcolor="#FFFFFF">
-				   <s:select list="goodsList" var="good" listValue="name" listKey="id" >
+				   <s:select list="goodsList" var="good" listValue="name" listKey="id"  id="goodid">
         			</s:select>
 				   </td>
-                   <td height="20" bgcolor="#FFFFFF">XXXXX</td>
+                   <td height="20" bgcolor="#FFFFFF"><div id="price"></div></td>
                    <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  cssStyle="width:60px;"/><select name="odetailList[%{#status.index}].goodUnit" >
         					<option value="两">两</option>
         					<option value="斤">斤</option>
         					<option value="公斤">公斤</option>
         				</select>
 					</td>
-					<td height="20" bgcolor="#FFFFFF">XXXwuwuXX</td>
+					<td height="20" bgcolor="#FFFFFF"><div id="dep"></div></td>
 					<td bgcolor="#FFFFFF"><s:textfield  name="odetailList[%{#status.index}].sendTime"  id="d12"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
                     <td bgcolor="#FFFFFF"><s:textfield name="odetailList[%{#status.index}].memo" /></td>
-                    <td bgcolor="#FFFFFF"><input name="del" type="button" value="删除" onClick="return deleteLines()" /> </td>
+                    <td bgcolor="#FFFFFF"><input id="del" type="button" value="删除" /> </td>
                   </tr>
 				  </s:iterator>
-                  
+             
                 </table></td>
               </tr>
+              <tr>
+               <td height="60"  width="50%"  align="center">
+              	 <span class="newfont07" >
+                    <input name="add" type="button"  class="right-button08"  value="添加" onClick="addLine()" />
+                    <input name="add" type="button"  class="right-button08"  value="保存" onClick="add()" />
+                    </span>
+                </td>
+          	 </tr>
             </table></td>
         </tr>
       </table>

@@ -18,6 +18,8 @@ public class GoodsAction extends BaseAction {
 	
 	private LuGoods goods;
 	
+	private String goodid;
+	
 	private List<LuGoods> goodsList;
 	
 	public String regist(){
@@ -46,6 +48,15 @@ public class GoodsAction extends BaseAction {
 			gd.setDeptName(dp.getName());
 		}
 		return "list";
+	}
+	
+	public String getdep(){
+		Integer id = Integer.valueOf(goodid);
+		LuGoods good = goodsService.get(id, LuGoods.class);
+		LuDepartment dep = departmentService.get(good.getDeptId(), LuDepartment.class);
+		String data = "{\"name\":\""+dep.getName()+"\",\"price\":\""+good.getPrice()+"元/"+good.getUnit()+"\"}";
+		System.out.println(data);
+		return ajaxResp(data,1);
 	}
 
 	public GoodsService getGoodsService() {
@@ -78,6 +89,14 @@ public class GoodsAction extends BaseAction {
 
 	public void setDepartmentService(DepartmentService departmentService) {
 		this.departmentService = departmentService;
+	}
+
+	public String getGoodid() {
+		return goodid;
+	}
+
+	public void setGoodid(String goodid) {
+		this.goodid = goodid;
 	}
 	
 	
