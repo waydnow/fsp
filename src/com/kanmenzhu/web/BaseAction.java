@@ -20,7 +20,7 @@ public class BaseAction {
 	public final String FAIL="fail";
 	
 	/**学校订单未提交*/
-	public final int ADUIT = 0;
+	public final int UNSUBMIT_ADUIT = 0;
 	/**学校提交订单，文教局审核中*/
 	public final int ADUIT_ING = 1;
 	/**文教局审核通过*/

@@ -37,26 +37,28 @@ public class OrderAction extends BaseAction {
 		odetailList = new ArrayList<LuOrderDetail>();
 		LuOrderDetail detail = new LuOrderDetail();
 		odetailList.add(detail);		
-		for (LuGoods good : goodsList) {
-			LuDepartment department = departmentService.get(good.getDeptId(), LuDepartment.class);
-//			goodDept.put(good.getId(), department);
-//			goodMap.put(good.getId(), good);
-		}
 		logger.info("####订单页面####");
 		return "regist";
 	}
 	
 	public String add(){
-		
-		if (null!=order) {
+		if(order != null){
 			order.setCreateTime(new Date());
-			//创建用户
-			LuUser user = getCurrentUser();
-			order.setCreateUserId(user.getId());
-			order.setDeptId(user.getDeptId());
-			order.setStatus(ADUIT);
+			order.setCreateUserId(getCurrentUser().getId());
+			order.setDeptId(getCurrentUser().getDeptId());
+			order.setStatus(UNSUBMIT_ADUIT);
 			orderService.save(order);
-		}
+			if (odetailList!=null) {
+				for (LuOrderDetail orderDetail : odetailList) {
+					if (null!=orderDetail) {
+						orderDetail.setCreateTime(new Date());
+						orderDetail.setOrderId(order.getId());
+						orderDetail.setUserId(getCurrentUser().getId());
+						odetailService.save(orderDetail);
+					}
+				}
+			}
+		}		
 		return list();
 	}
 
