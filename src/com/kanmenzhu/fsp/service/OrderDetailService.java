@@ -1,5 +1,7 @@
 package com.kanmenzhu.fsp.service;
 
+import java.util.List;
+
 import com.kanmenzhu.fsp.entity.LuOrderDetail;
 import com.kanmenzhu.service.BaseService;
 
@@ -10,4 +12,6 @@ import com.kanmenzhu.service.BaseService;
  */
 public interface OrderDetailService extends BaseService<LuOrderDetail> {
 
+	public List<LuOrderDetail> getOrderDetailByOrderId(Integer orderId);
+	
 }

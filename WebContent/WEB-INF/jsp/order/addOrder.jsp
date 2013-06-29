@@ -66,12 +66,15 @@ body {
         $("#"+name+" #del-0").attr("id","del-"+i);
         $("#"+name+" #num-0").attr("id","num-"+i);
         $("#num-"+i).attr("name","odetailList["+i+"].goodNum");
+        $("#num-"+i).val("");
         $("#"+name+" #unit-0").attr("id","unit-"+i);
         $("#unit-"+i).attr("name","odetailList["+i+"].goodUnit");
         $("#"+name+" #time-0").attr("id","time-"+i);
         $("#time-"+i).attr("name","odetailList["+i+"].sendTime");
+        $("#time-"+i).val("");
         $("#"+name+" #memo-0").attr("id","memo-"+i);
         $("#memo-"+i).attr("name","odetailList["+i+"].memo");
+        $("#memo-"+i).val("");
         $("#del-"+i).removeAttr("style");
 			
 		$.post("getdepGD.shtml?goodid="+$("#goodid-"+i).val(),function(data){
@@ -106,7 +109,7 @@ body {
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
 					 <tr>
-                    <td height="20" colspan="7" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单列表</td>
+                    <td height="20" colspan="7" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单明细</td>
                     </tr>
                   <tr>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">物品</td>
@@ -124,11 +127,9 @@ body {
         			</s:select>
 				   </td>
                    <td height="20" bgcolor="#FFFFFF"><div id="price-0"></div></td>
-                   <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-0" cssStyle="width:60px;"/><select id="unit-0" name="odetailList[%{#status.index}].goodUnit" >
-        					<option value="两">两</option>
-        					<option value="斤">斤</option>
-        					<option value="公斤">公斤</option>
-        				</select>
+                   <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-0" cssStyle="width:60px;"/>
+                   		<s:select id="unit-0"  name="odetailList[%{#status.index}].goodUnit"  list="{'两','斤','公斤'}">
+        				</s:select>
 					</td>
 					<td height="20" bgcolor="#FFFFFF"><div id="dep-0"></div></td>
 					<td bgcolor="#FFFFFF"><s:textfield  name="odetailList[%{#status.index}].sendTime"  id="time-0"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
@@ -140,9 +141,7 @@ body {
                 </table></td>
               </tr>
               <tr>
-               <td height="60"  width="50%"  align="center">
-               		订单备注：<s:textfield  name="order.memo" />  
-                </td>
+              <td height="60"  width="10%" align="center"  class="newfont02">订单备注：<s:textarea  name="order.memo" />  </td>
           	 </tr>
               <tr>
                <td height="60"  width="50%"  align="center">

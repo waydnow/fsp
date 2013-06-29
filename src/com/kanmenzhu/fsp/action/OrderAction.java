@@ -58,6 +58,8 @@ public class OrderAction extends BaseAction {
 					}
 				}
 			}
+		}else {
+			logger.error("保存订单时，订单为NULL，操作人："+getCurrentUser().getLoginName());
 		}		
 		return list();
 	}
@@ -65,6 +67,46 @@ public class OrderAction extends BaseAction {
 	public String list(){
 		orderList = orderService.getAll(-1, -1);
 		return "list";
+	}
+	
+	public String show(){
+		goodsList = goodsService.getAll(-1, -1);
+		if (order!=null) {
+			order = orderService.get(order.getId(), LuOrder.class);
+			odetailList = odetailService.getOrderDetailByOrderId(order.getId());
+		}
+		return "show";
+	}
+	
+	public String delete(){
+		if (order!=null) {
+			order = orderService.get(order.getId(), LuOrder.class);
+			odetailList = odetailService.getOrderDetailByOrderId(order.getId());
+			for (LuOrderDetail detail : odetailList) {
+				odetailService.delete(detail);
+			}
+			orderService.delete(order);
+			logger.info("用户"+getCurrentUser().getLoginName()+"将订单ID="+order.getId()+"删除！");
+		}
+		return list();
+	}
+	
+	public String update(){
+		if (order!=null) {
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				if (null == detail.getId()) {
+					detail.setCreateTime(new Date());
+					detail.setOrderId(order.getId());
+					detail.setUserId(getCurrentUser().getId());
+					odetailService.save(detail);
+				}else {
+					odetailService.update(detail);
+				}
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"更新订单ID="+order.getId());
+		}
+		return "show";
 	}
 	
 	public LuOrder getOrder() {

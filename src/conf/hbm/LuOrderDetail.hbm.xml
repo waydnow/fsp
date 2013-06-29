@@ -26,17 +26,17 @@
         <property name="memo" type="string">
             <column name="MEMO" />
         </property>
-        <property name="status" type="string">
+        <property name="status" type="int">
             <column name="STATUS"  not-null="true" />
         </property>
-        <property name="parentId" type="string">
-            <column name="PARENTID" />
+        <property name="parentId" type="int">
+            <column name="PARENT_ID" />
         </property>
-        <property name="userId" type="string">
-            <column name="USERID" not-null="true" />
+        <property name="userId" type="int">
+            <column name="USER_ID" not-null="true" />
         </property>
         <property name="createTime" type="timestamp">
-            <column name="CREATETIME"  length="19" not-null="true" />
+            <column name="CREATE_TIME"  length="19" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>
