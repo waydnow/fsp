@@ -58,6 +58,12 @@ body {
         $("#"+name+" #price").attr("id","price-"+i);
         $("#"+name+" #dep").attr("id","dep-"+i);
         $("#"+name+" #del").attr("id","del-"+i);
+        $("#"+name+" #num").attr("id","num-"+i);
+        $("#num-"+i).attr("name","odetailList["+i+"].goodNum");
+        $("#"+name+" #unit").attr("id","unit-"+i);
+        $("#unit-"+i).attr("name","odetailList["+i+"].goodUnit");
+        $("#"+name+" #time").attr("id","time-"+i);
+        $("#time-"+i).attr("name","odetailList["+i+"].sendTime");
         $("#del-"+i).removeAttr("style");
 			
 		$.post("getdepGD.shtml?goodid="+$("#goodid-"+i).val(),function(data){
@@ -110,15 +116,15 @@ body {
         			</s:select>
 				   </td>
                    <td height="20" bgcolor="#FFFFFF"><div id="price"></div></td>
-                   <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  cssStyle="width:60px;"/><select name="odetailList[%{#status.index}].goodUnit" >
+                   <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num" cssStyle="width:60px;"/><select id="unit" name="odetailList[%{#status.index}].goodUnit" >
         					<option value="两">两</option>
         					<option value="斤">斤</option>
         					<option value="公斤">公斤</option>
         				</select>
 					</td>
 					<td height="20" bgcolor="#FFFFFF"><div id="dep"></div></td>
-					<td bgcolor="#FFFFFF"><s:textfield  name="odetailList[%{#status.index}].sendTime"  id="d12"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
-                    <td bgcolor="#FFFFFF"><s:textfield name="odetailList[%{#status.index}].memo" /></td>
+					<td bgcolor="#FFFFFF"><s:textfield  name="odetailList[%{#status.index}].sendTime"  id="time"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
+                    <td bgcolor="#FFFFFF"><s:textfield id="memo" name="odetailList[%{#status.index}].memo" /></td>
                     <td bgcolor="#FFFFFF"><input id="del" type="button" value="删除" /> </td>
                   </tr>
 				  </s:iterator>
