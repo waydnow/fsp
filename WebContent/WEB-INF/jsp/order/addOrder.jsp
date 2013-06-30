@@ -21,49 +21,60 @@ body {
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <script language="javascript" type="text/javascript"  id="mainjs" >
  var i= 0;
- var name = "odetail";
+ var name = "odetail-0";
 	function checkSubmit(){
-		if($("#memo").val()==""){
-			alert("请输入订单描述!");
-			return false;
+		for(var j=0;j<=i;j++){
+			var obj = $("#odetail-"+j);
+			if(obj!=null){
+				if($("#num-"+j).val()==0){
+					alert("采购物品数量不能为0!");
+					return;
+				}
+				if($("#time-"+j).val()==""){
+					alert("送货时间不能为空!");
+					return;
+				}
 			}
-		if($("#price").val()==""){
-			alert("请输入单价!");
-			return false;
-			}
+		}
 		document.addOD.submit();
 		}
 	
 	$(document).ready(function(){
-		$("#del").attr("style","display:none");
-		$.post("getdepGD.shtml?goodid="+$("#goodid").val(),function(data){
-			  $("#price").text(data.price);
-			  $("#dep").text(data.name);
+		$("#del-0").attr("style","display:none");
+		$.post("getdepGD.shtml?goodid="+$("#goodid-0").val(),function(data){
+			  $("#price-0").text(data.price);
+			  $("#dep-0").text(data.name);
 			  });
-		  $("#goodid").change(function(){
-		  $.post("getdepGD.shtml?goodid="+$("#goodid").val(),function(data){
-			  $("#price").text(data.price);
-			  $("#dep").text(data.name);
+		  $("#goodid-0").change(function(){
+		  $.post("getdepGD.shtml?goodid="+$("#goodid-0").val(),function(data){
+			  $("#price-0").text(data.price);
+			  $("#dep-0").text(data.name);
 			  });
 		  });
 		});
 	
 
 	function addLine(){
-		$("#odetail").clone().insertAfter($("#"+name));
+		$("#odetail-0").clone().insertAfter($("#"+name));
 		i++;
 		name = "odetail-"+i;
-        $("#odetail:last-child").attr("id",name);
-        $("#"+name+" #goodid").attr("id","goodid-"+i);
-        $("#"+name+" #price").attr("id","price-"+i);
-        $("#"+name+" #dep").attr("id","dep-"+i);
-        $("#"+name+" #del").attr("id","del-"+i);
-        $("#"+name+" #num").attr("id","num-"+i);
+        $("#odetail-0:last-child").attr("id",name);
+        $("#"+name+" #goodid-0").attr("id","goodid-"+i);
+        $("#goodid-"+i).attr("name","odetailList["+i+"].goodId");
+        $("#"+name+" #price-0").attr("id","price-"+i);
+        $("#"+name+" #dep-0").attr("id","dep-"+i);
+        $("#"+name+" #del-0").attr("id","del-"+i);
+        $("#"+name+" #num-0").attr("id","num-"+i);
         $("#num-"+i).attr("name","odetailList["+i+"].goodNum");
-        $("#"+name+" #unit").attr("id","unit-"+i);
+        $("#num-"+i).val("");
+        $("#"+name+" #unit-0").attr("id","unit-"+i);
         $("#unit-"+i).attr("name","odetailList["+i+"].goodUnit");
-        $("#"+name+" #time").attr("id","time-"+i);
+        $("#"+name+" #time-0").attr("id","time-"+i);
         $("#time-"+i).attr("name","odetailList["+i+"].sendTime");
+        $("#time-"+i).val("");
+        $("#"+name+" #memo-0").attr("id","memo-"+i);
+        $("#memo-"+i).attr("name","odetailList["+i+"].memo");
+        $("#memo-"+i).val("");
         $("#del-"+i).removeAttr("style");
 			
 		$.post("getdepGD.shtml?goodid="+$("#goodid-"+i).val(),function(data){
@@ -87,18 +98,18 @@ body {
 </script>
 </head>
 <body>
-<s:form action="listGDshtml">
+<s:form action="addOD.shtml">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
 
         <tr>
-          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" id="odtable">
+          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" >
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
 					 <tr>
-                    <td height="20" colspan="7" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单列表</td>
+                    <td height="20" colspan="7" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单明细</td>
                     </tr>
                   <tr>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">物品</td>
@@ -110,32 +121,34 @@ body {
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
                   <s:iterator value="odetailList"  status="status" >
-                  <tr align="center" id="odetail">
+                  <tr align="center" id="odetail-0">
 				   <td height="20" bgcolor="#FFFFFF">
-				   <s:select list="goodsList" var="good" listValue="name" listKey="id"  id="goodid">
+				   <s:select list="goodsList" var="good" listValue="name"  name="odetailList[%{#status.index}].goodId" listKey="id"  id="goodid-0">
         			</s:select>
 				   </td>
-                   <td height="20" bgcolor="#FFFFFF"><div id="price"></div></td>
-                   <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num" cssStyle="width:60px;"/><select id="unit" name="odetailList[%{#status.index}].goodUnit" >
-        					<option value="两">两</option>
-        					<option value="斤">斤</option>
-        					<option value="公斤">公斤</option>
-        				</select>
+                   <td height="20" bgcolor="#FFFFFF"><div id="price-0"></div></td>
+                   <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-0" cssStyle="width:60px;"/>
+                   		<s:select id="unit-0"  name="odetailList[%{#status.index}].goodUnit"  list="{'两','斤','公斤'}">
+        				</s:select>
 					</td>
-					<td height="20" bgcolor="#FFFFFF"><div id="dep"></div></td>
-					<td bgcolor="#FFFFFF"><s:textfield  name="odetailList[%{#status.index}].sendTime"  id="time"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
-                    <td bgcolor="#FFFFFF"><s:textfield id="memo" name="odetailList[%{#status.index}].memo" /></td>
-                    <td bgcolor="#FFFFFF"><input id="del" type="button" value="删除" /> </td>
+					<td height="20" bgcolor="#FFFFFF"><div id="dep-0"></div></td>
+					<td bgcolor="#FFFFFF"><s:textfield  name="odetailList[%{#status.index}].sendTime"  id="time-0"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
+                    <td bgcolor="#FFFFFF"><s:textfield id="memo-0" name="odetailList[%{#status.index}].memo" /></td>
+                    <td bgcolor="#FFFFFF"><input id="del-0" type="button" value="删除" /> </td>
                   </tr>
 				  </s:iterator>
              
                 </table></td>
               </tr>
               <tr>
+              <td height="60"  width="10%" align="center"  class="newfont02">订单备注：<s:textarea  name="order.memo" />  </td>
+          	 </tr>
+              <tr>
                <td height="60"  width="50%"  align="center">
               	 <span class="newfont07" >
-                    <input name="add" type="button"  class="right-button08"  value="添加" onClick="addLine()" />
-                    <input name="add" type="button"  class="right-button08"  value="保存" onClick="add()" />
+                    <input name="add" type="button"  class="right-button08"  value="添加物品" onClick="addLine()" />
+                    <input name="add" type="button"  class="right-button08"  value="保存订单" onClick="checkSubmit()" />
+                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit()" />
                     </span>
                 </td>
           	 </tr>

@@ -37,32 +37,76 @@ public class OrderAction extends BaseAction {
 		odetailList = new ArrayList<LuOrderDetail>();
 		LuOrderDetail detail = new LuOrderDetail();
 		odetailList.add(detail);		
-		for (LuGoods good : goodsList) {
-			LuDepartment department = departmentService.get(good.getDeptId(), LuDepartment.class);
-//			goodDept.put(good.getId(), department);
-//			goodMap.put(good.getId(), good);
-		}
 		logger.info("####订单页面####");
 		return "regist";
 	}
 	
 	public String add(){
-		
-		if (null!=order) {
+		if(order != null){
 			order.setCreateTime(new Date());
-			//创建用户
-			LuUser user = getCurrentUser();
-			order.setCreateUserId(user.getId());
-			order.setDeptId(user.getDeptId());
-			order.setStatus(ADUIT);
+			order.setCreateUserId(getCurrentUser().getId());
+			order.setDeptId(getCurrentUser().getDeptId());
+			order.setStatus(UNSUBMIT_ADUIT);
 			orderService.save(order);
-		}
+			if (odetailList!=null) {
+				for (LuOrderDetail orderDetail : odetailList) {
+					if (null!=orderDetail) {
+						orderDetail.setCreateTime(new Date());
+						orderDetail.setOrderId(order.getId());
+						orderDetail.setUserId(getCurrentUser().getId());
+						odetailService.save(orderDetail);
+					}
+				}
+			}
+		}else {
+			logger.error("保存订单时，订单为NULL，操作人："+getCurrentUser().getLoginName());
+		}		
 		return list();
 	}
 
 	public String list(){
 		orderList = orderService.getAll(-1, -1);
 		return "list";
+	}
+	
+	public String show(){
+		goodsList = goodsService.getAll(-1, -1);
+		if (order!=null) {
+			order = orderService.get(order.getId(), LuOrder.class);
+			odetailList = odetailService.getOrderDetailByOrderId(order.getId());
+		}
+		return "show";
+	}
+	
+	public String delete(){
+		if (order!=null) {
+			order = orderService.get(order.getId(), LuOrder.class);
+			odetailList = odetailService.getOrderDetailByOrderId(order.getId());
+			for (LuOrderDetail detail : odetailList) {
+				odetailService.delete(detail);
+			}
+			orderService.delete(order);
+			logger.info("用户"+getCurrentUser().getLoginName()+"将订单ID="+order.getId()+"删除！");
+		}
+		return list();
+	}
+	
+	public String update(){
+		if (order!=null) {
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				if (null == detail.getId()) {
+					detail.setCreateTime(new Date());
+					detail.setOrderId(order.getId());
+					detail.setUserId(getCurrentUser().getId());
+					odetailService.save(detail);
+				}else {
+					odetailService.update(detail);
+				}
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"更新订单ID="+order.getId());
+		}
+		return "show";
 	}
 	
 	public LuOrder getOrder() {
