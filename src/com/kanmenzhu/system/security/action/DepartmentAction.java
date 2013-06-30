@@ -56,7 +56,7 @@ public class DepartmentAction extends BaseAction {
 				departmentService.delete(ld);
 			}
 		}
-		return ajaxResp("0");
+		return ajaxResp("0",0);
 	}
 	public String edit(){
 		if (null!=department) {
