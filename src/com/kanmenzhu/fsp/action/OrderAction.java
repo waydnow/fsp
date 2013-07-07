@@ -58,6 +58,32 @@ public class OrderAction extends BaseAction {
 					}
 				}
 			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"创建订单ID="+order.getId());
+		}else {
+			logger.error("保存订单时，订单为NULL，操作人："+getCurrentUser().getLoginName());
+		}		
+		return list();
+	}
+	
+	public String addAudit(){
+		if(order != null){
+			order.setCreateTime(new Date());
+			order.setCreateUserId(getCurrentUser().getId());
+			order.setDeptId(getCurrentUser().getDeptId());
+			order.setStatus(ADUIT_ING);
+			order.setSubmitTime(new Date());
+			orderService.save(order);
+			if (odetailList!=null) {
+				for (LuOrderDetail orderDetail : odetailList) {
+					if (null!=orderDetail) {
+						orderDetail.setCreateTime(new Date());
+						orderDetail.setOrderId(order.getId());
+						orderDetail.setUserId(getCurrentUser().getId());
+						odetailService.save(orderDetail);
+					}
+				}
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"创建并送审订单ID="+order.getId());
 		}else {
 			logger.error("保存订单时，订单为NULL，操作人："+getCurrentUser().getLoginName());
 		}		
@@ -108,6 +134,37 @@ public class OrderAction extends BaseAction {
 		}
 		return "show";
 	}
+	
+	public String audit(){
+		if (order!=null) {
+			order.setSubmitTime(new Date());
+			order.setStatus(ADUIT_ING);
+			orderService.update(order);
+			logger.info("用户"+getCurrentUser().getLoginName()+"送审订单ID="+order.getId());
+		}
+		return list();
+	}
+	
+	public String updateAudit(){
+		if (order!=null) {
+			order.setSubmitTime(new Date());
+			order.setStatus(ADUIT_ING);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				if (null == detail.getId()) {
+					detail.setCreateTime(new Date());
+					detail.setOrderId(order.getId());
+					detail.setUserId(getCurrentUser().getId());
+					odetailService.save(detail);
+				}else {
+					odetailService.update(detail);
+				}
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"更新并送审订单ID="+order.getId());
+		}
+		return "show";
+	}
+	
 	
 	public LuOrder getOrder() {
 		return order;

@@ -24,7 +24,7 @@ body {
  var index = <% out.print(((List) request.getAttribute("odetailList")).size()); %>;
  var i= index-1;
  var name = "odetail-"+i;
-	function checkSubmit(){
+ 	function checkSubmit(type){
 		for(var j=0;j<=i;j++){
 			var obj = $("#odetail-"+j);
 			if(obj!=null){
@@ -38,11 +38,23 @@ body {
 				}
 			}
 		}
-		document.updateOD.submit();
+		alert(type);
+		if (type == 'udpate') {
+			document.updateOD.submit();
+		} else if (type == 'audit') {
+			$("#showOrder").attr("action","auditOD.shtml");
+			$("#showOrder").submit();
+		} else if (type == 'udpateAudit') {
+			
+			
+			document.updateAuditOD.submit();
 		}
+		
+	}
 	
 	$(document).ready(function(){
 		$("#del-0").attr("style","display:none");
+		var length = 1;
 		function post(idx){
 			$.ajax({
 				type:"POST",
@@ -52,10 +64,14 @@ body {
 				success:function(data){
 					$("#price-"+idx).text(data.price);
 					$("#dep-"+idx).text(data.name);
+					if(length<index){
+						post(length);
+						length++;
+					}
 				}
 			});
 		};
-		var length = 1;
+		
 		$.ajax({
 			type:"POST",
 			url:"getdepGD.shtml",
@@ -128,7 +144,7 @@ body {
 </script>
 </head>
 <body>
-<s:form action="updateOD.shtml">
+<s:form action="updateOD.shtml" id="showOrder">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><table id="subtree1" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -150,22 +166,21 @@ body {
                     <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
-                  <s:iterator value="odetailList"  status="status" id="order">
-                  <s:set name="#status.index" var="index"/>
-                  <tr align="center" id="odetail-${index.id-1}">
+                  <s:iterator value="odetailList"  status="status">
+                  <tr align="center" id="odetail-<s:property value='#status.index'/>">
 				   <td height="20" bgcolor="#FFFFFF">
 				   <s:select list="goodsList" var="good" listValue="name"  name="odetailList[%{#status.index}].goodId" listKey="id"  id="goodid-%{#status.index}">
         			</s:select>
 				   </td>
-                   <td height="20" bgcolor="#FFFFFF"><div id="price-${index.id-1}"></div></td>
+                   <td height="20" bgcolor="#FFFFFF"><div id="price-<s:property value='#status.index'/>"></div></td>
                    <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-%{#status.index}" cssStyle="width:60px;"/>
                    		<s:select id="unit-%{#status.index}"  name="odetailList[%{#status.index}].goodUnit"  list="{'两','斤','公斤'}">
         				</s:select>
 					</td>
-					<td height="20" bgcolor="#FFFFFF"><div id="dep-${index.id-1}"></div></td>
+					<td height="20" bgcolor="#FFFFFF"><div id="dep-<s:property value='#status.index'/>"></div></td>
 					<td bgcolor="#FFFFFF"><s:textfield  name="odetailList[%{#status.index}].sendTime"  id="time-%{#status.index}"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
                     <td bgcolor="#FFFFFF"><s:textfield id="memo-%{#status.index}" name="odetailList[%{#status.index}].memo" /></td>
-                    <td bgcolor="#FFFFFF"><input id="del-${index.id-1}" type="button" value="删除" /> </td>
+                    <td bgcolor="#FFFFFF"><input id="del-<s:property value='#status.index'/>" type="button" value="删除" /> </td>
                   </tr>
 				  </s:iterator>
              	<tr align="center" id="odetail-last"></tr>
@@ -177,10 +192,13 @@ body {
               <tr>
                <td height="60"  width="50%"  align="center">
               	 <span class="newfont07" >
-                    <input name="add" type="button"  class="right-button08"  value="添加物品" onClick="addLine()" />
-                    <input name="add" type="button"  class="right-button08"  value="更新订单" onClick="checkSubmit()" />
-                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit()" />
-                    </span>
+              	 	<s:if test = "%{order.status == 0||order.status == 3}">
+              	 	<input name="add" type="button"  class="right-button08"  value="添加物品" onClick="addLine()" />
+              	 	<input name="add" type="button"  class="right-button08"  value="更新订单" onClick="checkSubmit('update')" />
+              	 	<input name="add" type="button"  class="right-button08"  value="提交订单" onClick="checkSubmit('audit')" />
+                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit('updateAudit')" />
+              	 	</s:if>
+                 </span>
                 </td>
           	 </tr>
             </table></td>

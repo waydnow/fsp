@@ -22,7 +22,7 @@ body {
 <script language="javascript" type="text/javascript"  id="mainjs" >
  var i= 0;
  var name = "odetail-0";
-	function checkSubmit(){
+	function checkSubmit(type){
 		for(var j=0;j<=i;j++){
 			var obj = $("#odetail-"+j);
 			if(obj!=null){
@@ -36,9 +36,14 @@ body {
 				}
 			}
 		}
-		document.addOD.submit();
+		if (type == "add") {
+			document.addOD.submit();
+		} else if (type == "addAudit") {
+			document.addAuditOD.submit();
 		}
-	
+		
+	}
+
 	$(document).ready(function(){
 		$("#del-0").attr("style","display:none");
 		$.post("getdepGD.shtml?goodid="+$("#goodid-0").val(),function(data){
@@ -55,7 +60,7 @@ body {
 	
 
 	function addLine(){
-		$("#odetail-0").clone().insertAfter($("#odetail-last"));
+		$("#odetail-0").clone().insertBefore($("#odetail-last"));
 		i++;
 		name = "odetail-"+i;
 		$("tbody #odetail-0").last().attr("id",name);
@@ -147,8 +152,8 @@ body {
                <td height="60"  width="50%"  align="center">
               	 <span class="newfont07" >
                     <input name="add" type="button"  class="right-button08"  value="添加物品" onClick="addLine()" />
-                    <input name="add" type="button"  class="right-button08"  value="保存订单" onClick="checkSubmit()" />
-                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit()" />
+                    <input name="add" type="button"  class="right-button08"  value="保存订单" onClick="checkSubmit('add')" />
+                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit('addAudit')" />
                     </span>
                 </td>
           	 </tr>
