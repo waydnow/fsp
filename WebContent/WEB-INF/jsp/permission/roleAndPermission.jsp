@@ -14,6 +14,12 @@ body {
 	margin-right: 0px;
 	margin-bottom: 0px;
 }
+.divColumn
+{
+         float: left;
+         width: 24%;
+         display:block;
+}
 -->
 </style>
 <link href="css/css.css" rel="stylesheet" type="text/css" />
@@ -69,17 +75,41 @@ var zNodes =[
 				});
 				$("#selectMenuId").val(submitNodes);
 			}
+ 		
+ 		function refreshTree(rid){
+			$.post("ajaxPermissionPA.shtml?rid="+rid,function(data){
+				zNodes=data;
+				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+	 			//$.fn.zTree.setting.check.chkboxType = { "Y" : "ps", "N" : "ps" };
+	 			//$.fn.zTree.expandAll(true);
+	 			var treeObj = $.fn.zTree.getZTreeObj("treeDemo"); 
+	 			treeObj.expandAll(true); 
+			});
+ 		}
 </script>
 </head>
 <body>
-<div class="content_wrap">
-	<div class="zTreeDemoBackground left">
-		<ul id="treeDemo" class="ztree"></ul>
+<div>
+	<div class="divColumn">
+		<div id="left">
+			<s:iterator value="rlist" id="role">
+				<a href="#" id="${role.id}" onclick="refreshTree(${role.id})"><ul id="${role.id}" onmouseover="">${role.name}</ul></a>
+			</s:iterator>
+			
+		</div>
+	</div>
+	<div class="divColumn">
+		<div class="content_wrap">
+			<div class="zTreeDemoBackground left">
+				<ul id="treeDemo" class="ztree"></ul>
+			</div>
+		</div>
+		<s:form action="savePA" onsubmit="return check();">
+			<s:hidden id="selectMenuId" name="selectMenuId"/>
+			<s:hidden id="rid"/>
+			<s:submit value="确认"/>
+		</s:form>
 	</div>
 </div>
-<s:form action="savePA" onsubmit="return check();">
-	<s:hidden id="selectMenuId" name="selectMenuId"/>
-	<s:submit value="确认"/>
-</s:form>
 </body>
 </html>

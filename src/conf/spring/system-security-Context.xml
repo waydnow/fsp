@@ -24,6 +24,7 @@
 	<bean id="permissionAction" class="com.kanmenzhu.system.security.action.PermissionAction" scope="request">
 		<property name="permissionService" ref="permissionService"></property>
 		<property name="menuService" ref="menuService"></property>
+		<property name="roleService" ref="roleService"></property>
 	</bean>
 	<bean id="permissionService" class="com.kanmenzhu.system.security.service.impl.PermissionServiceImpl">
 		<property name="dao" ref="permissionDao"></property>
