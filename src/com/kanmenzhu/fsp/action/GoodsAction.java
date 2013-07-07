@@ -55,7 +55,7 @@ public class GoodsAction extends BaseAction {
 		LuGoods good = goodsService.get(id, LuGoods.class);
 		LuDepartment dep = departmentService.get(good.getDeptId(), LuDepartment.class);
 		String data = "{\"name\":\""+dep.getName()+"\",\"price\":\""+good.getPrice()+"元/"+good.getUnit()+"\"}";
-		System.out.println(data);
+		System.out.println(good.getName()+"="+data);
 		return ajaxResp(data,1);
 	}
 
