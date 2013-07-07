@@ -55,10 +55,10 @@ body {
 	
 
 	function addLine(){
-		$("#odetail-0").clone().insertAfter($("#"+name));
+		$("#odetail-0").clone().insertAfter($("#odetail-last"));
 		i++;
 		name = "odetail-"+i;
-        $("#odetail-0:last-child").attr("id",name);
+		$("tbody #odetail-0").last().attr("id",name);
         $("#"+name+" #goodid-0").attr("id","goodid-"+i);
         $("#goodid-"+i).attr("name","odetailList["+i+"].goodId");
         $("#"+name+" #price-0").attr("id","price-"+i);
@@ -137,7 +137,7 @@ body {
                     <td bgcolor="#FFFFFF"><input id="del-0" type="button" value="删除" /> </td>
                   </tr>
 				  </s:iterator>
-             
+             	  <tr align="center" id="odetail-last"></tr>
                 </table></td>
               </tr>
               <tr>
