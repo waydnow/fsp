@@ -58,6 +58,7 @@ public class OrderAction extends BaseAction {
 					}
 				}
 			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"创建订单ID="+order.getId());
 		}else {
 			logger.error("保存订单时，订单为NULL，操作人："+getCurrentUser().getLoginName());
 		}		
@@ -82,6 +83,7 @@ public class OrderAction extends BaseAction {
 					}
 				}
 			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"创建并送审订单ID="+order.getId());
 		}else {
 			logger.error("保存订单时，订单为NULL，操作人："+getCurrentUser().getLoginName());
 		}		
@@ -133,6 +135,16 @@ public class OrderAction extends BaseAction {
 		return "show";
 	}
 	
+	public String audit(){
+		if (order!=null) {
+			order.setSubmitTime(new Date());
+			order.setStatus(ADUIT_ING);
+			orderService.update(order);
+			logger.info("用户"+getCurrentUser().getLoginName()+"送审订单ID="+order.getId());
+		}
+		return list();
+	}
+	
 	public String updateAudit(){
 		if (order!=null) {
 			order.setSubmitTime(new Date());
@@ -148,7 +160,7 @@ public class OrderAction extends BaseAction {
 					odetailService.update(detail);
 				}
 			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"更新订单ID="+order.getId());
+			logger.info("用户"+getCurrentUser().getLoginName()+"更新并送审订单ID="+order.getId());
 		}
 		return "show";
 	}

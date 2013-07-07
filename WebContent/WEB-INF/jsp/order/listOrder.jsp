@@ -142,11 +142,11 @@ function on_load(){
                     <td height="20" bgcolor="#FFFFFF"><a href="showOD.shtml?order.id=${od.id}"><s:property value="#od.id"/></a></td>
                   	<td bgcolor="#FFFFFF"><s:property value="#od.createTime"/></td>
                    	<td bgcolor="#FFFFFF">
-                   	<s:if test = "{#od.status== 0}">等待送审</s:if>
-					<s:elseif test="{#od.status == 1}">审核中</s:elseif>
-					<s:elseif test="{#od.status == 2}">审核通过</s:elseif>
-					<s:elseif test="{#od.status == 3}">审核不通过</s:elseif>
-					<s:elseif test="{#od.status == 4}">最终订单</s:elseif>
+                   	<s:if test = "%{#od.status== 0}">等待送审</s:if>
+					<s:elseif test="%{#od.status == 1}">审核中</s:elseif>
+					<s:elseif test="%{#od.status == 2}">审核通过</s:elseif>
+					<s:elseif test="%{#od.status == 3}">审核不通过</s:elseif>
+					<s:elseif test="%{#od.status == 4}">最终订单</s:elseif>
 					</td>
                     <td bgcolor="#FFFFFF"><s:property value="#od.memo"/></td>
                     <td bgcolor="#FFFFFF"><input type="button" value="删除" onclick="del(${od.id});" /></td>
