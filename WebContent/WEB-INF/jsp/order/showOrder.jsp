@@ -24,7 +24,7 @@ body {
  var index = <% out.print(((List) request.getAttribute("odetailList")).size()); %>;
  var i= index-1;
  var name = "odetail-"+i;
-	function checkSubmit(){
+ 	function checkSubmit(){
 		for(var j=0;j<=i;j++){
 			var obj = $("#odetail-"+j);
 			if(obj!=null){
@@ -39,10 +39,29 @@ body {
 			}
 		}
 		document.updateOD.submit();
+	}
+	
+ 	function submitAudit(){
+		for(var j=0;j<=i;j++){
+			var obj = $("#odetail-"+j);
+			if(obj!=null){
+				if($("#num-"+j).val()==0){
+					alert("采购物品数量不能为0!");
+					return;
+				}
+				if($("#time-"+j).val()==""){
+					alert("送货时间不能为空!");
+					return;
+				}
+			}
 		}
+		document.updateAuditOD.submit();
+	}
+	
 	
 	$(document).ready(function(){
 		$("#del-0").attr("style","display:none");
+		var length = 1;
 		function post(idx){
 			$.ajax({
 				type:"POST",
@@ -52,10 +71,14 @@ body {
 				success:function(data){
 					$("#price-"+idx).text(data.price);
 					$("#dep-"+idx).text(data.name);
+					if(length<index){
+						post(length);
+						length++;
+					}
 				}
 			});
 		};
-		var length = 1;
+		
 		$.ajax({
 			type:"POST",
 			url:"getdepGD.shtml",
@@ -179,7 +202,7 @@ body {
               	 <span class="newfont07" >
                     <input name="add" type="button"  class="right-button08"  value="添加物品" onClick="addLine()" />
                     <input name="add" type="button"  class="right-button08"  value="更新订单" onClick="checkSubmit()" />
-                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit()" />
+                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="submitAudit()" />
                     </span>
                 </td>
           	 </tr>
