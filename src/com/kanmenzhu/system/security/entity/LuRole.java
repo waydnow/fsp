@@ -11,8 +11,16 @@ public class LuRole  extends BaseBean {
 
 	private String name;
 	private Integer deltag;
+	private String type;
 	private Integer parentId;
 	private String memo;
+	
+	/** 角色：文教局 */
+	public String MANAGER = "MANAGER";
+	/** 角色：供应商 */
+	public String SUPPLIER = "SUPPLIER";
+	/** 角色：学校 */
+	public String SCHOOL = "SCHOOL";
 
 	public LuRole() {
 	}
@@ -21,9 +29,10 @@ public class LuRole  extends BaseBean {
 		this.name = name;
 	}
 
-	public LuRole(String name, Integer deltag, Integer parentId, String memo) {
+	public LuRole(String name, Integer deltag,String type, Integer parentId, String memo) {
 		this.name = name;
 		this.deltag = deltag;
+		this.type = type;
 		this.parentId = parentId;
 		this.memo = memo;
 	}
@@ -59,6 +68,14 @@ public class LuRole  extends BaseBean {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

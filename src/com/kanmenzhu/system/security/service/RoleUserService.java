@@ -3,6 +3,7 @@ package com.kanmenzhu.system.security.service;
 import java.util.List;
 
 import com.kanmenzhu.service.BaseService;
+import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.entity.LuRoleUser;
 import com.kanmenzhu.system.security.entity.LuUser;
 
@@ -14,5 +15,6 @@ public interface RoleUserService extends BaseService<LuRoleUser>{
 	 * @return
 	 */
 	public List<LuRoleUser> getRoleByUser(LuUser user);
+	
 
 }

@@ -69,6 +69,7 @@
 	</bean>
 	<bean id="roleService" class="com.kanmenzhu.system.security.service.impl.RoleServiceImpl">
 		<property name="dao" ref="roleDao"></property> 
+		<property name="rudao" ref="roleUserDao"></property>
 	</bean>
 	<bean id="roleDao" class="com.kanmenzhu.system.security.dao.impl.RoleDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>

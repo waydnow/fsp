@@ -14,8 +14,11 @@ import com.kanmenzhu.fsp.service.GoodsService;
 import com.kanmenzhu.fsp.service.OrderDetailService;
 import com.kanmenzhu.fsp.service.OrderService;
 import com.kanmenzhu.system.security.entity.LuDepartment;
+import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.system.security.service.DepartmentService;
+import com.kanmenzhu.system.security.service.RoleService;
+import com.kanmenzhu.system.security.service.RoleUserService;
 import com.kanmenzhu.web.BaseAction;
 
 public class OrderAction extends BaseAction {
@@ -32,6 +35,7 @@ public class OrderAction extends BaseAction {
 	private OrderDetailService odetailService;
 	private DepartmentService departmentService;
 	private GoodsService goodsService;
+	private RoleUserService roleUserService;
 	
 	public String regist(){
 		order = null;
@@ -93,6 +97,8 @@ public class OrderAction extends BaseAction {
 	}
 
 	public String list(){
+		//根据用户权限获取订单
+		List<LuRole> roleList = roleUserService.getRoleByUser(getCurrentUser());
 		orderList = orderService.getAll(-1, -1);
 		return "list";
 	}

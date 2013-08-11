@@ -176,10 +176,8 @@ body {
 					</td>
 					<td height="20" bgcolor="#FFFFFF"><div id="dep-<s:property value='#status.index'/>"></div></td>
 					<td bgcolor="#FFFFFF">
-					<!-- <s:textfield  name="odetailList[%{#status.index}].sendTime"  id="time-%{#status.index}"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />-->
-					
 					<s:textfield name="odetailList[%{#status.index}].sendTime" id="time-%{#status.index}"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
-					<s:date name="odetailList[%{#status.index}].sendTime" format="yyyy=MM-dd HH:mm:ss" />
+					<s:param name="value"><s:date name="new Date(odetailList[%{#status.index}].sendTime)" format="yyyy-MM-dd" /></s:param>
 					</s:textfield>
 					</td>
                     <td bgcolor="#FFFFFF"><s:textfield id="memo-%{#status.index}" name="odetailList[%{#status.index}].memo" /></td>
