@@ -79,12 +79,14 @@ var zNodes =[
  		
  		function refreshTree(rid){
 			$.post("ajaxPermissionPA.shtml?rid="+rid,function(data){
-				zNodes=data;
+				var dat=eval(data);
+				zNodes=dat;
 				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
 	 			//$.fn.zTree.setting.check.chkboxType = { "Y" : "ps", "N" : "ps" };
 	 			//$.fn.zTree.expandAll(true);
 	 			var treeObj = $.fn.zTree.getZTreeObj("treeDemo"); 
 	 			treeObj.expandAll(true); 
+	 			$("#rid").val(rid);
 			});
  		}
 </script>
@@ -107,7 +109,7 @@ var zNodes =[
 		</div>
 		<s:form action="savePA" onsubmit="return check();">
 			<s:hidden id="selectMenuId" name="selectMenuId"/>
-			<s:hidden id="rid"/>
+			<s:hidden id="rid" name="rid"/>
 			<s:submit value="确认"/>
 		</s:form>
 	</div>
