@@ -74,6 +74,7 @@ var zNodes =[
 					submitNodes=submitNodes+node.id+",";
 				});
 				$("#selectMenuId").val(submitNodes);
+				return true;
 			}
  		
  		function refreshTree(rid){

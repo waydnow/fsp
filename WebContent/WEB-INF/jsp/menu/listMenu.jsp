@@ -20,6 +20,7 @@ body {
 -->
 </style>
 <link href="css/css.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 </head>
 <SCRIPT language="JavaScript">
 function tupian(idt){
@@ -41,6 +42,17 @@ function tupian(idt){
 }
 
 function list(idstr){
+	var subMenus=$("table[id^='subtree']");
+	$.each(subMenus,function(idx,subMenuTable){
+		var sid=subMenuTable.id;
+		if(sid!="subtree"+idstr){
+			$("#"+subMenuTable.id).hide();
+		}else{
+			$("#"+subMenuTable.id).fadeIn();
+		}
+	});
+	
+	/*
 	var name1="subtree"+idstr;
 	var name2="img"+idstr;
 	var objectobj=document.all(name1);
@@ -65,6 +77,7 @@ function list(idstr){
 		objectobj.style.display="none";
 		imgobj.src="images/ico04.gif";
 	}
+	*/
 }
 
 </SCRIPT>
