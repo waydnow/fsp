@@ -1,5 +1,7 @@
 package com.kanmenzhu.fsp.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -95,7 +97,7 @@ public class OrderAction extends BaseAction {
 		return "list";
 	}
 	
-	public String show(){
+	public String show() throws Exception{
 		goodsList = goodsService.getAll(-1, -1);
 		if (order!=null) {
 			order = orderService.get(order.getId(), LuOrder.class);
