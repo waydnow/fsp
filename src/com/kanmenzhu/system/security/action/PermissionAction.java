@@ -104,7 +104,7 @@ public class PermissionAction extends BaseAction {
 		
 		//logger.info(initMenu);
 		
-		return ajaxResp(initMenu, 1);
+		return ajaxResp(initMenu, 0);
 	}
 	public void setMenuService(MenuService menuService) {
 		this.menuService = menuService;
