@@ -7,8 +7,10 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.kanmenzhu.system.security.entity.LuMenu;
+import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.service.MenuService;
 import com.kanmenzhu.system.security.service.PermissionService;
+import com.kanmenzhu.system.security.service.RoleService;
 import com.kanmenzhu.web.BaseAction;
 
 /**
@@ -20,6 +22,7 @@ public class PermissionAction extends BaseAction {
 
 	private MenuService menuService;
 	private PermissionService permissionService;
+	private RoleService roleService;
 	/**供ztree用的数组*/
 	private String initMenu;
 	/**角色id*/
@@ -27,6 +30,7 @@ public class PermissionAction extends BaseAction {
 	/**选择的菜单id*/
 	private String selectMenuId;
 	
+	private List<LuRole> rlist;
 	
 	public String set(){
 		
@@ -42,9 +46,9 @@ public class PermissionAction extends BaseAction {
 	 */
 	public String init(){
 		//#########################测试代码
-		rid=rid==null?1:rid;
+		rid=rid==null?-1:rid;
 		//####################
-		
+		rlist=roleService.getAll(-1, -1);
 		List<LuMenu> allMenu=menuService.getAll(-1, -1);
 		List<LuMenu> alreadySelectList=menuService.getPermissionByRid(rid, null);
 		
@@ -76,6 +80,31 @@ public class PermissionAction extends BaseAction {
 		}
 		return null;
 		
+	}
+	
+	/**
+	 * 初始展示
+	 * @return
+	 */
+	public String ajaxPermission(){
+		//#########################测试代码
+		rid=rid==null?-1:rid;
+		//####################
+		List<LuMenu> allMenu=menuService.getAll(-1, -1);
+		List<LuMenu> alreadySelectList=menuService.getPermissionByRid(rid, null);
+		
+		HashSet<Integer> alreadySelected=new HashSet<Integer>();
+		if(null!=alreadySelectList){
+			for(LuMenu lm:alreadySelectList){
+				alreadySelected.add(lm.getId());
+			}
+		}
+		//logger.info(getCurrentUser().toString());
+		initMenu=setZtreeData(allMenu, alreadySelected);
+		
+		//logger.info(initMenu);
+		
+		return ajaxResp(initMenu, 1);
 	}
 	public void setMenuService(MenuService menuService) {
 		this.menuService = menuService;
@@ -117,6 +146,13 @@ public class PermissionAction extends BaseAction {
 	}
 	public void setRid(Integer rid) {
 		this.rid = rid;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+	public List<LuRole> getRlist() {
+		return rlist;
 	}
 	
 	
