@@ -48,7 +48,11 @@ body {
       </tr>
       <tr>
         <td height="35">&nbsp;</td>
-        <td><a href="editDP.shtml?department.id=${department.id}"><input type="button" value="修改" class="right-button02" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
+        <td>
+        <a style="text-decoration: none;" href="editDP.shtml?department.id=${department.id}">
+        <input type="button" value="修改" class="right-button02" />
+        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- <input type="reset" class="right-button02"  value="重置"/> --></td>
       </tr>
     </table>
     </s:form>

@@ -124,7 +124,7 @@ function on_load(){
           	 <tr>
                <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
 	              <input name="Submit" type="button" class="right-button08" value="删除所选项目信息" />
-	              <input name="Submit2" type="button" class="right-button08" value="添加项目" onclick="link();"/></td>
+	              <input name="Submit2" type="button" class="right-button08" value="添加项目" onclick="javascript:window.location='registDP.shtml';"/></td>
           	 </tr>
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
