@@ -108,8 +108,8 @@ function on_load(){
               <input name="textfield" type="text" size="12" readonly="readonly"/><span class="newfont06">至</span>
 			 <input name="textfield" type="text" size="12" readonly="readonly"/>	
 			 <input name="Submit" type="button" class="right-button02" value="查 询" /></td>
-			 <td width="132" align="left"><a href="#" onclick="sousuo()">
-			   <input name="Submit" type="button" class="right-button07" value="高级搜索" /></a></td>	
+			 <td width="132" align="left"><!--<a href="#" onclick="sousuo()">
+			    <input name="Submit" type="button" class="right-button07" value="高级搜索" /></a> --></td>	
 		  </tr>
         </table></td>
       </tr>
@@ -122,9 +122,9 @@ function on_load(){
           <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
 
           	 <tr>
-               <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
-	              <input name="Submit" type="button" class="right-button08" value="删除所选项目信息" />
-	              <input name="Submit2" type="button" class="right-button08" value="添加项目" onclick="javascript:window.location='registDP.shtml';"/></td>
+               <td height="20"><span class="newfont07"><!--  选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
+	              <input name="Submit" type="button" class="right-button08" value="删除所选项目信息" />-->
+	              <input name="Submit2" type="button" class="right-button08" value="添加单位" onclick="javascript:window.location='registDP.shtml';"/></td>
           	 </tr>
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
