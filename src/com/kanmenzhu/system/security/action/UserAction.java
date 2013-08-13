@@ -39,6 +39,8 @@ public class UserAction extends ActionSupport {
 	
 	private List<LuDepartment> dps;
 	private LuDepartment department;
+	//用于界面显示
+	private List<LuUser> userList;
 	
 	public String add(){
 		String msg = null;
@@ -106,12 +108,38 @@ public class UserAction extends ActionSupport {
 		logger.info("####进入登录页面#####");
 		return "login";
 	}
-	
+	/**
+	 * 注册
+	 * @return
+	 */
+	@Deprecated
 	public String regist(){
 		user = null;
 		dps = departmentService.getAll();
 		roleList = roleService.getAll(-1, -1);
 		return "regist";
+	}
+	/**
+	 * 用户列表
+	 * @return
+	 */
+	public String list(){
+		
+		List<LuUser> ulist=userService.getAll(-1, -1);
+		return "list";
+	}
+	/**
+	 * 编辑
+	 * @return
+	 */
+	public String edit(){
+		return "edit";
+	}
+	/**
+	 * 修改保存
+	 */
+	public String update(){
+		return SUCCESS;
 	}
 
 	public void setVerifyCode(String verifyCode) {
@@ -188,6 +216,10 @@ public class UserAction extends ActionSupport {
 
 	public void setRuService(RoleUserService ruService) {
 		this.ruService = ruService;
+	}
+
+	public List<LuUser> getUserList() {
+		return userList;
 	}
 	
 	

@@ -13,7 +13,9 @@
     <result name="success">/WEB-INF/jsp/main.jsp</result>
     <result name="login">/WEB-INF/jsp/login.jsp</result>
     <result name="error">/WEB-INF/jsp/login.jsp</result>
-    <result name="regist">/WEB-INF/jsp/regist.jsp</result>
+    <result name="regist">/WEB-INF/jsp/user/regist.jsp</result>
+    <result name="list">/WEB-INF/jsp/user/list.jsp</result>
+    <result name="edit">/WEB-INF/jsp/user/editUsert.jsp</result>
   </action>
   
   <action name="*DP" class="departmentAction" method="{1}">
