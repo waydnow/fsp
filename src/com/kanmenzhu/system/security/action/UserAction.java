@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,10 +110,9 @@ public class UserAction extends ActionSupport {
 		return "login";
 	}
 	/**
-	 * 注册
+	 * 注册页面->
 	 * @return
 	 */
-	@Deprecated
 	public String regist(){
 		user = null;
 		dps = departmentService.getAll();
@@ -124,8 +124,11 @@ public class UserAction extends ActionSupport {
 	 * @return
 	 */
 	public String list(){
-		
-		List<LuUser> ulist=userService.getAll(-1, -1);
+		if(user!=null&&StringUtils.isNotBlank(user.getName())){
+			userList=userService.findByName(user.getName());
+		}else{
+			userList=userService.getAll(-1, -1);
+		}
 		return "list";
 	}
 	/**
