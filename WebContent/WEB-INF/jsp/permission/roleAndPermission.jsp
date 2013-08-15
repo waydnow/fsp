@@ -76,8 +76,12 @@ var zNodes =[
 				$("#selectMenuId").val(submitNodes);
 				return true;
 			}
- 		
+ 		var curSel="";//当前被选择的角色ul id
  		function refreshTree(rid){
+ 			var oid="u"+rid;
+ 			$('#'+curSel).css('background-color','');
+ 			curSel=oid;
+ 			$('#'+oid).css('background-color','#89a582');
 			$.post("ajaxPermissionPA.shtml?rid="+rid,function(data){
 				var dat=eval(data);
 				zNodes=dat;
@@ -89,14 +93,29 @@ var zNodes =[
 	 			$("#rid").val(rid);
 			});
  		}
+ 		//0:over 1:out
+ 		function changColor(uid,mouseType){
+ 			if(uid==curSel){
+ 				return;
+ 			}
+ 			if(mouseType==0){
+ 				$('#'+uid).css('background-color','#89a582');
+ 			}else{
+ 				$('#'+uid).css('background-color','');
+ 			}
+ 		}
 </script>
 </head>
 <body>
 <div>
-	<div class="divColumn">
-		<div id="left" style="border-style:solid;border-width:0px;border-right:1px solid;width:150px;">
+	<div class="divColumn" style="margin-left: 5px;">
+		<div id="left" style="border-style:solid;border-width:0px;border-right:1px solid;width:180px;">
 			<s:iterator value="rlist" id="role">
-				<span><a href="#" style="text-decoration: none;" id="${role.id}" onclick="refreshTree(${role.id})"><ul id="${role.id}" onmouseover="">${role.name}</ul></a></span>
+				<ul id="u${role.id}" style="width:140px;height:fitilen;border:1px solid #555;cursor:pointer;"
+				  onclick="refreshTree(${role.id})" onmouseover="changColor('u${role.id}',0);"
+				  onmouseout="changColor('u${role.id}',1);">
+				${role.name}
+				</ul>
 			</s:iterator>
 			
 		</div>
