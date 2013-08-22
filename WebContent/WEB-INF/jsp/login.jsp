@@ -96,8 +96,9 @@ body {
       </tr>
       <tr>
         <td height="35">&nbsp;</td>
-        <td><input type="button" value="提交" class="right-button02" onclick="checkSubmit();"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
+        <td><input type="button" value="登录" class="right-button02" onclick="checkSubmit();"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
       </tr>
+      <!-- 
       <tr>
         <td height="35">&nbsp;</td>
         <td><a href="registUA.shtml">添加用户</a></td>
@@ -110,6 +111,7 @@ body {
         <td height="35">&nbsp;</td>
         <td><a href="showDP.shtml">单位</a></td>
       </tr>
+       -->
     </table>
     </s:form>
     </td>

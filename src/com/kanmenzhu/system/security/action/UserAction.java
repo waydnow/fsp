@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,6 @@ public class UserAction extends ActionSupport {
 
 	private LuUser user;
 	
-	private List<LuUser> userList;
 	private List<LuRole> roleList;
 	private RoleService roleService;
 	private String roleids;
@@ -40,6 +40,8 @@ public class UserAction extends ActionSupport {
 	
 	private List<LuDepartment> dps;
 	private LuDepartment department;
+	//用于界面显示
+	private List<LuUser> userList;
 	
 	public String add(){
 		String msg = null;
@@ -103,21 +105,44 @@ public class UserAction extends ActionSupport {
 		return ERROR;
 	}
 	
-	public String list(){
-		userList = userService.getAll(-1, -1);
-		return "list";
-	}
-	
 	public String welcome(){
 		logger.info("####进入登录页面#####");
 		return "login";
 	}
-	
+	/**
+	 * 注册页面->
+	 * @return
+	 */
 	public String regist(){
 		user = null;
 		dps = departmentService.getAll();
 		roleList = roleService.getAll(-1, -1);
 		return "regist";
+	}
+	/**
+	 * 用户列表
+	 * @return
+	 */
+	public String list(){
+		if(user!=null&&StringUtils.isNotBlank(user.getName())){
+			userList=userService.findByName(user.getName());
+		}else{
+			userList=userService.getAll(-1, -1);
+		}
+		return "list";
+	}
+	/**
+	 * 编辑
+	 * @return
+	 */
+	public String edit(){
+		return "edit";
+	}
+	/**
+	 * 修改保存
+	 */
+	public String update(){
+		return SUCCESS;
 	}
 
 	public void setVerifyCode(String verifyCode) {
@@ -198,10 +223,6 @@ public class UserAction extends ActionSupport {
 
 	public List<LuUser> getUserList() {
 		return userList;
-	}
-
-	public void setUserList(List<LuUser> userList) {
-		this.userList = userList;
 	}
 	
 	

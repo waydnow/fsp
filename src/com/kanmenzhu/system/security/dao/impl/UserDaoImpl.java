@@ -21,5 +21,12 @@ public class UserDaoImpl extends BaseDaoImpl<LuUser> implements UserDao {
 	public String getEntityName() {
 		return "LuUser";
 	}
+
+	@Override
+	public List<LuUser> findByName(String name) {
+		String hql="from LuUser lu where lu.name =?";
+		List<LuUser> lulist= findByHql(hql, -1, -1,name);
+		return lulist;
+	}
 	
 }

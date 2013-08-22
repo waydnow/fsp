@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>æ­¦å¼ºå¿æ–‡æ•™å±€å®¡æ ¸ç³»ç»Ÿ-è§’è‰²åˆ—è¡¨</title>
+<title>ÎäÇ¿ÏØÎÄ½Ì¾ÖÉóºËÏµÍ³-ÓÃ»§ÁĞ±í</title>
 <style type="text/css">
 <!--
 body {
@@ -13,161 +14,224 @@ body {
 	margin-right: 0px;
 	margin-bottom: 0px;
 }
-.tabfont01 {	
-	font-family: "å®‹ä½“";
+
+.tabfont01 {
+	font-family: "ËÎÌå";
 	font-size: 9px;
 	color: #555555;
 	text-decoration: none;
 	text-align: center;
 }
-.font051 {font-family: "å®‹ä½“";
+
+.font051 {
+	font-family: "ËÎÌå";
 	font-size: 12px;
 	color: #333333;
 	text-decoration: none;
 	line-height: 20px;
 }
-.font201 {font-family: "å®‹ä½“";
+
+.font201 {
+	font-family: "ËÎÌå";
 	font-size: 12px;
 	color: #FF0000;
 	text-decoration: none;
 }
+
 .button {
-	font-family: "å®‹ä½“";
+	font-family: "ËÎÌå";
 	font-size: 14px;
 	height: 37px;
 }
-html { overflow-x: auto; overflow-y: auto; border:0;} 
+
+html {
+	overflow-x: auto;
+	overflow-y: auto;
+	border: 0;
+}
 -->
 </style>
 
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/xiangmu.js"></script>
+<script language="javascript" src="js/jquery-1.10.0.min.js"></script>
+
+<script language="javascript">
+	function sousuo() {
+		window
+				.open(
+						"gaojisousuo.htm",
+						"",
+						"depended=0,alwaysRaised=1,width=800,height=510,location=0,menubar=0,resizable=0,scrollbars=0,status=0,toolbar=0");
+	}
+	function selectAll() {
+		var obj = document.fom.elements;
+		for ( var i = 0; i < obj.length; i++) {
+			if (obj[i].name == "delid") {
+				obj[i].checked = true;
+			}
+		}
+	}
+
+	function unselectAll() {
+		var obj = document.fom.elements;
+		for ( var i = 0; i < obj.length; i++) {
+			if (obj[i].name == "delid") {
+				if (obj[i].checked == true)
+					obj[i].checked = false;
+				else
+					obj[i].checked = true;
+			}
+		}
+	}
+	function doDelete(id) {
+		alert("ÕıÔÚÊµÏÖÖĞ");
+		return;
+		if (confirm("ÊÇ·ñÕæÒªÉ¾³ı?")) {
+			$.post("deleteDP.shtml?id=" + id, function(data) {
+				if (0 == data) {
+					alert("É¾³ı³É¹¦!");
+					$("#tr" + id).remove();
+				} else {
+					alert("É¾³ı³É¹¦!");
+				}
+			});
+		}
+
+	}
+
+	function on_load() {
+		var loadingmsg = document.getElementById("loadingmsg");
+		var mainpage = document.getElementById("mainpage");
+		loadingmsg.style.display = "";
+		mainpage.style.display = "none";
+
+		loadingmsg.style.display = "none";
+		mainpage.style.display = "";
+	}
+</script>
 </head>
-<SCRIPT language="JavaScript">
-function selectAll(){
-	var obj = document.fom.elements;
-	for (var i=0;i<obj.length;i++){
-		if (obj[i].name == "delid"){
-			obj[i].checked = true;
-		}
-	}
-}
-
-function unselectAll(){
-	var obj = document.fom.elements;
-	for (var i=0;i<obj.length;i++){
-		if (obj[i].name == "delid"){
-			if (obj[i].checked==true) obj[i].checked = false;
-			else obj[i].checked = true;
-		}
-	}
-}
-
-function addGD() {
-	window.location.href = "registUA.shtml";
-}
-
-function on_load(){
-	var loadingmsg=document.getElementById("loadingmsg");
-	var mainpage=document.getElementById("mainpage");
-	loadingmsg.style.display="";
-	mainpage.style.display="none";
-	
-	loadingmsg.style.display="none";
-	mainpage.style.display="";
-}
-</SCRIPT>
-
 <body onload="on_load()">
-<s:form action="listUAshtml">
-<table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
+		<table id="mainpage" width="100%" border="0" cellspacing="0"
+			cellpadding="0">
 
-  <tr>
-    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td height="62" background="images/nav04.gif">
-          
-		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
-		  <tr>
-			<td width="21"><img src="images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">æŸ¥çœ‹å†…å®¹ï¼šæŒ‰æ—¶é—´ï¼š
-              <input name="textfield" type="text" size="12" readonly="readonly"/><span class="newfont06">è‡³</span>
-			 <input name="textfield" type="text" size="12" readonly="readonly"/>	
-			 <input name="Submit" type="button" class="right-button02" value="æŸ¥ è¯¢" /></td>
-		  </tr>
-        </table></td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td height="30"><table width="100%" border="0" cellspacing="0"
+						cellpadding="0">
+						<tr>
+							<td height="62" background="images/nav04.gif">
+								<s:form action="listUA.shtml" method="post">
+								<table width="98%" border="0" align="center" cellpadding="0"
+									cellspacing="0">
+									<tr>
+										<td width="21"><img src="images/ico07.gif" width="20" height="18" /></td>
+										<td width="550">ĞÕÃû: <s:textfield name="user.name"/>
+											<input name="Submit" type="submit" class="right-button02" value="²é Ñ¯" /></td>
+										<td width="132" align="left">
+											<!--<a href="#" onclick="sousuo()">
+			    <input name="Submit" type="button" class="right-button07" value="¸ß¼¶ËÑË÷" /></a> -->
+										</td>
+									</tr>
+								</table>
+								</s:form>
+							</td>
+						</tr>
+					</table></td>
+			</tr>
+			<tr>
+				<td><table id="subtree1" style="DISPLAY:" width="100%"
+						border="0" cellspacing="0" cellpadding="0">
 
-        <tr>
-          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+						<tr>
+							<td><table width="95%" border="0" align="center"
+									cellpadding="0" cellspacing="0">
 
-          	 <tr>
-               <td height="20"><span class="newfont07">é€‰æ‹©ï¼š<a href="#" class="right-font08" onclick="selectAll();">å…¨é€‰</a>-<a href="#" class="right-font08" onclick="unselectAll();">åé€‰</a></span>
-	              <input name="Submit" type="button" class="right-button08" value="åˆ é™¤" />
-	              <input name="Submit2" type="button" class="right-button08" value="æ·»åŠ " onclick="addGD();"/></td>
-          	 </tr>
-              <tr>
-                <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
+									<tr>
+										<td height="20"><span class="newfont07">
+												<!--  Ñ¡Ôñ£º<a href="#" class="right-font08" onclick="selectAll();">È«Ñ¡</a>-<a href="#" class="right-font08" onclick="unselectAll();">·´Ñ¡</a></span>
+	              <input name="Submit" type="button" class="right-button08" value="É¾³ıËùÑ¡ÏîÄ¿ĞÅÏ¢" />-->
+												<input name="Submit2" type="button" class="right-button08"
+												value="Ìí¼ÓÓÃ»§"
+												onclick="javascript:window.location='registUA.shtml';" /></td>
+									</tr>
+									<tr>
+										<td height="40" class="font42"><table width="100%"
+												border="0" cellpadding="4" cellspacing="1" bgcolor="#464646"
+												class="newfont03">
 
-					                  <tr>
-                    <td height="20" colspan="6" align="center" bgcolor="#EEEEEE" class="tablestyle_title">ç”¨æˆ·åˆ—è¡¨</td>
-                    </tr>
-                  <tr>
-				    <td width="5%" align="center" bgcolor="#EEEEEE">é€‰æ‹©</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">ç™»å½•å</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">çœŸå®åç§°</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">è”ç³»æ–¹å¼</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">å¤‡æ³¨</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">æ“ä½œ</td>
-                  </tr>
-                  <s:iterator value="userList" var="user">
-                  <tr align="center">
-				   <td bgcolor="#FFFFFF"><input type="checkbox" name="gd.id"/></td>
-                    <td height="20" bgcolor="#FFFFFF"><a href="showUA.shtml?user.id=${user.id}"><s:property value="#user.loginName"/></a></td>
-                  	<td bgcolor="#FFFFFF"><s:property value="#user.name"/></td>
-                  	<td bgcolor="#FFFFFF"><s:property value="#user.mobile"/></td>
-                   	<td bgcolor="#FFFFFF"><s:property value="#user.email"/></td>
-                    <td bgcolor="#FFFFFF"><a href="deleteUA.shtml">åˆ é™¤</a></td>
-                  </tr>
-				  </s:iterator>
-                  
-                </table></td>
-              </tr>
-            </table></td>
-        </tr>
-      </table>
-      <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-        <tr>
-          <td height="6"><img src="images/spacer.gif" width="1" height="1" /></td>
-        </tr>
-        <tr>
-          <td height="33"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">
-              <tr>
-                <td width="50%">å…± <span class="right-text09">5</span> é¡µ | ç¬¬ <span class="right-text09">1</span> é¡µ</td>
-                <td width="49%" align="right">[<a href="#" class="right-font08">é¦–é¡µ</a> | <a href="#" class="right-font08">ä¸Šä¸€é¡µ</a> | <a href="#" class="right-font08">ä¸‹ä¸€é¡µ</a> | <a href="#" class="right-font08">æœ«é¡µ</a>] è½¬è‡³ï¼š</td>
-                <td width="1%"><table width="20" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td width="1%"><input name="textfield3" type="text" class="right-textfield03" size="1" /></td>
-                      <td width="87%"><input name="Submit23222" type="submit" class="right-button06" value=" " />
-                      </td>
-                    </tr>
-                </table></td>
-              </tr>
-          </table></td>
-        </tr>
-      </table></td>
-  </tr>
-</table>
-</s:form>
+												<tr>
+													<td height="20" colspan="13" align="center"
+														bgcolor="#EEEEEE" class="tablestyle_title">ÓÃ»§ÁĞ±í</td>
+												</tr>
+												<tr>
+													<td width="5%" align="center" bgcolor="#EEEEEE">µÇÂ¼Ãû</td>
+													<td width="10%" height="20" align="center" bgcolor="#EEEEEE">ĞÕÃû</td>
+													<td width="10%" align="center" bgcolor="#EEEEEE">µ¥Î»</td>
+													<td width="6%" align="center" bgcolor="#EEEEEE">ÁªÏµµç»°</td>
+													<td width="9%" align="center" bgcolor="#EEEEEE">ÊÖ»ú</td>
+													<td width="16%" align="center" bgcolor="#EEEEEE">ÓÊÏä</td>
+													<td width="4%" align="center" bgcolor="#EEEEEE">²Ù×÷</td>
+												</tr>
+												<s:iterator value="userList" var="u">
+													<tr align="center" id="tr${u.id}">
+														<td bgcolor="#FFFFFF">${u.loginName}</td>
+														<td height="20" bgcolor="#FFFFFF"><a
+															href="showDP.shtml?department.id=${u.id}"></a>${u.name}</td>
+														<td bgcolor="#FFFFFF">${u.deptId}</td>
+														<td bgcolor="#FFFFFF">${u.phone}</td>
+														<td bgcolor="#FFFFFF">${u.mobile}</td>
+														<td bgcolor="#FFFFFF">${u.email}</td>
+														<td bgcolor="#FFFFFF"><a id="${u.id}"
+															href="javascript:doDelete(${u.id});">É¾³ı</a></td>
+													</tr>
+												</s:iterator>
 
-<div id="loadingmsg" style="width:100px; height:18px; top:0px; display:none;">
-	<img src="nn.gif" />
-</div>
+											</table></td>
+									</tr>
+								</table></td>
+						</tr>
+					</table>
+					<table width="95%" border="0" align="center" cellpadding="0"
+						cellspacing="0">
+						<tr>
+							<td height="6"><img src="images/spacer.gif" width="1"
+								height="1" /></td>
+						</tr>
+						<tr>
+							<td height="33"><table width="100%" border="0"
+									align="center" cellpadding="0" cellspacing="0"
+									class="right-font08">
+									<tr>
+										<td width="50%">¹² <span class="right-text09">5</span> Ò³ |
+											µÚ <span class="right-text09">1</span> Ò³
+										</td>
+										<td width="49%" align="right">[<a href="#"
+											class="right-font08">Ê×Ò³</a> | <a href="#"
+											class="right-font08">ÉÏÒ»Ò³</a> | <a href="#"
+											class="right-font08">ÏÂÒ»Ò³</a> | <a href="#"
+											class="right-font08">Ä©Ò³</a>] ×ªÖÁ£º
+										</td>
+										<td width="1%"><table width="20" border="0"
+												cellspacing="0" cellpadding="0">
+												<tr>
+													<td width="1%"><input name="textfield3" type="text"
+														class="right-textfield03" size="1" /></td>
+													<td width="87%"><input name="Submit23222"
+														type="submit" class="right-button06" value=" " /></td>
+												</tr>
+											</table></td>
+									</tr>
+								</table></td>
+						</tr>
+					</table></td>
+			</tr>
+		</table>
+
+	<div id="loadingmsg"
+		style="width: 100px; height: 18px; top: 0px; display: none;">
+		<img src="images/nn.gif" />
+	</div>
 
 </body>
 </html>

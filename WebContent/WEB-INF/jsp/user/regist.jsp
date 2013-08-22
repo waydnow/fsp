@@ -48,7 +48,7 @@ body {
         <td width="69%">
         	<s:select list="dps" var="department" listValue="name" listKey="id" name="user.deptId">
         	</s:select>
-			<a href="registDP.shtml">添加新单位</a>
+			<!-- <a href="registDP.shtml">添加新单位</a> -->
         </td>
         </tr>
       <tr>

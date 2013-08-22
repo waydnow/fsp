@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>武强县文教局审核系统-单位列表</title>
+<title>武强县文教局审核系统-添加单位</title>
 <style type="text/css">
 <!--
 body {
@@ -18,6 +18,19 @@ body {
 </style>
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
+<script language="javascript">
+	function checkSubmit(){
+		if($("#name").val()==""){
+			alert("请输入单位名称!");
+			return false;
+			}
+		if($("#manager").val()==""){
+			alert("请输入负责人!");
+			return false;
+			}
+		document.updateDP.submit();
+		}
+</script>
 </head>
 <body>
 
@@ -30,29 +43,25 @@ body {
 	
 	<s:form action="updateDP.shtml">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
+      <tr>
         <td width="31%" height="35" class="login-text02">单位名称<br /></td>
-        <td width="69%"><s:property value="department.name"/></td>
+        <td width="69%"><s:textfield name="department.name" id="name"/></td>
       </tr>
       <tr>
         <td height="35" class="login-text02">地址<br /></td>
-        <td><s:property value="department.address" /></td>
+        <td><s:textfield name="department.address" id="address"/></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">负责人<br /></td>
-        <td width="69%"><s:property value="department.manager"/></td>
+        <td width="69%"><s:textfield name="department.manager" id="manager"/></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">联系电话<br /></td>
-        <td width="69%"><s:property value="department.phone"/></td>
+        <td width="69%"><s:textfield name="department.phone" id="phone"/></td>
       </tr>
       <tr>
         <td height="35">&nbsp;</td>
-        <td>
-        <a style="text-decoration: none;" href="editDP.shtml?department.id=${department.id}">
-        <input type="button" value="修改" class="right-button02" />
-        </a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <!-- <input type="reset" class="right-button02"  value="重置"/> --></td>
+        <td><input type="button" value="保存" class="right-button02" onclick="checkSubmit();"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
       </tr>
     </table>
     </s:form>

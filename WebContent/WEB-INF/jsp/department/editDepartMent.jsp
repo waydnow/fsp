@@ -42,6 +42,7 @@ body {
     <td>
 	
 	<s:form action="updateDP.shtml">
+		<s:hidden name="department.id"/>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="31%" height="35" class="login-text02">单位名称<br /></td>
@@ -61,7 +62,10 @@ body {
       </tr>
       <tr>
         <td height="35">&nbsp;</td>
-        <td><input type="button" value="保存" class="right-button02" onclick="checkSubmit();"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
+        <td>
+        <input type="button" value="保存" class="right-button02" onclick="checkSubmit();"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- <input type="reset" class="right-button02"  value="重置"/> --></td>
       </tr>
     </table>
     </s:form>
