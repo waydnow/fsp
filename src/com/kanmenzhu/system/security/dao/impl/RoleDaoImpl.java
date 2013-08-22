@@ -31,19 +31,29 @@ public class RoleDaoImpl extends BaseDaoImpl<LuRole> implements RoleDao {
 
 	@Override
 	public List<LuRole> getRoles(List<LuRoleUser> roleUsers) {
-		String rid = "(";
-		for (LuRoleUser ru:roleUsers) {
-			rid = rid+ru.getRid()+",";
-		}
-		rid.substring(0, (rid.length()-1));
-		rid = rid+")";
-		String hql = "from LuRole r where r.id in "+rid;
-		List<LuRole> roles = getHibernateTemplate().find(hql);
-		if (roles!=null) {
-			return roles;
-		}else {
+		if (roleUsers==null) {
 			return null;
+		}else {
+			String hql = "";
+			if (roleUsers.size()>1) {
+				String rid = "(";
+				for (LuRoleUser ru:roleUsers) {
+					rid = rid+ru.getRid()+",";
+				}
+				rid = rid.substring(0,rid.length()-1);
+				rid = rid+")";
+				hql = "from LuRole r where r.id in "+rid;
+			} else {
+				hql = "from LuRole r where r.id ="+roleUsers.get(0).getRid();;
+			}
+			List<LuRole> roles = getHibernateTemplate().find(hql);
+			if (roles!=null) {
+				return roles;
+			}else {
+				return null;
+			}
 		}
+		
 	}
 	
 

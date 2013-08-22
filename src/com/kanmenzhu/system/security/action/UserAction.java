@@ -32,6 +32,7 @@ public class UserAction extends ActionSupport {
 
 	private LuUser user;
 	
+	private List<LuUser> userList;
 	private List<LuRole> roleList;
 	private RoleService roleService;
 	private String roleids;
@@ -100,6 +101,11 @@ public class UserAction extends ActionSupport {
 			addActionMessage(msg);
 		}
 		return ERROR;
+	}
+	
+	public String list(){
+		userList = userService.getAll(-1, -1);
+		return "list";
 	}
 	
 	public String welcome(){
@@ -188,6 +194,14 @@ public class UserAction extends ActionSupport {
 
 	public void setRuService(RoleUserService ruService) {
 		this.ruService = ruService;
+	}
+
+	public List<LuUser> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<LuUser> userList) {
+		this.userList = userList;
 	}
 	
 	

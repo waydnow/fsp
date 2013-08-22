@@ -15,6 +15,7 @@ import com.kanmenzhu.fsp.service.OrderDetailService;
 import com.kanmenzhu.fsp.service.OrderService;
 import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuRole;
+import com.kanmenzhu.system.security.entity.LuRoleUser;
 import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.RoleService;
@@ -35,7 +36,7 @@ public class OrderAction extends BaseAction {
 	private OrderDetailService odetailService;
 	private DepartmentService departmentService;
 	private GoodsService goodsService;
-	private RoleUserService roleUserService;
+	private RoleService roleService;
 	
 	public String regist(){
 		order = null;
@@ -98,8 +99,24 @@ public class OrderAction extends BaseAction {
 
 	public String list(){
 		//根据用户权限获取订单
-		List<LuRole> roleList = roleUserService.getRoleByUser(getCurrentUser());
-		orderList = orderService.getAll(-1, -1);
+		List<LuRole> roleList = roleService.getRoles(getCurrentUser());
+		if (roleList!=null) {
+			for (LuRole role : roleList) {
+				if (LuRole.SCHOOL.equals(role.getType())) {
+					//学校可查询所有状态订单
+					orderList = orderService.getAll(-1, -1);
+					return "list";
+				}else if (LuRole.MANAGER.equals(role.getType())) {
+					orderList = orderService.getOrdersByManager();
+					//文教局可查询审核中及审核通过及审核未通过的订单
+				}else if (LuRole.SUPPLIER.equals(role.getType())) {
+					//供应商可查询审核通过的订单
+					orderList = orderService.getOrdersBySupplier();
+				}
+			}
+		}
+		
+//		orderList = orderService.getAll(-1, -1);
 		return "list";
 	}
 	
@@ -252,6 +269,10 @@ public class OrderAction extends BaseAction {
 
 	public void setGoodMap(Map<Integer, LuGoods> goodMap) {
 		this.goodMap = goodMap;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
 	}
 	
 }

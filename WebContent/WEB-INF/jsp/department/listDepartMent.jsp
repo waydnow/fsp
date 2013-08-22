@@ -129,9 +129,9 @@ function on_load(){
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
-					                  <tr>
-                    <td height="20" colspan="13" align="center" bgcolor="#EEEEEE"class="tablestyle_title">单位列表</td>
-                    </tr>
+				<tr>
+                    <td height="20" colspan="6" align="center" bgcolor="#EEEEEE" class="tablestyle_title">单位列表</td>
+                  </tr>
                   <tr>
 				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">单位名称</td>

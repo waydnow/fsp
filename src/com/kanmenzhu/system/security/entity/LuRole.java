@@ -16,11 +16,11 @@ public class LuRole  extends BaseBean {
 	private String memo;
 	
 	/** 角色：文教局 */
-	public String MANAGER = "MANAGER";
+	public static String MANAGER = "MANAGER";
 	/** 角色：供应商 */
-	public String SUPPLIER = "SUPPLIER";
+	public static String SUPPLIER = "SUPPLIER";
 	/** 角色：学校 */
-	public String SCHOOL = "SCHOOL";
+	public static String SCHOOL = "SCHOOL";
 
 	public LuRole() {
 	}

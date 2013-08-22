@@ -26,6 +26,7 @@
 		<property name="departmentService" ref="departmentService"></property>
 		<property name="odetailService" ref="orderDetailService"></property>
 		<property name="goodsService" ref="goodsService"></property>
+		<property name="roleService" ref="roleService"></property>
 	</bean>
 	
 	<bean name="orderService" class="com.kanmenzhu.fsp.service.impl.OrderServiceImpl">
