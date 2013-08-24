@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>нДг©оьнд╫л╬жиС╨ко╣мЁ-сц╩╖ап╠М</title>
+<title>Г■╗Ф┬╥Е┬≈Х║╗</title>
 <style type="text/css">
 <!--
 body {
@@ -15,31 +15,26 @@ body {
 	margin-bottom: 0px;
 }
 
-.tabfont01 {
-	font-family: "кнлЕ";
+.tabfont01 {	
+	font-family: "Е╝▀Д╫⌠";
 	font-size: 9px;
 	color: #555555;
 	text-decoration: none;
 	text-align: center;
 }
-
-.font051 {
-	font-family: "кнлЕ";
+.font051 {font-family: "Е╝▀Д╫⌠";
 	font-size: 12px;
 	color: #333333;
 	text-decoration: none;
 	line-height: 20px;
 }
-
-.font201 {
-	font-family: "кнлЕ";
+.font201 {font-family: "Е╝▀Д╫⌠";
 	font-size: 12px;
 	color: #FF0000;
 	text-decoration: none;
 }
-
 .button {
-	font-family: "кнлЕ";
+	font-family: "Е╝▀Д╫⌠";
 	font-size: 14px;
 	height: 37px;
 }
@@ -85,21 +80,6 @@ html {
 			}
 		}
 	}
-	function doDelete(id) {
-		alert("уЩтзй╣ожжп");
-		return;
-		if (confirm("йг╥ЯуФр╙и╬ЁЩ?")) {
-			$.post("deleteDP.shtml?id=" + id, function(data) {
-				if (0 == data) {
-					alert("и╬ЁЩЁи╧╕!");
-					$("#tr" + id).remove();
-				} else {
-					alert("и╬ЁЩЁи╧╕!");
-				}
-			});
-		}
-
-	}
 
 	function on_load() {
 		var loadingmsg = document.getElementById("loadingmsg");
@@ -126,11 +106,9 @@ html {
 									cellspacing="0">
 									<tr>
 										<td width="21"><img src="images/ico07.gif" width="20" height="18" /></td>
-										<td width="550">пуцШ: <s:textfield name="user.name"/>
-											<input name="Submit" type="submit" class="right-button02" value="╡И я╞" /></td>
+										<td width="550">Е░█Г╖╟: <s:textfield name="user.name"/>
+											<input name="Submit" type="submit" class="right-button02" value="Ф░°Г╢╒" /></td>
 										<td width="132" align="left">
-											<!--<a href="#" onclick="sousuo()">
-			    <input name="Submit" type="button" class="right-button07" value="╦ъ╪╤кякВ" /></a> -->
 										</td>
 									</tr>
 								</table>
@@ -149,10 +127,8 @@ html {
 
 									<tr>
 										<td height="20"><span class="newfont07">
-												<!--  я║тЯё╨<a href="#" class="right-font08" onclick="selectAll();">х╚я║</a>-<a href="#" class="right-font08" onclick="unselectAll();">╥╢я║</a></span>
-	              <input name="Submit" type="button" class="right-button08" value="и╬ЁЩкЫя║оНд©пео╒" />-->
 												<input name="Submit2" type="button" class="right-button08"
-												value="лМ╪ссц╩╖"
+												value="ФЁ╗Е├▄"
 												onclick="javascript:window.location='registUA.shtml';" /></td>
 									</tr>
 									<tr>
@@ -161,29 +137,28 @@ html {
 												class="newfont03">
 
 												<tr>
-													<td height="20" colspan="13" align="center"
-														bgcolor="#EEEEEE" class="tablestyle_title">сц╩╖ап╠М</td>
+													<td height="20" colspan="7" align="center"
+														bgcolor="#EEEEEE" class="tablestyle_title">Г■╗Ф┬╥Е┬≈Х║╗</td>
 												</tr>
 												<tr>
-													<td width="5%" align="center" bgcolor="#EEEEEE">╣гб╪цШ</td>
-													<td width="10%" height="20" align="center" bgcolor="#EEEEEE">пуцШ</td>
-													<td width="10%" align="center" bgcolor="#EEEEEE">╣╔н╩</td>
-													<td width="6%" align="center" bgcolor="#EEEEEE">а╙о╣╣Г╩╟</td>
-													<td width="9%" align="center" bgcolor="#EEEEEE">йж╩З</td>
-													<td width="16%" align="center" bgcolor="#EEEEEE">сйоД</td>
-													<td width="4%" align="center" bgcolor="#EEEEEE">╡ывВ</td>
+													<td width="10%" align="center" bgcolor="#EEEEEE">Г≥╩Е╫∙Е░█</td>
+													<td width="10%" height="20" align="center" bgcolor="#EEEEEE">Г°÷Е╝·Е╖⌠Е░█</td>
+													<td width="10%" align="center" bgcolor="#EEEEEE">И┐╗И≈╗</td>
+													<td width="6%" align="center" bgcolor="#EEEEEE">Г■╣Х╞²</td>
+													<td width="6%" align="center" bgcolor="#EEEEEE">Ф┴▀Ф°╨</td>
+													<td width="9%" align="center" bgcolor="#EEEEEE">Г■╣Е╜░И┌╝Г╝╠</td>
+													<td width="4%" align="center" bgcolor="#EEEEEE">Е┬═И≥╓</td>
 												</tr>
 												<s:iterator value="userList" var="u">
 													<tr align="center" id="tr${u.id}">
-														<td bgcolor="#FFFFFF">${u.loginName}</td>
-														<td height="20" bgcolor="#FFFFFF"><a
-															href="showDP.shtml?department.id=${u.id}"></a>${u.name}</td>
-														<td bgcolor="#FFFFFF">${u.deptId}</td>
+														<td bgcolor="#FFFFFF"><a href="editUA.shtml?user.id=${u.id}">${u.loginName}</a></td>
+														<td height="20" bgcolor="#FFFFFF">${u.name}</td>
+														<td bgcolor="#FFFFFF">${u.depName}</td>
 														<td bgcolor="#FFFFFF">${u.phone}</td>
 														<td bgcolor="#FFFFFF">${u.mobile}</td>
 														<td bgcolor="#FFFFFF">${u.email}</td>
 														<td bgcolor="#FFFFFF"><a id="${u.id}"
-															href="javascript:doDelete(${u.id});">и╬ЁЩ</a></td>
+															href="javascript:doDelete(${u.id});">Е┬═И≥╓</a></td>
 													</tr>
 												</s:iterator>
 
@@ -192,39 +167,26 @@ html {
 								</table></td>
 						</tr>
 					</table>
-					<table width="95%" border="0" align="center" cellpadding="0"
-						cellspacing="0">
-						<tr>
-							<td height="6"><img src="images/spacer.gif" width="1"
-								height="1" /></td>
-						</tr>
-						<tr>
-							<td height="33"><table width="100%" border="0"
-									align="center" cellpadding="0" cellspacing="0"
-									class="right-font08">
-									<tr>
-										<td width="50%">╧╡ <span class="right-text09">5</span> рЁ |
-											╣з <span class="right-text09">1</span> рЁ
-										</td>
-										<td width="49%" align="right">[<a href="#"
-											class="right-font08">йврЁ</a> | <a href="#"
-											class="right-font08">иор╩рЁ</a> | <a href="#"
-											class="right-font08">обр╩рЁ</a> | <a href="#"
-											class="right-font08">д╘рЁ</a>] в╙жаё╨
-										</td>
-										<td width="1%"><table width="20" border="0"
-												cellspacing="0" cellpadding="0">
-												<tr>
-													<td width="1%"><input name="textfield3" type="text"
-														class="right-textfield03" size="1" /></td>
-													<td width="87%"><input name="Submit23222"
-														type="submit" class="right-button06" value=" " /></td>
-												</tr>
-											</table></td>
-									</tr>
-								</table></td>
-						</tr>
-					</table></td>
+					<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td height="6"><img src="images/spacer.gif" width="1" height="1" /></td>
+        </tr>
+        <tr>
+          <td height="33"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">
+              <tr>
+                <td width="50%">Е┘╠ <span class="right-text09">5</span> И║╣ | Г╛╛ <span class="right-text09">1</span> И║╣</td>
+                <td width="49%" align="right">[<a href="#" class="right-font08">И╕√И║╣</a> | <a href="#" class="right-font08">Д╦┼Д╦─И║╣</a> | <a href="#" class="right-font08">Д╦▀Д╦─И║╣</a> | <a href="#" class="right-font08">Ф°╚И║╣</a>] Х╫╛Х┤ЁО╪ </td>
+                <td width="1%"><table width="20" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="1%"><input name="textfield3" type="text" class="right-textfield03" size="1" /></td>
+                      <td width="87%"><input name="Submit23222" type="submit" class="right-button06" value=" " />
+                      </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+        </tr>
+      </table></td>
 			</tr>
 		</table>
 

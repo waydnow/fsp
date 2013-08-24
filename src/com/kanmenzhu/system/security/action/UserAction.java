@@ -128,6 +128,12 @@ public class UserAction extends ActionSupport {
 			userList=userService.findByName(user.getName());
 		}else{
 			userList=userService.getAll(-1, -1);
+			for (LuUser u : userList) {
+				LuDepartment d = departmentService.get(u.getDeptId(), LuDepartment.class);
+				if (d!=null) {
+					u.setDepName(d.getName());
+				}
+			}
 		}
 		return "list";
 	}
@@ -136,6 +142,24 @@ public class UserAction extends ActionSupport {
 	 * @return
 	 */
 	public String edit(){
+		if (null!=user) {
+			user = userService.get(user.getId(), LuUser.class);
+			if (user.getDeptId()!=null) {
+				LuDepartment d = departmentService.get(user.getDeptId(), LuDepartment.class);
+				if (null!=d) {
+					user.setDepName(d.getName());
+				}
+			}
+			List<LuRole> roles = roleService.getRoles(user);
+			if (roles!=null) {
+				String rs = "";
+				for (LuRole role : roles) {
+					rs = rs + role.getName()+";";
+				}
+				user.setRole(rs);
+			}
+			
+		}
 		return "edit";
 	}
 	/**
