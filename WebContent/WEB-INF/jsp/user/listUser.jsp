@@ -128,7 +128,7 @@ html {
 									<tr>
 										<td height="20"><span class="newfont07">
 												<input name="Submit2" type="button" class="right-button08"
-												value="注册"
+												value="添加新用户"
 												onclick="javascript:window.location='registUA.shtml';" /></td>
 									</tr>
 									<tr>

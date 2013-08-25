@@ -9,13 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.kanmenzhu.system.security.entity.LuUser;
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * 基础action
  * @author ch_w
  *
  */
-public class BaseAction {
+public class BaseAction extends ActionSupport {
 	public final String SUCC="success";
 	public final String FAIL="fail";
 	

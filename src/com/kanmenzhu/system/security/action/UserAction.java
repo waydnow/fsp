@@ -1,5 +1,6 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.Currency;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -22,7 +23,7 @@ import com.kanmenzhu.web.RandomImageAction;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class UserAction extends ActionSupport {
+public class UserAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	private Logger logger=LoggerFactory.getLogger(getClass());
 	
@@ -114,10 +115,18 @@ public class UserAction extends ActionSupport {
 	 * @return
 	 */
 	public String regist(){
-		user = null;
 		dps = departmentService.getAll();
-		roleList = roleService.getAll(-1, -1);
-		return "regist";
+		user = getCurrentUser();
+		if (user!=null) {
+			if ("admin".equals(user.getLoginName())) {
+				roleList = roleService.getAll(-1, -1);
+			}else {
+				roleList = roleService.getRoles(user);
+			}
+			user = null;
+			return "regist";
+		}
+		return welcome();
 	}
 	/**
 	 * 用户列表

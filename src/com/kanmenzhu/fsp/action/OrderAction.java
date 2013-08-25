@@ -116,7 +116,6 @@ public class OrderAction extends BaseAction {
 			}
 		}
 		
-//		orderList = orderService.getAll(-1, -1);
 		return "list";
 	}
 	
