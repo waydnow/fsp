@@ -94,9 +94,9 @@ var zNodes =[
 <body>
 <div>
 	<div class="divColumn">
-		<div id="left" style="border-style:solid;border-width:0px;border-right:1px solid;width:150px;">
+		<div id="left" >
 			<s:iterator value="rlist" id="role">
-				<span><a href="#" style="text-decoration: none;" id="${role.id}" onclick="refreshTree(${role.id})"><ul id="${role.id}" onmouseover="">${role.name}</ul></a></span>
+				<span style="border-style:solid;border-width:0px;border-right:1px solid;width:150px;"><a href="#" style="text-decoration: none;" id="${role.id}" onclick="refreshTree(${role.id})"><ul id="${role.id}" onmouseover="">${role.name}</ul></a></span>
 			</s:iterator>
 			
 		</div>
