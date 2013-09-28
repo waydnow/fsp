@@ -45,8 +45,13 @@ body {
 			$("#showOrder").submit();
 		} else if (type == 'updateAudit') {
 			document.updateAuditOD.submit();
+		} else if (type == 'auditNoPass') {
+			$("#showOrder").attr("action","auditNoPassOD.shtml");
+			$("#showOrder").submit();
+		} else if (type == 'auditPass') {
+			$("#showOrder").attr("action","auditPassOD.shtml");
+			$("#showOrder").submit();
 		}
-		
 	}
 	
 	$(document).ready(function(){
@@ -176,8 +181,7 @@ body {
 					</td>
 					<td height="20" bgcolor="#FFFFFF"><div id="dep-<s:property value='#status.index'/>"></div></td>
 					<td bgcolor="#FFFFFF">
-					<s:textfield name="odetailList[%{#status.index}].sendTime" id="time-%{#status.index}"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
-					<s:param name="value"><s:date name="new Date(odetailList[%{#status.index}].sendTime)" format="yyyy-MM-dd" /></s:param>
+					<s:textfield name="odetailList[%{#status.index}].sendTime"  id="time-%{#status.index}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
 					</s:textfield>
 					</td>
                     <td bgcolor="#FFFFFF"><s:textfield id="memo-%{#status.index}" name="odetailList[%{#status.index}].memo" /></td>
@@ -193,11 +197,15 @@ body {
               <tr>
                <td height="60"  width="50%"  align="center">
               	 <span class="newfont07" >
-              	 	<s:if test = "%{order.status == 0||order.status == 3}">
+              	 	<s:if test = "%{(order.status == 0||order.status == 3)&&roleList}">
               	 	<input name="add" type="button"  class="right-button08"  value="添加物品" onClick="addLine()" />
               	 	<input name="add" type="button"  class="right-button08"  value="更新订单" onClick="checkSubmit('update')" />
               	 	<input name="add" type="button"  class="right-button08"  value="提交订单" onClick="checkSubmit('audit')" />
                     <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit('updateAudit')" />
+              	 	</s:if>
+              	 	<s:if test = "%{order.status == 1}">
+                    <input name="add" type="button"  class="right-button08"  value="审核通过" onClick="checkSubmit('auditPass')" />
+              	 	<input name="add" type="button"  class="right-button08"  value="审核不通过" onClick="checkSubmit('auditNoPass')" />
               	 	</s:if>
                  </span>
                 </td>

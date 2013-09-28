@@ -78,7 +78,7 @@ body {
       <tr>
         <td width="31%" height="35" class="login-text02">用户角色：</td>
         <td width="69%">
-			<s:select name="roleids" list="roleList"  var="role" listKey="id" listValue="name" multiple="true"></s:select>
+			<s:select name="roleids" list="roleList"  var="role" listKey="id" listValue="name" multiple="false"></s:select>
 		</td>
       </tr>
       <tr>

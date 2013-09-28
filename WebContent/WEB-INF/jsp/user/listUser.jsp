@@ -142,7 +142,7 @@ html {
 												</tr>
 												<tr>
 													<td width="10%" align="center" bgcolor="#EEEEEE">登录名</td>
-													<td width="10%" height="20" align="center" bgcolor="#EEEEEE">真实姓名</td>
+													<td width="10%" height="20" align="center" bgcolor="#EEEEEE">联系人</td>
 													<td width="10%" align="center" bgcolor="#EEEEEE">部门</td>
 													<td width="6%" align="center" bgcolor="#EEEEEE">电话</td>
 													<td width="6%" align="center" bgcolor="#EEEEEE">手机</td>
@@ -157,8 +157,11 @@ html {
 														<td bgcolor="#FFFFFF">${u.phone}</td>
 														<td bgcolor="#FFFFFF">${u.mobile}</td>
 														<td bgcolor="#FFFFFF">${u.email}</td>
-														<td bgcolor="#FFFFFF"><a id="${u.id}"
-															href="javascript:doDelete(${u.id});">删除</a></td>
+														<td bgcolor="#FFFFFF">
+														<s:if test="#u.deptId!=0">
+														<a id="${u.id}"	href="javascript:doDelete(${u.id});">删除</a>
+														</s:if>
+														</td>
 													</tr>
 												</s:iterator>
 

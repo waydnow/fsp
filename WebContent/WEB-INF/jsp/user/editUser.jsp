@@ -58,7 +58,7 @@ body {
         <tr>
         <td width="31%" height="35" class="login-text02">单位：</td>
         <td width="69%">
-        	&nbsp;<s:property value="user.depName"/>
+        &nbsp;<s:property value="user.depName"/>
         </td>
         </tr>
       <tr>

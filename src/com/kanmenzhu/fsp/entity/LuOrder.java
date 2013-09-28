@@ -12,6 +12,18 @@ import com.kanmenzhu.bean.BaseBean;
 public class LuOrder extends BaseBean {
 
 	private static final long serialVersionUID = 1L;
+	
+	/**学校订单未提交*/
+	public static final int UNSUBMIT_ADUIT = 0;
+	/**学校提交订单，文教局审核中*/
+	public static final int ADUIT_ING = 1;
+	/**文教局审核通过*/
+	public static final int ADUIT_SUCCESS = 2;
+	/**文教局审核失败*/
+	public static final int ADUIT_FAIL = 3;
+	/**供应商提交真实订单给学校*/
+	public static final int ADUIT_END = 4;
+	
 	private int deptId;
 	private int createUserId;
 	private Date createTime;
@@ -21,6 +33,8 @@ public class LuOrder extends BaseBean {
 	private Date auditTime;
 	private String memo;
 	private String auditMemo;
+	
+	
 
 	public LuOrder() {
 	}
