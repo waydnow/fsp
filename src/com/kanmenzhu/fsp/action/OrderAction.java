@@ -124,6 +124,7 @@ public class OrderAction extends BaseAction {
 	}
 	
 	public String show() throws Exception{
+		roleList = roleService.getRoles(getCurrentUser());
 		goodsList = goodsService.getAll(-1, -1);
 		if (order!=null) {
 			order = orderService.get(order.getId(), LuOrder.class);
@@ -312,5 +313,15 @@ public class OrderAction extends BaseAction {
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
+
+	public List<LuRole> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<LuRole> roleList) {
+		this.roleList = roleList;
+	}
+	
+	
 	
 }
