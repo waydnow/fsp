@@ -20,5 +20,8 @@
         <property name="memo" type="string">
             <column name="MEMO" />
         </property>
+         <property name="type" type="string">
+            <column name="TYPE" />
+        </property>
     </class>
 </hibernate-mapping>

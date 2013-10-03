@@ -14,7 +14,7 @@ public class RoleUserDaoImpl extends BaseDaoImpl<LuRoleUser> implements RoleUser
 
 		String hql = "from LuRoleUser lu where lu.uid = ?";
 		List<LuRoleUser> roleUser = getHibernateTemplate().find(hql, user.getId());
-		if(roleUser!=null){
+		if(roleUser!=null&&roleUser.size()>0){
 			return roleUser;
 		}else{
 			return null;

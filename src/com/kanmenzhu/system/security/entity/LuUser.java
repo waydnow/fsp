@@ -19,6 +19,8 @@ public class LuUser extends BaseBean {
 	private Integer deltag;
 	private String headImg;
 	private String memo;
+	private String depName;
+	private String role;
 
 	public LuUser() {
 	}
@@ -124,6 +126,8 @@ public class LuUser extends BaseBean {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+	
+	
 	/**
 	 * 密码比较
 	 * @param u 待比较的用户
@@ -138,6 +142,22 @@ public class LuUser extends BaseBean {
 		return super.toString()+"LuUser [name=" + name + ", loginName=" + loginName + ", pwd="
 				+ pwd + ", deptId=" + deptId + ", phone=" + phone + ", mobile="
 				+ mobile + ", email=" + email + ", deltag=" + deltag + "]";
+	}
+
+	public String getDepName() {
+		return depName;
+	}
+
+	public void setDepName(String depName) {
+		this.depName = depName;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

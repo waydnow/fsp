@@ -17,6 +17,7 @@ body {
 -->
 </style>
 <link href="css/css.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" >
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script language="javascript">
 	function checkSubmit(){
@@ -36,7 +37,17 @@ body {
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td bgcolor="#4AA3D8"></td>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td height="62" background="images/nav04.gif">
+			<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="21" align="left">系统管理>>添加单位</td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
   </tr>
   <tr>
     <td>
@@ -44,19 +55,19 @@ body {
 	<s:form action="addDP.shtml">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="31%" height="35" class="login-text02">单位名称<br /></td>
+        <td width="31%" height="35" class="login-text02">单位名称：</td>
         <td width="69%"><s:textfield name="department.name" id="name"/></td>
       </tr>
       <tr>
-        <td height="35" class="login-text02">地址<br /></td>
+        <td height="35" class="login-text02">地址：</td>
         <td><s:textfield name="department.address" id="address"/></td>
       </tr>
       <tr>
-        <td width="31%" height="35" class="login-text02">负责人<br /></td>
+        <td width="31%" height="35" class="login-text02">负责人：</td>
         <td width="69%"><s:textfield name="department.manager" id="manager"/></td>
       </tr>
       <tr>
-        <td width="31%" height="35" class="login-text02">联系电话<br /></td>
+        <td width="31%" height="35" class="login-text02">联系电话：</td>
         <td width="69%"><s:textfield name="department.phone" id="phone"/></td>
       </tr>
       <tr>

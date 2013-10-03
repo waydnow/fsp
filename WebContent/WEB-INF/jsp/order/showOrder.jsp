@@ -1,4 +1,6 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@page import="com.kanmenzhu.system.security.entity.LuRole" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -38,18 +40,20 @@ body {
 				}
 			}
 		}
-		alert(type);
-		if (type == 'udpate') {
-			document.updateOD.submit();
+		if (type == 'update') {
+			$("#showOrder").submit();
 		} else if (type == 'audit') {
 			$("#showOrder").attr("action","auditOD.shtml");
 			$("#showOrder").submit();
-		} else if (type == 'udpateAudit') {
-			
-			
+		} else if (type == 'updateAudit') {
 			document.updateAuditOD.submit();
+		} else if (type == 'auditNoPass') {
+			$("#showOrder").attr("action","auditNoPassOD.shtml");
+			$("#showOrder").submit();
+		} else if (type == 'auditPass') {
+			$("#showOrder").attr("action","auditPassOD.shtml");
+			$("#showOrder").submit();
 		}
-		
 	}
 	
 	$(document).ready(function(){
@@ -166,11 +170,10 @@ body {
                     <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
-                  <s:iterator value="odetailList"  status="status">
+                  <s:iterator value="odetailList" var="detail"  status="status">
                   <tr align="center" id="odetail-<s:property value='#status.index'/>">
 				   <td height="20" bgcolor="#FFFFFF">
-				   <s:select list="goodsList" var="good" listValue="name"  name="odetailList[%{#status.index}].goodId" listKey="id"  id="goodid-%{#status.index}">
-        			</s:select>
+					<s:select list="goodsList" var="good" listValue="name"  name="odetailList[%{#status.index}].goodId" listKey="id"  id="goodid-%{#status.index}"> </s:select>
 				   </td>
                    <td height="20" bgcolor="#FFFFFF"><div id="price-<s:property value='#status.index'/>"></div></td>
                    <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-%{#status.index}" cssStyle="width:60px;"/>
@@ -178,7 +181,10 @@ body {
         				</s:select>
 					</td>
 					<td height="20" bgcolor="#FFFFFF"><div id="dep-<s:property value='#status.index'/>"></div></td>
-					<td bgcolor="#FFFFFF"><s:textfield  name="odetailList[%{#status.index}].sendTime"  id="time-%{#status.index}"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
+					<td bgcolor="#FFFFFF">
+					<s:textfield name="odetailList[%{#status.index}].sendTime"  id="time-%{#status.index}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
+					</s:textfield>
+					</td>
                     <td bgcolor="#FFFFFF"><s:textfield id="memo-%{#status.index}" name="odetailList[%{#status.index}].memo" /></td>
                     <td bgcolor="#FFFFFF"><input id="del-<s:property value='#status.index'/>" type="button" value="删除" /> </td>
                   </tr>
@@ -192,12 +198,31 @@ body {
               <tr>
                <td height="60"  width="50%"  align="center">
               	 <span class="newfont07" >
-              	 	<s:if test = "%{order.status == 0||order.status == 3}">
-              	 	<input name="add" type="button"  class="right-button08"  value="添加物品" onClick="addLine()" />
-              	 	<input name="add" type="button"  class="right-button08"  value="更新订单" onClick="checkSubmit('update')" />
-              	 	<input name="add" type="button"  class="right-button08"  value="提交订单" onClick="checkSubmit('audit')" />
-                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit('updateAudit')" />
+              	 <s:iterator value="roleList" var="role">
+              		 <s:if test="#role.type=='MANAGER'">
+	              	 	<s:if test = "%{order.status == 1}">
+	                    <input name="add" type="button"  class="right-button08"  value="审核通过" onClick="checkSubmit('auditPass')" />
+	              	 	<input name="add" type="button"  class="right-button08"  value="审核不通过" onClick="checkSubmit('auditNoPass')" />
+	              	 	</s:if>
               	 	</s:if>
+              	 	<s:if test="#role.type=='SCHOOL'">
+              	 		<s:if test = "%{order.status == 0||order.status == 3}">
+	              	 	<input name="add" type="button"  class="right-button08"  value="添加物品" onClick="addLine()" />
+	              	 	<input name="add" type="button"  class="right-button08"  value="更新订单" onClick="checkSubmit('update')" />
+	              	 	<input name="add" type="button"  class="right-button08"  value="提交订单" onClick="checkSubmit('audit')" />
+	                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit('updateAudit')" />
+	              	 	</s:if>
+	              	 	<s:if test = "%{order.status ==4}">
+	              	 	<input name="add" type="button" class="right-button08"  value="确认供应订单" onClick="checkSubmit('auditReal')" />
+	              	 	</s:if>
+              	 	</s:if>
+              	 	<s:if test="#role.type=='SUPPLIER'">
+              	 		<s:if test = "%{order.status == 2}">
+	              	 	<input name="add" type="button"  class="right-button08"  value="添加物品" onClick="addLine()" />
+	              	 	<input name="add" type="button"  class="right-button08"  value="保存供应订单" onClick="checkSubmit('updateReal')" />
+	              	 	</s:if>
+              	 	</s:if>
+              	 </s:iterator>
                  </span>
                 </td>
           	 </tr>

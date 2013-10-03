@@ -1,9 +1,11 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.Currency;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,7 @@ import com.kanmenzhu.web.RandomImageAction;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class UserAction extends ActionSupport {
+public class UserAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	private Logger logger=LoggerFactory.getLogger(getClass());
 	
@@ -39,6 +41,8 @@ public class UserAction extends ActionSupport {
 	
 	private List<LuDepartment> dps;
 	private LuDepartment department;
+	//用于界面显示
+	private List<LuUser> userList;
 	
 	public String add(){
 		String msg = null;
@@ -106,12 +110,72 @@ public class UserAction extends ActionSupport {
 		logger.info("####进入登录页面#####");
 		return "login";
 	}
-	
+	/**
+	 * 注册页面->
+	 * @return
+	 */
 	public String regist(){
-		user = null;
 		dps = departmentService.getAll();
-		roleList = roleService.getAll(-1, -1);
-		return "regist";
+		user = getCurrentUser();
+		if (user!=null) {
+			if ("admin".equals(user.getLoginName())) {
+				roleList = roleService.getAll(-1, -1);
+			}else {
+				roleList = roleService.getRoles(user);
+			}
+			user = null;
+			return "regist";
+		}
+		return welcome();
+	}
+	/**
+	 * 用户列表
+	 * @return
+	 */
+	public String list(){
+		if(user!=null&&StringUtils.isNotBlank(user.getName())){
+			userList=userService.findByName(user.getName());
+		}else{
+			userList=userService.getAll(-1, -1);
+			for (LuUser u : userList) {
+				LuDepartment d = departmentService.get(u.getDeptId(), LuDepartment.class);
+				if (d!=null) {
+					u.setDepName(d.getName());
+				}
+			}
+		}
+		return "list";
+	}
+	/**
+	 * 编辑
+	 * @return
+	 */
+	public String edit(){
+		if (null!=user) {
+			user = userService.get(user.getId(), LuUser.class);
+			if (user.getDeptId()!=null) {
+				LuDepartment d = departmentService.get(user.getDeptId(), LuDepartment.class);
+				if (null!=d) {
+					user.setDepName(d.getName());
+				}
+			}
+			List<LuRole> roles = roleService.getRoles(user);
+			if (roles!=null) {
+				String rs = "";
+				for (LuRole role : roles) {
+					rs = rs + role.getName()+";";
+				}
+				user.setRole(rs);
+			}
+			
+		}
+		return "edit";
+	}
+	/**
+	 * 修改保存
+	 */
+	public String update(){
+		return SUCCESS;
 	}
 
 	public void setVerifyCode(String verifyCode) {
@@ -188,6 +252,10 @@ public class UserAction extends ActionSupport {
 
 	public void setRuService(RoleUserService ruService) {
 		this.ruService = ruService;
+	}
+
+	public List<LuUser> getUserList() {
+		return userList;
 	}
 	
 	

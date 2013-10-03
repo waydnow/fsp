@@ -1,6 +1,6 @@
 body{
 	margin:0px;
-
+	font-size:12px;
 }
 
 html {
@@ -476,7 +476,7 @@ font-weight: bold;
 .main li a{
 	float:left;
 	width:310px;
-	text-overflow:ellipsis;/*文字超长则用省略号*/
+	text-overflow:ellipsis;/*鏂囧瓧瓒呴暱鍒欑敤鐪佺暐鍙�/
 	white-space:nowrap;
 	overflow : hidden;
 }
@@ -500,7 +500,7 @@ div{
 	  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
-/*整合的CSS*/
+/*鏁村悎鐨凜SS*/
 
 .tablestyle_title{
 	/*height: 20px; font-style: normal; font-variant: normal; font-weight: bold; font-size: 16px;letter-spacing: 2px; text-align: middle; border-top: 2px solid #ff7300; padding-left: 10px; background-color: #f0f0f0;text-align:center;*/

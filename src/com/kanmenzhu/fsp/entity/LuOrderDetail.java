@@ -15,6 +15,7 @@ public class LuOrderDetail extends BaseBean {
 	private int goodId;
 	private int orderId;
 	private Date sendTime;
+	private String send;
 	private int goodNum;
 	private String goodUnit;
 	private String memo;
@@ -119,6 +120,14 @@ public class LuOrderDetail extends BaseBean {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getSend() {
+		return send;
+	}
+
+	public void setSend(String send) {
+		this.send = send;
 	}
 
 }
