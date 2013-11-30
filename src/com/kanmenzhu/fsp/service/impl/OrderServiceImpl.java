@@ -23,6 +23,12 @@ public class OrderServiceImpl extends BaseServiceImpl<LuOrder> implements OrderS
 		return orders;
 	}
 
+	@Override
+	public List<LuOrder> getOrdersByTime() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

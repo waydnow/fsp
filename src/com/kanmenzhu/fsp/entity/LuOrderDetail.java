@@ -13,6 +13,7 @@ public class LuOrderDetail extends BaseBean {
 	private static final long serialVersionUID = 1L;
 	/**订单id*/
 	private int goodId;
+	private String goodName;
 	private int orderId;
 	private Date sendTime;
 	private String send;
@@ -23,6 +24,8 @@ public class LuOrderDetail extends BaseBean {
 	private int parentId;
 	private int userId;
 	private Date createTime;
+	private String depName;
+	private String price;
 
 	public LuOrderDetail() {
 	}
@@ -128,6 +131,30 @@ public class LuOrderDetail extends BaseBean {
 
 	public void setSend(String send) {
 		this.send = send;
+	}
+
+	public String getGoodName() {
+		return goodName;
+	}
+
+	public void setGoodName(String goodName) {
+		this.goodName = goodName;
+	}
+
+	public String getDepName() {
+		return depName;
+	}
+
+	public void setDepName(String depName) {
+		this.depName = depName;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
 	}
 
 }

@@ -23,9 +23,19 @@ body {
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+<script language="javascript" type="text/javascript">
+	function exportXls(){
+		$("#exportXls").attr("action","exportListOD.shtml");
+		$("#exportXls").submit();
+	}  
+	function showXls(){
+		$("#exportXls").attr("action","showXlsOD.shtml");
+		$("#exportXls").submit();
+	}
+</script>
 </head>
 <body>
-<s:form action="updateOD.shtml" id="showOrder">
+<s:form action="exportListOD.shtml" id="exportXls">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -39,7 +49,7 @@ body {
 			</td>
 		</tr>
 	</table>
-  </tr>
+	</tr>
   <tr>
     <td>
     <table id="subtree1" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -47,14 +57,55 @@ body {
           <td>
           <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" >
 			<tr>
-			 <td height="20">导出订单  ： </td>
-			 <td>开始日期:<s:textfield name="beginTime" /></td>
-			 <td>结束日期:<s:textfield name="endTime" /></td>
+			 <td width="2%"><img src="images/ico07.gif" width="20" height="18" /></td>
+			 <td>导出订单  ： </td>
+			 <td>开始日期:<s:textfield name="beginTime" readonly="true" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" /></td>
+			 <td>结束日期:<s:textfield name="endTime" readonly="true" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" /></td>
 			</tr>
           </table>
           </td>
        </tr>
+         <tr>
+           <td height="60"  width="50%"  align="center">
+          	 <span class="newfont07" >
+               <input type="button" class="right-button08" value="查询" onClick="showXls()" />
+               <input type="button" class="right-button08" value="导出订单" onClick="exportXls()" />
+             </span>
+           </td>
+         </tr>
      </table>
+     <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" >
+              <tr>
+                <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
+
+					 <tr>
+                    <td height="20" colspan="6" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单明细</td>
+                    </tr>
+                  <tr>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">物品</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">物品单价</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">物品数量</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">供货单位</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">送货时间</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
+                  </tr>
+                  <s:iterator value="odetailList" var="detail"  status="status">
+                  <tr align="center">
+				   <td height="20" bgcolor="#FFFFFF">
+					<s:text name="odetailList[%{#status.index}].goodName"/>
+				   </td>
+                   <td height="20" bgcolor="#FFFFFF"><s:text name="odetailList[%{#status.index}].price"/></td>
+                   <td bgcolor="#FFFFFF" ><s:text name="odetailList[%{#status.index}].goodNum"/>
+                   	<s:text name="odetailList[%{#status.index}].goodUnit"/>
+					</td>
+					<td height="20" bgcolor="#FFFFFF"><s:text name="odetailList[%{#status.index}].depName"/></td>
+					<td bgcolor="#FFFFFF">
+					<s:text name="odetailList[%{#status.index}].send" />
+					</td>
+                    <td bgcolor="#FFFFFF"><s:text name="odetailList[%{#status.index}].memo" /></td>
+                  </tr>
+				  </s:iterator>
+                </table>
      </td>
   </tr>
 </table>

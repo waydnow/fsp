@@ -45,9 +45,7 @@ html { overflow-x: auto; overflow-y: auto; border:0;}
 <script type="text/javascript" src="js/xiangmu.js"></script>
 </head>
 <script language="JavaScript" type="text/javascript">
-function sousuo(){
-	window.open("gaojisousuo.htm","","depended=0,alwaysRaised=1,width=800,height=510,location=0,menubar=0,resizable=0,scrollbars=0,status=0,toolbar=0");
-}
+
 function selectAll(){
 	var obj = document.fom.elements;
 	for (var i=0;i<obj.length;i++){

@@ -2,8 +2,10 @@ package com.kanmenzhu.fsp.action;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,7 @@ import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.RoleService;
 import com.kanmenzhu.web.BaseAction;
 import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
+import com.sun.org.apache.bcel.internal.generic.LUSHR;
 
 public class OrderAction extends BaseAction {
 	
@@ -46,9 +49,9 @@ public class OrderAction extends BaseAction {
 	private Map<Integer, LuDepartment> goodDept;
 	private Map<Integer,LuGoods> goodMap;
 	/** 订单开始时间 */
-	private Date beginTime;
+	private String beginTime;
 	/** 订单结束时间 */
-	private Date endTime;
+	private String endTime;
 	
 	private OrderService orderService;
 	private OrderDetailService odetailService;
@@ -246,13 +249,54 @@ public class OrderAction extends BaseAction {
 		return list();
 	}
 	
-	public String export(){
-		Date oldTime = new Date();
+	public String exportList(){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		
-		beginTime = new Date();
-		endTime = new Date();
-		return list();
+		try {
+			Date start = format.parse(beginTime);
+			Date end = format.parse(endTime);
+			List<LuOrderDetail> list = odetailService.getOrderDetailsByTime(start, end);
+		} catch (ParseException e) {
+			logger.error("时间格式错误！",e);
+		}
+		return "export";
+	}
+	
+	public String showXls(){
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date start = format.parse(beginTime);
+			Date end = format.parse(endTime);
+			Calendar endtime = Calendar.getInstance();
+			endtime.setTime(end);
+			endtime.add(Calendar.DATE, 1);
+			end = endtime.getTime();
+			odetailList = odetailService.getOrderDetailsByTime(start, end);
+			for (LuOrderDetail detail : odetailList) {
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				detail.setSend(format2.format(detail.getSendTime()));
+				LuGoods goods = goodsService.get(detail.getGoodId(), LuGoods.class);
+				if (null!=goods) {
+					detail.setGoodName(goods.getName());
+					detail.setPrice(goods.getPrice()+"元/"+goods.getUnit());
+					LuDepartment dep = departmentService.get(goods.getDeptId(), LuDepartment.class);
+					if (null!=dep) {
+						detail.setDepName(dep.getName());
+					}
+				}
+			}
+		} catch (ParseException e) {
+			logger.error("时间格式错误！",e);
+		}
+		return "export";
+	}
+	
+	public String export(){
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		beginTime = format.format(new Date());
+		Calendar now = Calendar.getInstance();
+		now.add(Calendar.WEEK_OF_MONTH, 1);
+		endTime = format.format(now.getTime());
+		return "export";
 	}
 	
 	public static String exportXls(){
@@ -484,22 +528,21 @@ public class OrderAction extends BaseAction {
 		this.roleList = roleList;
 	}
 
-	public Date getBeginTime() {
+	public String getBeginTime() {
 		return beginTime;
 	}
 
-	public void setBeginTime(Date beginTime) {
+	public void setBeginTime(String beginTime) {
 		this.beginTime = beginTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	
-	
+
 	
 }

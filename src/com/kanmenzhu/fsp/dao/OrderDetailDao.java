@@ -1,5 +1,6 @@
 package com.kanmenzhu.fsp.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.kanmenzhu.dao.BaseDao;
@@ -13,5 +14,7 @@ import com.kanmenzhu.fsp.entity.LuOrderDetail;
 public interface OrderDetailDao extends BaseDao<LuOrderDetail> {
 
 	List<LuOrderDetail> getOrderDetailByOrderId(Integer orderId);
+
+	List<LuOrderDetail> getOrderDetailsByTime(Date start, Date end);
 
 }
