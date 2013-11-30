@@ -16,4 +16,6 @@ public interface OrderService extends BaseService<LuOrder> {
 	
 	public List<LuOrder> getOrdersBySupplier();
 	
+	public List<LuOrder> getOrdersByTime();
+	
 }

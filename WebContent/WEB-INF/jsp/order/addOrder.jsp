@@ -17,6 +17,7 @@ body {
 -->
 </style>
 <link href="css/css.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <script language="javascript" type="text/javascript"  id="mainjs" >
@@ -105,6 +106,19 @@ body {
 <body>
 <s:form action="addOD.shtml">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td height="62" background="images/nav04.gif">
+			<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="21" align="left">订单管理 >> 添加订单</td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+  </tr>
   <tr>
     <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
 

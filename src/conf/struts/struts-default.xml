@@ -37,6 +37,7 @@
     		<result name="show">/WEB-INF/jsp/order/showOrder.jsp</result>
   			<result name="list">/WEB-INF/jsp/order/listOrder.jsp</result>
    			<result name="edit">/WEB-INF/jsp/order/editOrder.jsp</result>
+   			<result name="export">/WEB-INF/jsp/order/exportOrder.jsp</result>
   		</action>
 	</package>
 </struts>

@@ -150,6 +150,19 @@ body {
 <body>
 <s:form action="updateOD.shtml" id="showOrder">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td height="62" background="images/nav04.gif">
+			<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="21" align="left">订单管理  >> 订单列表 >> 订单详情</td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+  </tr>
   <tr>
     <td><table id="subtree1" width="100%" border="0" cellspacing="0" cellpadding="0">
 

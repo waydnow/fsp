@@ -105,8 +105,9 @@ html {
 								<table width="98%" border="0" align="center" cellpadding="0"
 									cellspacing="0">
 									<tr>
-										<td width="21"><img src="images/ico07.gif" width="20" height="18" /></td>
-										<td width="550">名称: <s:textfield name="user.name"/>
+										<td width="25%" align="left">用户管理  >> 用户列表 </td>
+										<td width="5%"><img src="images/ico07.gif" width="20" height="18" /></td>
+										<td width="70%">名称: <s:textfield name="user.name"/>
 											<input name="Submit" type="submit" class="right-button02" value="搜索" /></td>
 										<td width="132" align="left">
 										</td>
@@ -122,14 +123,10 @@ html {
 						border="0" cellspacing="0" cellpadding="0">
 
 						<tr>
-							<td><table width="95%" border="0" align="center"
-									cellpadding="0" cellspacing="0">
+							<td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
 
 									<tr>
-										<td height="20"><span class="newfont07">
-												<input name="Submit2" type="button" class="right-button08"
-												value="添加新用户"
-												onclick="javascript:window.location='registUA.shtml';" /></td>
+										<td>&nbsp;</td>
 									</tr>
 									<tr>
 										<td height="40" class="font42"><table width="100%"
@@ -169,8 +166,14 @@ html {
 									</tr>
 								</table></td>
 						</tr>
+						
+						<tr>
+							<td height="30" align="center">
+							<input name="Submit2" type="button" class="right-button08" value="添加新用户" onclick="javascript:window.location='registUA.shtml';" />
+							</td>
+						</tr>
 					</table>
-					<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
           <td height="6"><img src="images/spacer.gif" width="1" height="1" /></td>
         </tr>

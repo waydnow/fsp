@@ -42,7 +42,7 @@ body {
 			<td height="62" background="images/nav04.gif">
 			<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 				<tr>
-					<td width="21" align="left">系统管理>>添加用户</td>
+					<td width="21" align="left">系统管理 >> 添加用户</td>
 				</tr>
 			</table>
 			</td>

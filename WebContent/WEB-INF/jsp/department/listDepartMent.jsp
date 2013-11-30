@@ -103,8 +103,9 @@ function on_load(){
           
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
-			<td width="21"><img src="images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：按时间：
+		  <td width="25%" align="left">用户管理  >> 用户列表 </td>
+			<td width="5%"><img src="images/ico07.gif" width="20" height="18" /></td>
+			<td width="70%">查看内容：按时间：
               <input name="textfield" type="text" size="12" readonly="readonly"/><span class="newfont06">至</span>
 			 <input name="textfield" type="text" size="12" readonly="readonly"/>	
 			 <input name="Submit" type="button" class="right-button02" value="查 询" /></td>

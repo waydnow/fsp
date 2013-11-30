@@ -1,28 +1,21 @@
 package com.kanmenzhu.fsp.action;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.Region;
-import org.apache.struts2.ServletActionContext;
 
 import com.kanmenzhu.fsp.entity.LuGoods;
 import com.kanmenzhu.fsp.entity.LuOrder;
@@ -253,7 +246,16 @@ public class OrderAction extends BaseAction {
 		return list();
 	}
 	
-	public static String export(){
+	public String export(){
+		Date oldTime = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		beginTime = new Date();
+		endTime = new Date();
+		return list();
+	}
+	
+	public static String exportXls(){
 		
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet("采购计划");
@@ -261,7 +263,7 @@ public class OrderAction extends BaseAction {
 		HSSFCellStyle styleRow0 = workbook.createCellStyle();
 		Font fontRow0 = workbook.createFont();
 		//设置字体
-		fontRow0.setBoldweight((short)3);
+		fontRow0.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		fontRow0.setFontName("宋体");
 		fontRow0.setFontHeightInPoints((short)24);
 		styleRow0.setFont(fontRow0);
@@ -269,7 +271,7 @@ public class OrderAction extends BaseAction {
 		styleRow0.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		styleRow0.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		HSSFRow row0 = sheet.createRow(0);
-		row0.setHeightInPoints(28);
+		row0.setHeightInPoints((float)31.5);
 		sheet.addMergedRegion(new Region(0,(short)0,0,(short)4));
 		HSSFCell row0Cell0 = row0.createCell(0);
 		row0Cell0.setCellStyle(styleRow0);
@@ -279,10 +281,10 @@ public class OrderAction extends BaseAction {
 		Font fontRow1 = workbook.createFont();
 		//设置字体
 		fontRow1.setFontName("宋体");
-		fontRow1.setFontHeightInPoints((short)16);
+		fontRow1.setFontHeightInPoints((short)18);
 		styleRow1.setFont(fontRow1);
 		HSSFRow row1 = sheet.createRow(1);
-		row1.setHeightInPoints(18);
+		row1.setHeightInPoints((float)20.25);
 		HSSFCell row1Cell0 = row1.createCell(0);
 		row1Cell0.setCellStyle(styleRow1);
 		row1Cell0.setCellValue("学校：");
@@ -291,31 +293,92 @@ public class OrderAction extends BaseAction {
 		row1Cell3.setCellStyle(styleRow1);
 		row1Cell3.setCellValue("日期：");
 		//第三行
+		HSSFCellStyle styleRow2 = workbook.createCellStyle();
+		Font fontRow2 = workbook.createFont();
+		//设置字体
+		fontRow2.setFontName("宋体");
+		fontRow2.setFontHeightInPoints((short)16);
+		styleRow2.setFont(fontRow2);
 		HSSFRow row2 = sheet.createRow(2);
+		row2.setHeightInPoints((float)20.25);
 		sheet.addMergedRegion(new Region(2,(short)0,2,(short)4));
-		row2.createCell(0).setCellValue("餐厅经理签字：");
+		HSSFCell row2Cell0 = row2.createCell(0);
+		row2Cell0.setCellStyle(styleRow2);
+		row2Cell0.setCellValue("餐厅经理签字：");
 		//第四行，标题行
+		HSSFCellStyle styleRow3 = workbook.createCellStyle();
+		Font fontRow3 = workbook.createFont();
+		//设置字体
+		fontRow3.setFontName("宋体");
+		fontRow3.setFontHeightInPoints((short)18);
+		styleRow3.setFont(fontRow3);
+		styleRow3.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleRow3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleRow3.setBorderBottom(HSSFCellStyle.BORDER_THIN);  
+		styleRow3.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+		styleRow3.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+		styleRow3.setBorderRight(HSSFCellStyle.BORDER_THIN);  
 		HSSFRow row3 = sheet.createRow(3);
-		row3.createCell(0).setCellValue("采购物品名称");
-		row3.createCell(1).setCellValue("数量");
-		row3.createCell(2).setCellValue("单位");
-		row3.createCell(3).setCellValue("需送达时间");
-		row3.createCell(4).setCellValue("备注");
+		row3.setHeightInPoints((float)22.5);
+		HSSFCell row3Cell0 = row3.createCell(0);
+		row3Cell0.setCellValue("采购物品名称");
+		row3Cell0.setCellStyle(styleRow3);
+		sheet.setColumnWidth(0, 22*256);
+		HSSFCell row3Cell1 = row3.createCell(1);
+		row3Cell1.setCellValue("数量");
+		row3Cell1.setCellStyle(styleRow3);
+		sheet.setColumnWidth(1, 17*256);
+		HSSFCell row3Cell2 = row3.createCell(2);
+		row3Cell2.setCellStyle(styleRow3);
+		row3Cell2.setCellValue("单位");
+		sheet.setColumnWidth(2, 17*256);
+		HSSFCell row3Cell3 = row3.createCell(3);
+		row3Cell3.setCellStyle(styleRow3);
+		row3Cell3.setCellValue("需送达时间");
+		sheet.setColumnWidth(3, 20*256);
+		HSSFCell row3Cell4 = row3.createCell(4);
+		row3Cell4.setCellStyle(styleRow3);
+		row3Cell4.setCellValue("备注");
+		sheet.setColumnWidth(4, 20*256);
 		int num = 4;
 		for (int i = 4; i < num+4; i++) {
 			HSSFRow rowi = sheet.createRow(i);
-			rowi.createCell(0).setCellValue("茄子"+i);
-			rowi.createCell(1).setCellValue("100"+i);
-			rowi.createCell(2).setCellValue("斤"+i);
-			rowi.createCell(3).setCellValue("2012-01-01"+i);
-			rowi.createCell(4).setCellValue("周"+i);
+			rowi.setHeightInPoints((float)22.5);
+			HSSFCell rowiCell0 = rowi.createCell(0);
+			rowiCell0.setCellStyle(styleRow3);
+			rowiCell0.setCellValue("茄子"+i);
+			HSSFCell rowiCell1 = rowi.createCell(1);
+			rowiCell1.setCellStyle(styleRow3);
+			rowiCell1.setCellValue("100"+i);
+			HSSFCell rowiCell2 = rowi.createCell(2);
+			rowiCell2.setCellStyle(styleRow3);
+			rowiCell2.setCellValue("100"+i);
+			HSSFCell rowiCell3 = rowi.createCell(3);
+			rowiCell3.setCellStyle(styleRow3);
+			rowiCell3.setCellValue("100"+i);
+			HSSFCell rowiCell4 = rowi.createCell(4);
+			rowiCell4.setCellStyle(styleRow3);
+			rowiCell4.setCellValue("100"+i);
 		}
 		HSSFRow rowlast = sheet.createRow(4+num);
-		rowlast.createCell(0).setCellValue("审批人");
-		rowlast.createCell(3).setCellValue("公章");
+		HSSFCellStyle styleRowlast = workbook.createCellStyle();
+		Font fontRowlast = workbook.createFont();
+		//设置字体
+		fontRowlast.setFontName("宋体");
+		//字体大小
+		fontRowlast.setFontHeightInPoints((short)12);
+		styleRowlast.setFont(fontRowlast);
+		rowlast.setHeightInPoints((float)39);
+		styleRowlast.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		HSSFCell rowlastCell0 = rowlast.createCell(0);
+		rowlastCell0.setCellStyle(styleRowlast);
+		rowlastCell0.setCellValue("审批人");
+		HSSFCell rowlastCell3 = rowlast.createCell(3);
+		rowlastCell3.setCellStyle(styleRowlast);
+		rowlastCell3.setCellValue("公章");
 		FileOutputStream file;
 		try {
-			file = new FileOutputStream("workbook.xls");
+			file = new FileOutputStream("workbook1.xls");
 			workbook.write(file);
 			file.close();
 		} catch (IOException e) {
@@ -326,7 +389,7 @@ public class OrderAction extends BaseAction {
 	}
 	
 	public static void main(String[] args) {
-		export();
+		exportXls();
 	}
 	
 	public LuOrder getOrder() {
