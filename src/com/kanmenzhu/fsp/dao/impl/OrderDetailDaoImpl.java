@@ -23,7 +23,7 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 
 	@Override
 	public List<LuOrderDetail> getOrderDetailsByTime(Date start, Date end) {
-		String hql = "from LuOrderDetail d where d.sendTime between ? and ? order by d.sendTime desc";
+		String hql = "from LuOrderDetail d where d.sendTime between ? and ? order by d.sendTime asc";
 		List<LuOrderDetail> list = findByHql(hql, -1, -1, start,end);
 		return list;
 	}

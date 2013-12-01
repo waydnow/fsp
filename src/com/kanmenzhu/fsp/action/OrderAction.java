@@ -1,7 +1,12 @@
 package com.kanmenzhu.fsp.action;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,7 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -30,9 +34,8 @@ import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.RoleService;
 import com.kanmenzhu.web.BaseAction;
-import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
-import com.sun.org.apache.bcel.internal.generic.LUSHR;
 
+@SuppressWarnings("deprecation")
 public class OrderAction extends BaseAction {
 	
 	/**
@@ -52,6 +55,8 @@ public class OrderAction extends BaseAction {
 	private String beginTime;
 	/** 订单结束时间 */
 	private String endTime;
+	/** 下载文件名称 */
+	private String fileName;
 	
 	private OrderService orderService;
 	private OrderDetailService odetailService;
@@ -254,11 +259,64 @@ public class OrderAction extends BaseAction {
 		try {
 			Date start = format.parse(beginTime);
 			Date end = format.parse(endTime);
-			List<LuOrderDetail> list = odetailService.getOrderDetailsByTime(start, end);
+			Calendar endtime = Calendar.getInstance();
+			endtime.setTime(end);
+			endtime.add(Calendar.DATE, 1);
+			end = endtime.getTime();
+			odetailList = odetailService.getOrderDetailsByTime(start, end);
+			for (LuOrderDetail detail : odetailList) {
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				detail.setSend(format2.format(detail.getSendTime()));
+				LuGoods goods = goodsService.get(detail.getGoodId(), LuGoods.class);
+				if (null!=goods) {
+					detail.setGoodName(goods.getName());
+					detail.setPrice(goods.getPrice()+"元/"+goods.getUnit());
+					LuDepartment dep = departmentService.get(goods.getDeptId(), LuDepartment.class);
+					if (null!=dep) {
+						detail.setDepName(dep.getName());
+					}
+				}
+			}
+			//exportXls(odetailList);
 		} catch (ParseException e) {
 			logger.error("时间格式错误！",e);
 		}
-		return "export";
+		return "success";
+	}
+	
+	/**
+	 * 文件下载
+	 * @return
+	 */
+	public InputStream getDownload(){
+		InputStream is=null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date start = format.parse(beginTime);
+			Date end = format.parse(endTime);
+			Calendar endtime = Calendar.getInstance();
+			endtime.setTime(end);
+			endtime.add(Calendar.DATE, 1);
+			end = endtime.getTime();
+			odetailList = odetailService.getOrderDetailsByTime(start, end);
+			for (LuOrderDetail detail : odetailList) {
+				SimpleDateFormat format2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				detail.setSend(format2.format(detail.getSendTime()));
+				LuGoods goods = goodsService.get(detail.getGoodId(), LuGoods.class);
+				if (null!=goods) {
+					detail.setGoodName(goods.getName());
+					detail.setPrice(goods.getPrice()+"元/"+goods.getUnit());
+					LuDepartment dep = departmentService.get(goods.getDeptId(), LuDepartment.class);
+					if (null!=dep) {
+						detail.setDepName(dep.getName());
+					}
+				}
+			}
+			is=exportXls(odetailList);
+		} catch (ParseException e) {
+			logger.error("时间格式错误！",e);
+		}
+		return is;
 	}
 	
 	public String showXls(){
@@ -296,11 +354,23 @@ public class OrderAction extends BaseAction {
 		Calendar now = Calendar.getInstance();
 		now.add(Calendar.WEEK_OF_MONTH, 1);
 		endTime = format.format(now.getTime());
+		odetailList= new ArrayList<LuOrderDetail>();
 		return "export";
 	}
+
 	
-	public static String exportXls(){
-		
+	public InputStream exportXls(List<LuOrderDetail> list){
+		fileName = "";
+		LuDepartment dep = departmentService.get(getCurrentUser().getDeptId(), LuDepartment.class);
+		if (null!=dep) {
+			fileName = fileName+dep.getName();
+		}
+		fileName = fileName+beginTime+"至"+endTime+"采购计划";
+		try {
+			URLEncoder.encode(fileName, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			logger.error("下载文件名转换中文错误！",e1);
+		} 
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet("采购计划");
 		//第一行
@@ -319,7 +389,7 @@ public class OrderAction extends BaseAction {
 		sheet.addMergedRegion(new Region(0,(short)0,0,(short)4));
 		HSSFCell row0Cell0 = row0.createCell(0);
 		row0Cell0.setCellStyle(styleRow0);
-		row0Cell0.setCellValue("20-23号采集计划");
+		row0Cell0.setCellValue(beginTime+"至"+endTime+"采集计划");
 		//第二行
 		HSSFCellStyle styleRow1 = workbook.createCellStyle();
 		Font fontRow1 = workbook.createFont();
@@ -335,7 +405,8 @@ public class OrderAction extends BaseAction {
 		sheet.addMergedRegion(new Region(1, (short)3, 1, (short)4));
 		HSSFCell row1Cell3 = row1.createCell(3);
 		row1Cell3.setCellStyle(styleRow1);
-		row1Cell3.setCellValue("日期：");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		row1Cell3.setCellValue("日期："+format.format(new Date()));
 		//第三行
 		HSSFCellStyle styleRow2 = workbook.createCellStyle();
 		Font fontRow2 = workbook.createFont();
@@ -379,30 +450,36 @@ public class OrderAction extends BaseAction {
 		HSSFCell row3Cell3 = row3.createCell(3);
 		row3Cell3.setCellStyle(styleRow3);
 		row3Cell3.setCellValue("需送达时间");
-		sheet.setColumnWidth(3, 20*256);
+		sheet.setColumnWidth(3, 25*256);
 		HSSFCell row3Cell4 = row3.createCell(4);
 		row3Cell4.setCellStyle(styleRow3);
 		row3Cell4.setCellValue("备注");
 		sheet.setColumnWidth(4, 20*256);
-		int num = 4;
-		for (int i = 4; i < num+4; i++) {
-			HSSFRow rowi = sheet.createRow(i);
+		int num = list.size();
+		for (int i = 0; i < num; i++) {
+			LuOrderDetail detail = list.get(i);
+			HSSFRow rowi = sheet.createRow(i+4);
 			rowi.setHeightInPoints((float)22.5);
 			HSSFCell rowiCell0 = rowi.createCell(0);
 			rowiCell0.setCellStyle(styleRow3);
-			rowiCell0.setCellValue("茄子"+i);
+			rowiCell0.setCellValue(detail.getGoodName());
 			HSSFCell rowiCell1 = rowi.createCell(1);
 			rowiCell1.setCellStyle(styleRow3);
-			rowiCell1.setCellValue("100"+i);
+			rowiCell1.setCellValue(detail.getGoodNum());
 			HSSFCell rowiCell2 = rowi.createCell(2);
 			rowiCell2.setCellStyle(styleRow3);
-			rowiCell2.setCellValue("100"+i);
+			rowiCell2.setCellValue(detail.getGoodUnit());
 			HSSFCell rowiCell3 = rowi.createCell(3);
-			rowiCell3.setCellStyle(styleRow3);
-			rowiCell3.setCellValue("100"+i);
+			Font fonttime = workbook.createFont();
+			fonttime.setFontName("宋体");
+			fonttime.setFontHeightInPoints((short)12);
+			HSSFCellStyle styletime = workbook.createCellStyle();
+			styletime.setFont(fonttime);
+			rowiCell3.setCellStyle(styletime);
+			rowiCell3.setCellValue(detail.getSend());
 			HSSFCell rowiCell4 = rowi.createCell(4);
 			rowiCell4.setCellStyle(styleRow3);
-			rowiCell4.setCellValue("100"+i);
+			rowiCell4.setCellValue(detail.getMemo());
 		}
 		HSSFRow rowlast = sheet.createRow(4+num);
 		HSSFCellStyle styleRowlast = workbook.createCellStyle();
@@ -421,19 +498,25 @@ public class OrderAction extends BaseAction {
 		rowlastCell3.setCellStyle(styleRowlast);
 		rowlastCell3.setCellValue("公章");
 		FileOutputStream file;
-		try {
-			file = new FileOutputStream("workbook1.xls");
+		/*try {
+			file = new FileOutputStream("E://privateWorkSpace//fsp//workbook1.xls");
 			workbook.write(file);
 			file.close();
 		} catch (IOException e) {
 			System.err.println("生产xls文件出错");
 			e.printStackTrace();
+		}*/
+		
+		
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		try {
+			workbook.write(os);// 在内存中把数据写入ByteArrayOutputStream os
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return "export";
-	}
-	
-	public static void main(String[] args) {
-		exportXls();
+		byte[] content = os.toByteArray();// 在内存中,得到os的字节数组
+		InputStream iss = new ByteArrayInputStream(content);// 用字节数组构造一个输入流
+		return iss;
 	}
 	
 	public LuOrder getOrder() {
@@ -542,6 +625,14 @@ public class OrderAction extends BaseAction {
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	

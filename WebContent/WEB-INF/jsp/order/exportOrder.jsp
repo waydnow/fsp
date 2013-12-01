@@ -24,8 +24,9 @@ body {
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <script language="javascript" type="text/javascript">
-	function exportXls(){
+	function exportList(){
 		$("#exportXls").attr("action","exportListOD.shtml");
+		
 		$("#exportXls").submit();
 	}  
 	function showXls(){
@@ -68,8 +69,8 @@ body {
          <tr>
            <td height="60"  width="50%"  align="center">
           	 <span class="newfont07" >
-               <input type="button" class="right-button08" value="查询" onClick="showXls()" />
-               <input type="button" class="right-button08" value="导出订单" onClick="exportXls()" />
+               <input type="button" name="search" class="right-button08" value="查询" onClick="showXls();" />
+               <input type="button" name="export" class="right-button08" value="导出订单" onClick="exportList();" />
              </span>
            </td>
          </tr>

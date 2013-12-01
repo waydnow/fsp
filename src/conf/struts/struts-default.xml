@@ -38,6 +38,13 @@
   			<result name="list">/WEB-INF/jsp/order/listOrder.jsp</result>
    			<result name="edit">/WEB-INF/jsp/order/editOrder.jsp</result>
    			<result name="export">/WEB-INF/jsp/order/exportOrder.jsp</result>
+   			<result name="success" type="stream">
+                <param name="contentType">application/vnd.ms-excel</param>  
+                <param name="inputName">download</param>  
+                <param name="contentDisposition">attachment;filename="${fileName}.xls"</param>  
+                <param name="bufferSize">4096</param>  
+            </result>  
+   			
   		</action>
 	</package>
 </struts>
