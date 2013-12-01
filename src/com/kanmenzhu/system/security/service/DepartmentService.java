@@ -12,5 +12,7 @@ public interface DepartmentService extends BaseService<LuDepartment> {
 	public LuDepartment getDepartmentByUser(LuUser user);
 	
 	public List<LuDepartment> getAll();
+	
+	public List<LuDepartment> getByType(int type);
 
 }

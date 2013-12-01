@@ -15,6 +15,6 @@ public interface OrderDetailDao extends BaseDao<LuOrderDetail> {
 
 	List<LuOrderDetail> getOrderDetailByOrderId(Integer orderId);
 
-	List<LuOrderDetail> getOrderDetailsByTime(Date start, Date end);
+	List<LuOrderDetail> getOrderDetailsByTimeAndStatus(Date start, Date end, String status);
 
 }

@@ -13,6 +13,7 @@ public class LuDepartment extends BaseBean {
 	private String address;
 	private String manager;
 	private String phone;
+	private int type;
 
 	public LuDepartment() {
 	}
@@ -59,6 +60,14 @@ public class LuDepartment extends BaseBean {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 

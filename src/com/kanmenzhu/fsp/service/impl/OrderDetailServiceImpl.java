@@ -20,8 +20,8 @@ public class OrderDetailServiceImpl extends BaseServiceImpl<LuOrderDetail> imple
 	}
 
 	@Override
-	public List<LuOrderDetail> getOrderDetailsByTime(Date start, Date end) {
-		List<LuOrderDetail> orderDetailList = ((OrderDetailDao)dao).getOrderDetailsByTime(start, end);
+	public List<LuOrderDetail> getOrderDetailsByTimeAndStatus(Date start, Date end, String status) {
+		List<LuOrderDetail> orderDetailList = ((OrderDetailDao)dao).getOrderDetailsByTimeAndStatus(start, end, status);
 		return orderDetailList;
 	}
 	

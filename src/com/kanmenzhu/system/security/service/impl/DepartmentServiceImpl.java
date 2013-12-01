@@ -23,5 +23,11 @@ public class DepartmentServiceImpl extends BaseServiceImpl<LuDepartment> impleme
 		return departments;
 	}
 
+	@Override
+	public List<LuDepartment> getByType(int type) {
+		List<LuDepartment> departments = ((DepartmentDao)dao).getByType(type);
+		return departments;
+	}
+
 	
 }

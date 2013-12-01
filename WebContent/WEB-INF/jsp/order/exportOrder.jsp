@@ -1,6 +1,9 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.kanmenzhu.system.security.entity.LuRole" %>
+<%@page import="com.kanmenzhu.fsp.entity.LuOrder" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -34,6 +37,15 @@ body {
 		$("#exportXls").submit();
 	}
 </script>
+<%
+Map mapStatus = new HashMap();
+mapStatus.put(LuOrder.UNSUBMIT_ADUIT,"未提交");
+mapStatus.put(LuOrder.ADUIT_ING,"审核中");
+mapStatus.put(LuOrder.ADUIT_SUCCESS,"审核通过");
+mapStatus.put(LuOrder.ADUIT_FAIL,"审核失败");
+mapStatus.put(LuOrder.ADUIT_END,"重新修改");
+request.setAttribute("mapStatus",mapStatus);
+%>
 </head>
 <body>
 <s:form action="exportListOD.shtml" id="exportXls">
@@ -60,8 +72,15 @@ body {
 			<tr>
 			 <td width="2%"><img src="images/ico07.gif" width="20" height="18" /></td>
 			 <td>导出订单  ： </td>
+			 <td>学校：<s:select name="depId" list="depList" headerKey="" headerValue="全部" listValue="name" listKey="id">
+			 </s:select>
+			 </td>
 			 <td>开始日期:<s:textfield name="beginTime" readonly="true" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" /></td>
 			 <td>结束日期:<s:textfield name="endTime" readonly="true" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" /></td>
+			 <td>订单状态:
+			 <s:select name="status" list="#request.mapStatus" headerKey="" headerValue="全部"  >
+			 </s:select>
+			 </td>
 			</tr>
           </table>
           </td>

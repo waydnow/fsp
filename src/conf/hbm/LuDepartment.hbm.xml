@@ -20,5 +20,8 @@
         <property name="phone" type="string">
             <column name="PHONE" length="128" />
         </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="TYPE" length="11" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

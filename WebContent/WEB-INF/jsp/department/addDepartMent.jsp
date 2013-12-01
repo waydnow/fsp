@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page import="com.kanmenzhu.system.security.entity.LuRole" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -57,6 +58,16 @@ body {
       <tr>
         <td width="31%" height="35" class="login-text02">单位名称：</td>
         <td width="69%"><s:textfield name="department.name" id="name"/></td>
+      </tr>
+      <tr>
+        <td width="31%" height="35" class="login-text02">单位类型：</td>
+        <td width="69%">
+        <select name="type" >
+        	<option value="${LuRole.MANAGER}">文教局</option>
+        	<option value="${LuRole.SUPPLIER}">供货商</option>
+        	<option value="${LuRole.SCHOOL }">学校</option>
+        </select>
+        </td>
       </tr>
       <tr>
         <td height="35" class="login-text02">地址：</td>

@@ -14,13 +14,22 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 		String hql = "from LuDepartment lu where lu.id = ?";
 		List<LuDepartment> departments = getHibernateTemplate().find(hql,user.getDeptId());
 		if(departments!=null){
-			if(departments.size()>1){
+			if(departments.size()>=1){
 				logger.info("用户"+user.getName()+"绑定了"+departments.size()+"部门");
+				return departments.get(0); 
 			}
-			return departments.get(0); 
-		}else{
-			return null;
 		}
+		return null;
+	}
+	
+	@Override
+	public List<LuDepartment> getByType(int type) {
+		String hql = "from LuDepartment lu where lu.type = ?";
+		List<LuDepartment> departments = getHibernateTemplate().find(hql,type);
+		if(departments!=null){
+			return departments;
+		}
+		return null;
 	}
 
 

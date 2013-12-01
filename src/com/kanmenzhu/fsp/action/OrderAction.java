@@ -49,6 +49,7 @@ public class OrderAction extends BaseAction {
 	private List<LuOrderDetail> odetailList;
 	private List<LuGoods> goodsList;
 	private List<LuRole> roleList;
+	private List<LuDepartment> depList;
 	private Map<Integer, LuDepartment> goodDept;
 	private Map<Integer,LuGoods> goodMap;
 	/** 订单开始时间 */
@@ -57,6 +58,9 @@ public class OrderAction extends BaseAction {
 	private String endTime;
 	/** 下载文件名称 */
 	private String fileName;
+	/** 订单状态 */
+	private String status;
+	private String depId;
 	
 	private OrderService orderService;
 	private OrderDetailService odetailService;
@@ -263,7 +267,7 @@ public class OrderAction extends BaseAction {
 			endtime.setTime(end);
 			endtime.add(Calendar.DATE, 1);
 			end = endtime.getTime();
-			odetailList = odetailService.getOrderDetailsByTime(start, end);
+			odetailList = odetailService.getOrderDetailsByTimeAndStatus(start, end, status);
 			for (LuOrderDetail detail : odetailList) {
 				SimpleDateFormat format2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				detail.setSend(format2.format(detail.getSendTime()));
@@ -298,7 +302,7 @@ public class OrderAction extends BaseAction {
 			endtime.setTime(end);
 			endtime.add(Calendar.DATE, 1);
 			end = endtime.getTime();
-			odetailList = odetailService.getOrderDetailsByTime(start, end);
+			odetailList = odetailService.getOrderDetailsByTimeAndStatus(start, end, status);
 			for (LuOrderDetail detail : odetailList) {
 				SimpleDateFormat format2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				detail.setSend(format2.format(detail.getSendTime()));
@@ -328,7 +332,7 @@ public class OrderAction extends BaseAction {
 			endtime.setTime(end);
 			endtime.add(Calendar.DATE, 1);
 			end = endtime.getTime();
-			odetailList = odetailService.getOrderDetailsByTime(start, end);
+			odetailList = odetailService.getOrderDetailsByTimeAndStatus(start, end, status);
 			for (LuOrderDetail detail : odetailList) {
 				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				detail.setSend(format2.format(detail.getSendTime()));
@@ -349,11 +353,28 @@ public class OrderAction extends BaseAction {
 	}
 	
 	public String export(){
+		//判断当前用户是否为文教部门
+		List<LuRole> roles = roleService.getRoles(getCurrentUser());
+		boolean isTrue = false;
+		for (LuRole role:roles) {
+			if (LuRole.MANAGER.equals(role.getType())) {
+				isTrue = true;
+			}
+		}
+		if (true) {
+			depList = departmentService.;		
+		}else {
+			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
+			if (null!=dep) {
+				depList.add(dep);
+			}
+		}
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		beginTime = format.format(new Date());
 		Calendar now = Calendar.getInstance();
 		now.add(Calendar.WEEK_OF_MONTH, 1);
 		endTime = format.format(now.getTime());
+		this.setStatus("");
 		odetailList= new ArrayList<LuOrderDetail>();
 		return "export";
 	}
@@ -635,5 +656,27 @@ public class OrderAction extends BaseAction {
 		this.fileName = fileName;
 	}
 
-	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public List<LuDepartment> getDepList() {
+		return depList;
+	}
+
+	public void setDepList(List<LuDepartment> depList) {
+		this.depList = depList;
+	}
+
+	public String getDepId() {
+		return depId;
+	}
+
+	public void setDepId(String depId) {
+		this.depId = depId;
+	}
 }
