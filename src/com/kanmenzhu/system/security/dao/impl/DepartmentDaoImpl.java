@@ -23,7 +23,7 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 	}
 	
 	@Override
-	public List<LuDepartment> getByType(int type) {
+	public List<LuDepartment> getByType(String type) {
 		String hql = "from LuDepartment lu where lu.type = ?";
 		List<LuDepartment> departments = getHibernateTemplate().find(hql,type);
 		if(departments!=null){

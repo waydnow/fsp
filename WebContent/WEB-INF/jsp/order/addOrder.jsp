@@ -160,7 +160,10 @@ body {
                 </table></td>
               </tr>
               <tr>
-              <td height="60"  width="10%" align="center"  class="newfont02">订单备注：<s:textarea  name="order.memo" />  </td>
+              <td height="60"  width="10%" align="center"  class="newfont02">
+              	学校： <s:select name="order.deptId" list="depList" listValue="name" listKey="id">
+			 </s:select>&nbsp;&nbsp;&nbsp;
+              	订单备注：<s:textarea  name="order.memo" />  </td>
           	 </tr>
               <tr>
                <td height="60"  width="50%"  align="center">

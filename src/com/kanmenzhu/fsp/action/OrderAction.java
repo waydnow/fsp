@@ -60,7 +60,7 @@ public class OrderAction extends BaseAction {
 	private String fileName;
 	/** 订单状态 */
 	private String status;
-	private String depId;
+	private Integer depId;
 	
 	private OrderService orderService;
 	private OrderDetailService odetailService;
@@ -70,6 +70,23 @@ public class OrderAction extends BaseAction {
 	
 	public String regist(){
 		order = null;
+		//判断当前用户是否为文教部门
+		depList = new ArrayList<LuDepartment>();
+		List<LuRole> roles = roleService.getRoles(getCurrentUser());
+		boolean isTrue = false;
+		for (LuRole role:roles) {
+			if (LuRole.MANAGER.equals(role.getType())) {
+				isTrue = true;
+			}
+		}
+		if (isTrue) {
+			depList = departmentService.getByType(LuRole.MANAGER);		
+		}else {
+			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
+			if (null!=dep) {
+				depList.add(dep);
+			}
+		}		
 		roleList = roleService.getRoles(getCurrentUser());
 		goodsList = goodsService.getAll(-1, -1);
 		odetailList = new ArrayList<LuOrderDetail>();
@@ -83,7 +100,7 @@ public class OrderAction extends BaseAction {
 		if(order != null){
 			order.setCreateTime(new Date());
 			order.setCreateUserId(getCurrentUser().getId());
-			order.setDeptId(getCurrentUser().getDeptId());
+//			order.setDeptId(getCurrentUser().getDeptId());
 			order.setStatus(LuOrder.UNSUBMIT_ADUIT);
 			orderService.save(order);
 			if (odetailList!=null) {
@@ -93,6 +110,7 @@ public class OrderAction extends BaseAction {
 						orderDetail.setOrderId(order.getId());
 						orderDetail.setStatus(LuOrder.UNSUBMIT_ADUIT);
 						orderDetail.setUserId(getCurrentUser().getId());
+						orderDetail.setDeptId(order.getDeptId());
 						odetailService.save(orderDetail);
 					}
 				}
@@ -354,6 +372,7 @@ public class OrderAction extends BaseAction {
 	
 	public String export(){
 		//判断当前用户是否为文教部门
+		depList = new ArrayList<LuDepartment>();
 		List<LuRole> roles = roleService.getRoles(getCurrentUser());
 		boolean isTrue = false;
 		for (LuRole role:roles) {
@@ -361,8 +380,8 @@ public class OrderAction extends BaseAction {
 				isTrue = true;
 			}
 		}
-		if (true) {
-			depList = departmentService.;		
+		if (isTrue) {
+			depList = departmentService.getByType(LuRole.MANAGER);		
 		}else {
 			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
 			if (null!=dep) {
@@ -672,11 +691,12 @@ public class OrderAction extends BaseAction {
 		this.depList = depList;
 	}
 
-	public String getDepId() {
+	public Integer getDepId() {
 		return depId;
 	}
 
-	public void setDepId(String depId) {
+	public void setDepId(Integer depId) {
 		this.depId = depId;
 	}
+
 }

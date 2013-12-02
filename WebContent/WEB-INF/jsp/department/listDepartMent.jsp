@@ -92,7 +92,6 @@ function on_load(){
 <body onload="on_load()">
 <s:form action="listDP.shtml">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
-
   <tr>
     <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
@@ -100,14 +99,12 @@ function on_load(){
           
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
-		  <td width="25%" align="left">用户管理  >> 用户列表 </td>
+		  <td width="25%" align="left">单位管理  >> 单位列表 </td>
 			<td width="5%"><img src="images/ico07.gif" width="20" height="18" /></td>
 			<td width="70%">查看内容：按时间：
               <input name="textfield" type="text" size="12" readonly="readonly"/><span class="newfont06">至</span>
 			 <input name="textfield" type="text" size="12" readonly="readonly"/>	
 			 <input name="Submit" type="button" class="right-button02" value="查 询" /></td>
-			 <td width="132" align="left"><!--<a href="#" onclick="sousuo()">
-			    <input name="Submit" type="button" class="right-button07" value="高级搜索" /></a> --></td>	
 		  </tr>
         </table></td>
       </tr>
@@ -120,18 +117,17 @@ function on_load(){
           <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
 
           	 <tr>
-               <td height="20"><span class="newfont07"><!--  选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
-	              <input name="Submit" type="button" class="right-button08" value="删除所选项目信息" />-->
+               <td height="20">
+               <span>
 	              <input name="Submit2" type="button" class="right-button08" value="添加单位" onclick="javascript:window.location='registDP.shtml';"/></td>
+          	 	</span>
           	 </tr>
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
-
 				<tr>
-                    <td height="20" colspan="6" align="center" bgcolor="#EEEEEE" class="tablestyle_title">单位列表</td>
+                    <td height="20" colspan="5" align="center" bgcolor="#EEEEEE" class="tablestyle_title">单位列表</td>
                   </tr>
                   <tr>
-				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">单位名称</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">负责人</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">地址</td>
@@ -140,7 +136,6 @@ function on_load(){
                   </tr>
                   <s:iterator value="dplist" var="dp">
                   <tr align="center" id="tr${dp.id}">
-				   <td bgcolor="#FFFFFF"><input type="checkbox" name="dp.id"/></td>
                     <td height="20" bgcolor="#FFFFFF"><a href="showDP.shtml?department.id=${dp.id}"><s:property value="#dp.name"/></a></td>
                     <td bgcolor="#FFFFFF"><s:property value="#dp.manager"/></td>
                     <td bgcolor="#FFFFFF"><s:property value="#dp.address"/></td>

@@ -35,6 +35,9 @@
         <property name="userId" type="int">
             <column name="USER_ID" not-null="true" />
         </property>
+        <property name="deptId" type="int">
+            <column name="DEPT_ID" not-null="true" />
+        </property>
         <property name="createTime" type="timestamp">
             <column name="CREATE_TIME"  length="19" not-null="true" />
         </property>

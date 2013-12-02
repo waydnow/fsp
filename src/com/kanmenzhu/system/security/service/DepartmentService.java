@@ -13,6 +13,6 @@ public interface DepartmentService extends BaseService<LuDepartment> {
 	
 	public List<LuDepartment> getAll();
 	
-	public List<LuDepartment> getByType(int type);
+	public List<LuDepartment> getByType(String type);
 
 }

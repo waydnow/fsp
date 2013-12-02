@@ -23,6 +23,7 @@ public class LuOrderDetail extends BaseBean {
 	private int status;
 	private int parentId;
 	private int userId;
+	private int deptId;
 	private Date createTime;
 	private String depName;
 	private String price;
@@ -155,6 +156,14 @@ public class LuOrderDetail extends BaseBean {
 
 	public void setPrice(String price) {
 		this.price = price;
+	}
+
+	public int getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
 	}
 
 }

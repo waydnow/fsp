@@ -103,8 +103,6 @@ function on_load(){
               <input name="textfield" type="text" size="12" readonly="readonly"/><span class="newfont06">至</span>
 			 <input name="textfield" type="text" size="12" readonly="readonly"/>	
 			 <input name="Submit" type="button" class="right-button02" value="查 询" /></td>
-			 <td width="132" align="left"><a href="#" onclick="sousuo()">
-			   <input name="Submit" type="button" class="right-button07" value="高级搜索" /></a></td>	
 		  </tr>
         </table></td>
       </tr>
@@ -115,20 +113,19 @@ function on_load(){
 
         <tr>
           <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-
           	 <tr>
-               <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
-	              <input name="Submit" type="button" class="right-button08" value="删除" />
-	              <input name="Submit2" type="button" class="right-button08" value="添加" onclick="addOD();"/></td>
+               <td height="20">
+               <span>
+	              <input name="Submit2" type="button" class="right-button08" value="添加新订单" onclick="addOD();"/>
+	           </span>
+	           </td>
           	 </tr>
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
-
-					                  <tr>
-                    <td height="20" colspan="6" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单列表</td>
+					<tr>
+                    <td height="20" colspan="5" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单列表</td>
                     </tr>
                   <tr>
-				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">订单序号</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">创建时间</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">状态</td>
@@ -137,7 +134,6 @@ function on_load(){
                   </tr>
                   <s:iterator value="orderList" var="od">
                   <tr align="center">
-				   <td bgcolor="#FFFFFF"><input type="checkbox" name="od.id"/></td>
                     <td height="20" bgcolor="#FFFFFF"><a href="showOD.shtml?order.id=${od.id}"><s:property value="#od.id"/></a></td>
                   	<td bgcolor="#FFFFFF"><s:property value="#od.createTime"/></td>
                    	<td bgcolor="#FFFFFF">

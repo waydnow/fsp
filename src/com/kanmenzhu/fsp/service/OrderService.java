@@ -1,5 +1,6 @@
 package com.kanmenzhu.fsp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.kanmenzhu.fsp.entity.LuOrder;
@@ -16,6 +17,6 @@ public interface OrderService extends BaseService<LuOrder> {
 	
 	public List<LuOrder> getOrdersBySupplier();
 	
-	public List<LuOrder> getOrdersByTime();
+	public List<LuOrder> getOrdersByTimeAndStatus(Date start, Date end, String status);
 	
 }

@@ -42,7 +42,7 @@ body {
 			<td height="62" background="images/nav04.gif">
 			<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 				<tr>
-					<td width="21" align="left">系统管理>>编辑单位</td>
+					<td width="21" align="left">单位管理 >> 编辑单位</td>
 				</tr>
 			</table>
 			</td>
@@ -58,6 +58,10 @@ body {
       <tr>
         <td width="31%" height="35" class="login-text02">单位名称：</td>
         <td width="69%"><s:textfield name="department.name" id="name"/></td>
+      </tr>
+      <tr>
+       <td width="31%" height="35" class="login-text02">单位类型：</td>
+        <td width="69%"><s:select list="mapType" name="department.type"></s:select></td>
       </tr>
       <tr>
         <td height="35" class="login-text02">地址：</td>

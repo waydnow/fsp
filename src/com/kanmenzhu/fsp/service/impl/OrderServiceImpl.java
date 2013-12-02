@@ -1,5 +1,6 @@
 package com.kanmenzhu.fsp.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.kanmenzhu.fsp.dao.OrderDao;
@@ -23,8 +24,7 @@ public class OrderServiceImpl extends BaseServiceImpl<LuOrder> implements OrderS
 	}
 
 	@Override
-	public List<LuOrder> getOrdersByTime() {
-		// TODO Auto-generated method stub
+	public List<LuOrder> getOrdersByTimeAndStatus(Date start, Date end, String status) {
 		return null;
 	}
 

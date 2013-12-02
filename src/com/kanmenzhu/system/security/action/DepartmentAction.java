@@ -1,10 +1,13 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.kanmenzhu.system.security.entity.LuDepartment;
+import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.web.BaseAction;
 
@@ -15,6 +18,8 @@ public class DepartmentAction extends BaseAction {
 	private LuDepartment department;
 	
 	private List<LuDepartment> dplist;
+	
+	private Map<String, String> mapType = new HashMap<String, String>();
 	
 	private Integer id;
 
@@ -96,6 +101,17 @@ public class DepartmentAction extends BaseAction {
 	
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Map<String, String> getMapType() {
+		mapType.put(LuRole.MANAGER, "文教局");
+		mapType.put(LuRole.SCHOOL, "学校");
+		mapType.put(LuRole.SUPPLIER, "供货商");
+		return mapType;
+	}
+
+	public void setMapType(Map<String, String> mapType) {
+		this.mapType = mapType;
 	}
 	
 	
