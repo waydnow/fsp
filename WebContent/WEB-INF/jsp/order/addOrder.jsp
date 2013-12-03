@@ -147,7 +147,7 @@ body {
 				   </td>
                    <td height="20" bgcolor="#FFFFFF"><div id="price-0"></div></td>
                    <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-0" cssStyle="width:60px;"/>
-                   		<s:select id="unit-0"  name="odetailList[%{#status.index}].goodUnit"  list="{'两','斤','公斤'}">
+                   		<s:select id="unit-0"  name="odetailList[%{#status.index}].goodUnit"  list="{'两','斤','公斤','袋'}">
         				</s:select>
 					</td>
 					<td height="20" bgcolor="#FFFFFF"><div id="dep-0"></div></td>

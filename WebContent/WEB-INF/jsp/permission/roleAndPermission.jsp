@@ -121,9 +121,9 @@ var zNodes =[
 	</table>
 <div>
 	<div class="divColumn" style="margin-left: 5px;">
-		<div id="left" style="border-style:solid;border-width:0px;border-right:1px solid;width:180px;">
+		<div id="left" style="border-style:solid;border-width:0px;border-right:1px solid;width:140px;">
 			<s:iterator value="rlist" id="role">
-				<ul id="u${role.id}" style="width:140px;height:fitilen;border:1px solid #555;cursor:pointer;"
+				<ul id="u${role.id}" style="width:100px;height:fitilen;border:1px solid #555;cursor:pointer;"
 				  onclick="refreshTree(${role.id})" onmouseover="changColor('u${role.id}',0);"
 				  onmouseout="changColor('u${role.id}',1);">
 				${role.name}

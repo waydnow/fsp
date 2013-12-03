@@ -53,11 +53,19 @@ body {
     <td>
 	
 	<s:form action="addGD.shtml">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="31%" height="35" class="login-text02">名称：</td>
         <td width="69%"><s:textfield name="goods.name" id="name"/></td>
       </tr>
+      <tr>
+        <td width="31%" height="35" class="login-text02">供应商：</td>
+        <td width="69%">
+        <s:select name="goods.deptId" list="depList" listValue="name" listKey="id">
+		</s:select>
+		</td>
+      </tr>
+      
       <tr>
         <td height="35" class="login-text02">单价：</td>
         <td>
@@ -66,11 +74,8 @@ body {
       </tr>
       <tr>
         <td height="35" class="login-text02">单位：</td>
-        <td><select name="goods.unit" >
-        		<option value="两">两</option>
-        		<option value="斤">斤</option>
-        		<option value="公斤">公斤</option>
-        	</select>
+        <td><s:select name="goods.unit"  list="{'两','斤','公斤','袋'}">
+        </s:select>
         </td>
       </tr>
       
@@ -82,7 +87,7 @@ body {
         <td height="35">&nbsp;</td>
         <td><input type="button" value="保存" class="right-button02" onclick="checkSubmit();"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
       </tr>
-    </table>
+	</table>
     </s:form>
 	</td>
   </tr>

@@ -1,28 +1,31 @@
 package com.kanmenzhu.fsp.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.kanmenzhu.fsp.entity.LuGoods;
 import com.kanmenzhu.fsp.service.GoodsService;
 import com.kanmenzhu.system.security.entity.LuDepartment;
-import com.kanmenzhu.system.security.entity.LuUser;
+import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.service.DepartmentService;
-import com.kanmenzhu.system.security.service.UserService;
+import com.kanmenzhu.system.security.service.RoleService;
 import com.kanmenzhu.web.BaseAction;
 
 public class GoodsAction extends BaseAction {
 	
 	private GoodsService goodsService;
 	private DepartmentService departmentService;
+	private RoleService roleService;
 	
 	private LuGoods goods;
-	
 	private String goodid;
 	
 	private List<LuGoods> goodsList;
+	private List<LuDepartment> depList;
 	
 	public String regist(){
+		deptList();
 		goods = null;
 		logger.info("####添加物品####");
 		return "regist";
@@ -32,13 +35,41 @@ public class GoodsAction extends BaseAction {
 		if (null!=goods) {
 			if (null!=goods.getName()) {
 				goods.setCreateTime(new Date());
-				//暂时取一个用户  
-				goods.setCreateUserId(2);
-				goods.setDeptId(4);
+				goods.setCreateUserId(getCurrentUser().getId());
+				goods.setDeptId(goods.getDeptId());
 				goodsService.save(goods);
 			}
 		}
 		return list();
+	}
+	
+	public String update(){
+		if (null!=goods) {
+			if (null!=goods.getName()) {
+				goodsService.update(goods);
+			}
+		}
+		return list();
+	}
+	
+	public String show(){
+		deptList();
+		if (null!=goods) {
+			if (null!=goods.getId()) {
+				goods = goodsService.get(goods.getId(), LuGoods.class);
+			}
+		}
+		return "show";
+	}
+	
+	public String edit(){
+		deptList();
+		if (null!=goods) {
+			if (null!=goods.getId()) {
+				goods = goodsService.get(goods.getId(), LuGoods.class);
+			}
+		}
+		return "edit";
 	}
 	
 	public String list(){
@@ -49,6 +80,26 @@ public class GoodsAction extends BaseAction {
 		}
 		return "list";
 	}
+	
+    public void deptList(){
+    	//判断当前用户是否为文教部门
+    	depList = new ArrayList<LuDepartment>();
+		List<LuRole> roles = roleService.getRoles(getCurrentUser());
+		boolean isTrue = false;
+		for (LuRole role:roles) {
+			if (LuRole.MANAGER.equals(role.getType())) {
+				isTrue = true;
+			}
+		}
+		if (isTrue) {
+			depList = departmentService.getByType(LuRole.SUPPLIER);		
+		}else {
+			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
+			if (null!=dep) {
+				depList.add(dep);
+			}
+		}				
+    }
 	
 	public String getdep(){
 		Integer id = Integer.valueOf(goodid);
@@ -97,6 +148,22 @@ public class GoodsAction extends BaseAction {
 
 	public void setGoodid(String goodid) {
 		this.goodid = goodid;
+	}
+
+	public RoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	public List<LuDepartment> getDepList() {
+		return depList;
+	}
+
+	public void setDepList(List<LuDepartment> depList) {
+		this.depList = depList;
 	}
 	
 	

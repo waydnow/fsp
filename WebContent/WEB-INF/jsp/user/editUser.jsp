@@ -20,17 +20,21 @@ body {
 <link href="css/style.css" rel="stylesheet" type="text/css" >
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script language="javascript">
-	function checkSubmit(){
-		if($("#name").val()==""){
-			alert("请输入单位名称!");
-			return false;
-			}
-		if($("#manager").val()==""){
-			alert("请输入负责人!");
-			return false;
-			}
-		document.updateUA.submit();
-		}
+function checkSubmit(){
+	if($("#pwd").val()==""){
+		alert("请输入密码!");
+		return false;
+	}
+	if($("#pwdcopy").val()==""){
+		alert("请输入确认密码!");
+		return false;
+	}
+	if ($("#pwdcopy").val()!=$("#pwd").val()) {
+		alert("密码与确认密码不一致!");
+		return false;
+	}
+	document.updateUA.submit();
+}
 </script>
 </head>
 <body>
@@ -43,7 +47,7 @@ body {
 			<td height="62" background="images/nav04.gif">
 			<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 				<tr>
-					<td width="21" align="left"><b>用户列表>>用户修改</b></td>
+					<td width="21" align="left">用户列表>>用户修改</td>
 				</tr>
 			</table>
 			</td>
@@ -53,6 +57,7 @@ body {
   </tr>
   <tr>
     <td>
+    <font color="red"><s:actionmessage/></font>
 	<s:form action="updateUA.shtml">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -62,6 +67,7 @@ body {
         </td>
         </tr>
       <tr>
+      <s:hidden name="user.loginName"></s:hidden>
         <td width="31%" height="35" class="login-text02">用户名：</td>
         <td width="69%">&nbsp;<b><s:property value="user.loginName"/></b></td>
       </tr>
@@ -71,7 +77,7 @@ body {
       </tr>
       <tr>
         <td height="35" class="login-text02">确认密码：</td>
-        <td><s:password name="user.pwdcopy" id="pwdcopy"/></td>
+        <td><s:password name="user.pwdCopy" id="pwdcopy"/></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">用户角色：</td>
@@ -97,7 +103,9 @@ body {
       </tr>
       <tr>
         <td height="35">&nbsp;</td>
-        <td><input type="button" value="保存" class="right-button02" onclick="checkSubmit();"/></td>
+        <td><input type="button" value="保存" class="right-button02" onclick="checkSubmit();"/>
+        <input name="Submit2" type="button" class="right-button02" value="返回" onclick="javascript:history.go(-1);"/>
+        </td>
       </tr>
     </table>
     </s:form>

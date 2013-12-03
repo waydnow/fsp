@@ -190,7 +190,7 @@ body {
 				   </td>
                    <td height="20" bgcolor="#FFFFFF"><div id="price-<s:property value='#status.index'/>"></div></td>
                    <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-%{#status.index}" cssStyle="width:60px;"/>
-                   		<s:select id="unit-%{#status.index}"  name="odetailList[%{#status.index}].goodUnit"  list="{'两','斤','公斤'}">
+                   		<s:select id="unit-%{#status.index}"  name="odetailList[%{#status.index}].goodUnit"  list="{'两','斤','公斤','袋'}">
         				</s:select>
 					</td>
 					<td height="20" bgcolor="#FFFFFF"><div id="dep-<s:property value='#status.index'/>"></div></td>

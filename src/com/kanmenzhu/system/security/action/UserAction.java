@@ -137,11 +137,11 @@ public class UserAction extends BaseAction {
 			userList=userService.findByName(user.getName());
 		}else{
 			userList=userService.getAll(-1, -1);
-			for (LuUser u : userList) {
-				LuDepartment d = departmentService.get(u.getDeptId(), LuDepartment.class);
-				if (d!=null) {
-					u.setDepName(d.getName());
-				}
+		}
+		for (LuUser u : userList) {
+			LuDepartment d = departmentService.get(u.getDeptId(), LuDepartment.class);
+			if (d!=null) {
+				u.setDepName(d.getName());
 			}
 		}
 		return "list";
@@ -179,16 +179,22 @@ public class UserAction extends BaseAction {
 		if (null!=user) {
 			//TODO 需要添加判断是否已经存在该用户名的用户
 			LuUser olduser = userService.findByLoginName(user.getLoginName());
-			if (null!=olduser) {
-				msg="用户名"+olduser.getLoginName()+"已经被注册！";
-			}else if(StringUtils.isBlank(user.getPwd())){
+			if(StringUtils.isBlank(user.getPwd())){
 				msg="用户名"+olduser.getLoginName()+"密码为空，不能修改！";
-			}else if(user.getPwd().equals(user.getPwdCopy())){
+				user = olduser;
+			}else if(!user.getPwd().equals(user.getPwdCopy())){
 				msg="用户名"+olduser.getLoginName()+"2次输入密码不同，不能修改！";
-			}else{
-				userService.update(user);
-				logger.info("修改用户"+user.getLoginName()+",ID="+user.getId()+"成功");
-				return welcome();
+				user = olduser;
+			}else if (null!=olduser) {
+				olduser.setEmail(user.getEmail());
+				olduser.setPwd(user.getPwd());
+				olduser.setPhone(user.getPhone());
+				olduser.setMobile(user.getMobile());
+				olduser.setEmail(user.getEmail());
+				olduser.setName(user.getName());
+				userService.update(olduser);
+				user = null;
+				logger.info("修改用户"+olduser.getLoginName()+",ID="+olduser.getId()+"成功");
 			}
 		}else {
 			msg = "用户修改失败！"; 
@@ -196,6 +202,7 @@ public class UserAction extends BaseAction {
 		if (null!=msg) {
 			clearMessages();
 			addActionMessage(msg);
+			return edit();
 		}
 		return list();
 	}

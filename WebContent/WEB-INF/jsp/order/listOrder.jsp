@@ -109,7 +109,7 @@ function on_load(){
     </table></td>
   </tr>
   <tr>
-    <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
+    <td><table id="subtree1" width="100%" border="0" cellspacing="0" cellpadding="0">
 
         <tr>
           <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">

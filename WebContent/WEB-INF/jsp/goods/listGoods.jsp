@@ -45,24 +45,6 @@ html { overflow-x: auto; overflow-y: auto; border:0;}
 <script type="text/javascript" src="js/xiangmu.js"></script>
 </head>
 <Script language="JavaScript">
-function selectAll(){
-	var obj = document.fom.elements;
-	for (var i=0;i<obj.length;i++){
-		if (obj[i].name == "delid"){
-			obj[i].checked = true;
-		}
-	}
-}
-
-function unselectAll(){
-	var obj = document.fom.elements;
-	for (var i=0;i<obj.length;i++){
-		if (obj[i].name == "delid"){
-			if (obj[i].checked==true) obj[i].checked = false;
-			else obj[i].checked = true;
-		}
-	}
-}
 
 function addGD() {
 	window.location.href = "registGD.shtml";
@@ -88,17 +70,17 @@ function on_load(){
       <tr>
         <td height="62" background="images/nav04.gif">
           
-		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
-		  <tr>
-			<td width="21"><img src="images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：按时间：
-              <input name="textfield" type="text" size="12" readonly="readonly"/><span class="newfont06">至</span>
-			 <input name="textfield" type="text" size="12" readonly="readonly"/>	
-			 <input name="Submit" type="button" class="right-button02" value="查 询" /></td>
-			 <td width="132" align="left"><a href="#" onclick="sousuo()">
-			   <input name="Submit" type="button" class="right-button07" value="高级搜索" /></a></td>	
-		  </tr>
-        </table></td>
+		  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td height="62" background="images/nav04.gif">
+			<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="21" align="left">商品管理  >> 商品列表</td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table></td>
       </tr>
     </table></td>
   </tr>
@@ -109,8 +91,7 @@ function on_load(){
           <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
 
           	 <tr>
-               <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
-	              <input name="Submit" type="button" class="right-button08" value="删除" />
+               <td height="20">
 	              <input name="Submit2" type="button" class="right-button08" value="添加" onclick="addGD();"/></td>
           	 </tr>
               <tr>
