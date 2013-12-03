@@ -25,7 +25,23 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 	}
 
 	@Override
-	public List<LuOrderDetail> getOrderDetailsByTimeAndStatus(Date start, Date end, String status) {
+	public List<LuOrderDetail> getOrderDetailsByTimeStatusType(Date start, Date end, String status, int deptId) {
+		String hql = "";
+		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
+		if (StringUtils.isNotBlank(status)) {
+			int s = Integer.parseInt(status);
+			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime between ? and ? and d.status=? order by d.sendTime asc";
+			list = findByHql(hql, -1, -1, deptId,start,end,s);
+		}else {
+			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime between ? and ? order by d.sendTime asc";
+			list = findByHql(hql, -1, -1, deptId,start,end);
+		}
+		return list;
+	}
+
+	@Override
+	public List<LuOrderDetail> getOrderDetailsByTimeAndStatus(Date start,
+			Date end, String status) {
 		String hql = "";
 		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
 		if (StringUtils.isNotBlank(status)) {

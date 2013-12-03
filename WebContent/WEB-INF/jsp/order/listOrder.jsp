@@ -123,19 +123,22 @@ function on_load(){
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 					<tr>
-                    <td height="20" colspan="5" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单列表</td>
+                    <td height="20" colspan="6" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单列表</td>
                     </tr>
                   <tr>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">订单序号</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">学校</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">创建时间</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">状态</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
                   <s:iterator value="orderList" var="od">
                   <tr align="center">
                     <td height="20" bgcolor="#FFFFFF"><a href="showOD.shtml?order.id=${od.id}"><s:property value="#od.id"/></a></td>
-                  	<td bgcolor="#FFFFFF"><s:property value="#od.createTime"/></td>
+                    <td bgcolor="#FFFFFF"><s:property value="#od.deptName"/></td>
+                    <td bgcolor="#FFFFFF"><s:property value="#od.memo"/></td>
+                  	<td bgcolor="#FFFFFF"><s:property value="#od.create"/></td>
                    	<td bgcolor="#FFFFFF">
                    	<s:if test = "%{#od.status== 0}">等待送审</s:if>
 					<s:elseif test="%{#od.status == 1}">审核中</s:elseif>
@@ -143,7 +146,6 @@ function on_load(){
 					<s:elseif test="%{#od.status == 3}">审核不通过</s:elseif>
 					<s:elseif test="%{#od.status == 4}">最终订单</s:elseif>
 					</td>
-                    <td bgcolor="#FFFFFF"><s:property value="#od.memo"/></td>
                     <td bgcolor="#FFFFFF"><input type="button" value="删除" onclick="del(${od.id});" /></td>
                   </tr>
 				  </s:iterator>

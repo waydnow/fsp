@@ -12,7 +12,16 @@ public class LuUser extends BaseBean {
 	private String name;
 	private String loginName;
 	private String pwd;
+	private String pwdCopy;
 	private Integer deptId;
+	public String getPwdCopy() {
+		return pwdCopy;
+	}
+
+	public void setPwdCopy(String pwdCopy) {
+		this.pwdCopy = pwdCopy;
+	}
+
 	private String phone;
 	private String mobile;
 	private String email;

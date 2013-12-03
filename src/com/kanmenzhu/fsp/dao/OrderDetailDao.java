@@ -17,4 +17,15 @@ public interface OrderDetailDao extends BaseDao<LuOrderDetail> {
 
 	List<LuOrderDetail> getOrderDetailsByTimeAndStatus(Date start, Date end, String status);
 
+	/**
+	 * 获取订单详细，条件：时间、学校、状态
+	 * @param start
+	 * @param end
+	 * @param status
+	 * @param deptId
+	 * @return
+	 */
+	List<LuOrderDetail> getOrderDetailsByTimeStatusType(Date start, Date end,
+			String status, int deptId);
+
 }

@@ -215,6 +215,7 @@ body {
               <tr>
                <td height="60"  width="50%"  align="center">
               	 <span class="newfont07" >
+              	 <s:if test="%{roleList!=null}">
               	 <s:iterator value="roleList" var="role">
               		 <s:if test="#role.type=='MANAGER'">
 	              	 	<s:if test = "%{order.status == 1}">
@@ -240,6 +241,7 @@ body {
 	              	 	</s:if>
               	 	</s:if>
               	 </s:iterator>
+              	 </s:if>
                  </span>
                 </td>
           	 </tr>

@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -80,7 +81,7 @@ public class OrderAction extends BaseAction {
 			}
 		}
 		if (isTrue) {
-			depList = departmentService.getByType(LuRole.MANAGER);		
+			depList = departmentService.getByType(LuRole.SCHOOL);		
 		}else {
 			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
 			if (null!=dep) {
@@ -108,19 +109,40 @@ public class OrderAction extends BaseAction {
 					if (null!=orderDetail) {
 						orderDetail.setCreateTime(new Date());
 						orderDetail.setOrderId(order.getId());
-						orderDetail.setStatus(LuOrder.UNSUBMIT_ADUIT);
+						orderDetail.setStatus(order.getStatus());
 						orderDetail.setUserId(getCurrentUser().getId());
 						orderDetail.setDeptId(order.getDeptId());
 						odetailService.save(orderDetail);
 					}
 				}
 			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"创建订单ID="+order.getId());
+			logger.info("用户"+getCurrentUser().getLoginName()+"创建订单ID="+order.getId()+"学校ID"+order.getDeptId());
 		}else {
 			logger.error("保存订单时，订单为NULL，操作人："+getCurrentUser().getLoginName());
 		}		
 		return list();
 	}
+	
+	public String update() throws Exception{
+		if (order!=null) {
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				if (null == detail.getId()) {
+					detail.setCreateTime(new Date());
+					detail.setOrderId(order.getId());
+					detail.setStatus(order.getStatus());
+					detail.setUserId(getCurrentUser().getId());
+					detail.setDeptId(order.getDeptId());
+					odetailService.save(detail);
+				}else {
+					odetailService.update(detail);
+				}
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"更新订单ID="+order.getId());
+		}
+		return show();
+	}
+	
 	
 	public String addAudit(){
 		if(order != null){
@@ -135,7 +157,8 @@ public class OrderAction extends BaseAction {
 					if (null!=orderDetail) {
 						orderDetail.setCreateTime(new Date());
 						orderDetail.setOrderId(order.getId());
-						orderDetail.setStatus(LuOrder.ADUIT_ING);
+						orderDetail.setStatus(order.getStatus());
+						orderDetail.setDeptId(order.getDeptId());
 						orderDetail.setUserId(getCurrentUser().getId());
 						odetailService.save(orderDetail);
 					}
@@ -156,6 +179,15 @@ public class OrderAction extends BaseAction {
 				if (LuRole.SCHOOL.equals(role.getType())) {
 					//学校可查询所有状态订单
 					orderList = orderService.getAll(-1, -1);
+					for (LuOrder order : orderList) {
+						LuDepartment dep = departmentService.get(order.getDeptId(), LuDepartment.class);
+						order.setDeptName(dep.getName());
+						Date send = order.getCreateTime();
+						System.out.println("时间"+send.toString());
+						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						String time = format.format(send);
+						order.setCreate(time);
+					}
 					return "list";
 				}else if (LuRole.MANAGER.equals(role.getType())) {
 					orderList = orderService.getOrdersByManager();
@@ -165,11 +197,37 @@ public class OrderAction extends BaseAction {
 					orderList = orderService.getOrdersBySupplier();
 				}
 			}
+			for (LuOrder order : orderList) {
+				LuDepartment dep = departmentService.get(order.getDeptId(), LuDepartment.class);
+				order.setDeptName(dep.getName());
+				Date send = order.getCreateTime();
+				System.out.println("时间"+send.toString());
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String time = format.format(send);
+				order.setCreate(time);
+			}
 		}
 		return "list";
 	}
 	
 	public String show() throws Exception{
+		//判断当前用户是否为文教部门
+		depList = new ArrayList<LuDepartment>();
+		List<LuRole> roles = roleService.getRoles(getCurrentUser());
+		boolean isTrue = false;
+		for (LuRole role:roles) {
+			if (LuRole.MANAGER.equals(role.getType())) {
+				isTrue = true;
+			}
+		}
+		if (isTrue) {
+			depList = departmentService.getByType(LuRole.SCHOOL);		
+		}else {
+			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
+			if (null!=dep) {
+				depList.add(dep);
+			}
+		}				
 		roleList = roleService.getRoles(getCurrentUser());
 		goodsList = goodsService.getAll(-1, -1);
 		if (order!=null) {
@@ -199,23 +257,6 @@ public class OrderAction extends BaseAction {
 		return list();
 	}
 	
-	public String update(){
-		if (order!=null) {
-			orderService.update(order);
-			for (LuOrderDetail detail : odetailList) {
-				if (null == detail.getId()) {
-					detail.setCreateTime(new Date());
-					detail.setOrderId(order.getId());
-					detail.setUserId(getCurrentUser().getId());
-					odetailService.save(detail);
-				}else {
-					odetailService.update(detail);
-				}
-			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"更新订单ID="+order.getId());
-		}
-		return "show";
-	}
 	
 	public String audit(){
 		if (order!=null) {
@@ -285,7 +326,11 @@ public class OrderAction extends BaseAction {
 			endtime.setTime(end);
 			endtime.add(Calendar.DATE, 1);
 			end = endtime.getTime();
-			odetailList = odetailService.getOrderDetailsByTimeAndStatus(start, end, status);
+			if(null!=depId){
+				odetailList = odetailService.getOrderDetailsByTimeStatusType(start, end, status, depId);
+			}else{
+				odetailList = odetailService.getOrderDetailsByTimeAndStatus(start, end, status);
+			}
 			for (LuOrderDetail detail : odetailList) {
 				SimpleDateFormat format2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				detail.setSend(format2.format(detail.getSendTime()));
@@ -320,7 +365,11 @@ public class OrderAction extends BaseAction {
 			endtime.setTime(end);
 			endtime.add(Calendar.DATE, 1);
 			end = endtime.getTime();
-			odetailList = odetailService.getOrderDetailsByTimeAndStatus(start, end, status);
+			if(null!=depId){
+				odetailList = odetailService.getOrderDetailsByTimeStatusType(start, end, status, depId);
+			}else{
+				odetailList = odetailService.getOrderDetailsByTimeAndStatus(start, end, status);
+			}
 			for (LuOrderDetail detail : odetailList) {
 				SimpleDateFormat format2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				detail.setSend(format2.format(detail.getSendTime()));
@@ -350,7 +399,11 @@ public class OrderAction extends BaseAction {
 			endtime.setTime(end);
 			endtime.add(Calendar.DATE, 1);
 			end = endtime.getTime();
-			odetailList = odetailService.getOrderDetailsByTimeAndStatus(start, end, status);
+			if(null!=depId){
+				odetailList = odetailService.getOrderDetailsByTimeStatusType(start, end, status, depId);
+			}else{
+				odetailList = odetailService.getOrderDetailsByTimeAndStatus(start, end, status);
+			}
 			for (LuOrderDetail detail : odetailList) {
 				SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				detail.setSend(format2.format(detail.getSendTime()));
@@ -381,7 +434,7 @@ public class OrderAction extends BaseAction {
 			}
 		}
 		if (isTrue) {
-			depList = departmentService.getByType(LuRole.MANAGER);		
+			depList = departmentService.getByType(LuRole.SCHOOL);		
 		}else {
 			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
 			if (null!=dep) {
@@ -401,7 +454,7 @@ public class OrderAction extends BaseAction {
 	
 	public InputStream exportXls(List<LuOrderDetail> list){
 		fileName = "";
-		LuDepartment dep = departmentService.get(getCurrentUser().getDeptId(), LuDepartment.class);
+		LuDepartment dep = departmentService.get(depId, LuDepartment.class);
 		if (null!=dep) {
 			fileName = fileName+dep.getName();
 		}
@@ -441,7 +494,11 @@ public class OrderAction extends BaseAction {
 		row1.setHeightInPoints((float)20.25);
 		HSSFCell row1Cell0 = row1.createCell(0);
 		row1Cell0.setCellStyle(styleRow1);
-		row1Cell0.setCellValue("学校：");
+		String xuexiao = "学校：";
+		if (null!=dep) {
+			xuexiao = xuexiao+dep.getName();
+		}
+		row1Cell0.setCellValue(xuexiao);
 		sheet.addMergedRegion(new Region(1, (short)3, 1, (short)4));
 		HSSFCell row1Cell3 = row1.createCell(3);
 		row1Cell3.setCellStyle(styleRow1);

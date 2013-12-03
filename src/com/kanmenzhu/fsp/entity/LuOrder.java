@@ -33,8 +33,26 @@ public class LuOrder extends BaseBean {
 	private Date auditTime;
 	private String memo;
 	private String auditMemo;
+	private String deptName;
+	private String create;
 	
 	
+
+	public String getCreate() {
+		return create;
+	}
+
+	public void setCreate(String create) {
+		this.create = create;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 
 	public LuOrder() {
 	}

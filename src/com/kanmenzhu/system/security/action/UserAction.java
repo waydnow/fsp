@@ -175,7 +175,29 @@ public class UserAction extends BaseAction {
 	 * 修改保存
 	 */
 	public String update(){
-		return SUCCESS;
+		String msg = null;
+		if (null!=user) {
+			//TODO 需要添加判断是否已经存在该用户名的用户
+			LuUser olduser = userService.findByLoginName(user.getLoginName());
+			if (null!=olduser) {
+				msg="用户名"+olduser.getLoginName()+"已经被注册！";
+			}else if(StringUtils.isBlank(user.getPwd())){
+				msg="用户名"+olduser.getLoginName()+"密码为空，不能修改！";
+			}else if(user.getPwd().equals(user.getPwdCopy())){
+				msg="用户名"+olduser.getLoginName()+"2次输入密码不同，不能修改！";
+			}else{
+				userService.update(user);
+				logger.info("修改用户"+user.getLoginName()+",ID="+user.getId()+"成功");
+				return welcome();
+			}
+		}else {
+			msg = "用户修改失败！"; 
+		}
+		if (null!=msg) {
+			clearMessages();
+			addActionMessage(msg);
+		}
+		return list();
 	}
 
 	public void setVerifyCode(String verifyCode) {

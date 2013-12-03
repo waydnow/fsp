@@ -16,5 +16,8 @@ public interface OrderDetailService extends BaseService<LuOrderDetail> {
 	public List<LuOrderDetail> getOrderDetailByOrderId(Integer orderId);
 	
 	public List<LuOrderDetail> getOrderDetailsByTimeAndStatus(Date start, Date end, String status);
+
+	List<LuOrderDetail> getOrderDetailsByTimeStatusType(Date start, Date end,
+			String status, int deptId);
 	
 }
