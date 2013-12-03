@@ -71,7 +71,7 @@ function unselectAll(){
 					alert("删除成功!");
 					$("#tr"+id).remove();
 				}else{
-					alert("删除成功!");
+					alert("删除失败!");
 				}
 			});
 		}

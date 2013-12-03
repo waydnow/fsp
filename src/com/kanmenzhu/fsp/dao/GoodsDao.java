@@ -1,5 +1,7 @@
 package com.kanmenzhu.fsp.dao;
 
+import java.util.List;
+
 import com.kanmenzhu.dao.BaseDao;
 import com.kanmenzhu.fsp.entity.LuGoods;
 
@@ -9,5 +11,7 @@ import com.kanmenzhu.fsp.entity.LuGoods;
  *
  */
 public interface GoodsDao extends BaseDao<LuGoods> {
+
+	public List<LuGoods> getGoodsByTag(int deltag);
 
 }

@@ -26,6 +26,9 @@
         <property name="createTime" type="timestamp">
             <column name="CREATE_TIME" length="19" not-null="true" />
         </property>
+        <property name="delTag" type="java.lang.Integer">
+            <column name="DELTAG" />
+        </property>
         <property name="memo" type="string">
             <column name="MEMO" />
         </property>

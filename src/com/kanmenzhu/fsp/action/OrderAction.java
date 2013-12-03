@@ -89,7 +89,7 @@ public class OrderAction extends BaseAction {
 			}
 		}		
 		roleList = roleService.getRoles(getCurrentUser());
-		goodsList = goodsService.getAll(-1, -1);
+		goodsList = goodsService.getGoodsByTag(LuGoods.OK);
 		odetailList = new ArrayList<LuOrderDetail>();
 		LuOrderDetail detail = new LuOrderDetail();
 		odetailList.add(detail);		
@@ -230,6 +230,11 @@ public class OrderAction extends BaseAction {
 		}				
 		roleList = roleService.getRoles(getCurrentUser());
 		goodsList = goodsService.getAll(-1, -1);
+		for (LuGoods goods : goodsList) {
+			if (goods.getDelTag()==LuGoods.DELETE) {
+				goods.setName(goods.getName()+"(已删除)");
+			}
+		}
 		if (order!=null) {
 			order = orderService.get(order.getId(), LuOrder.class);
 			odetailList = odetailService.getOrderDetailByOrderId(order.getId());

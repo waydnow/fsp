@@ -43,11 +43,26 @@ html { overflow-x: auto; overflow-y: auto; border:0;}
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/xiangmu.js"></script>
+<script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 </head>
 <Script language="JavaScript">
 
 function addGD() {
 	window.location.href = "registGD.shtml";
+}
+
+function doDelete(id){
+	if(confirm("是否真要删除?")){
+		$.post("deleteGD.shtml?goods.id="+id,function(data){
+			if(0==data){
+				alert("删除成功!");
+				$("#tr"+id).remove();
+			}else{
+				alert("删除失败!");
+			}
+		});
+	}
+	
 }
 
 function on_load(){
@@ -62,7 +77,7 @@ function on_load(){
 </Script>
 
 <body onload="on_load()">
-<s:form action="listGDshtml">
+<s:form action="listGD.shtml">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
 
   <tr>
@@ -109,13 +124,13 @@ function on_load(){
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
                   <s:iterator value="goodsList" var="gd">
-                  <tr align="center">
+                  <tr align="center" id="tr${gd.id}">
 				   <td bgcolor="#FFFFFF"><input type="checkbox" name="gd.id"/></td>
                     <td height="20" bgcolor="#FFFFFF"><a href="showGD.shtml?goods.id=${gd.id}"><s:property value="#gd.name"/></a></td>
                   	<td bgcolor="#FFFFFF"><s:property value="#gd.price"/>/<s:property value="#gd.unit"/></td>
                    	<td bgcolor="#FFFFFF"><s:property value="#gd.deptName"/></td>
                     <td bgcolor="#FFFFFF"><s:property value="#gd.memo"/></td>
-                    <td bgcolor="#FFFFFF"><a href="deleteGD.shtml">删除</a></td>
+                    <td bgcolor="#FFFFFF"><a id="${gd.id}" href="javascript:doDelete(${gd.id});">删除</a></td>
                   </tr>
 				  </s:iterator>
                   

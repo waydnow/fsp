@@ -1,5 +1,7 @@
 package com.kanmenzhu.fsp.service;
 
+import java.util.List;
+
 import com.kanmenzhu.fsp.entity.LuGoods;
 import com.kanmenzhu.service.BaseService;
 
@@ -9,5 +11,7 @@ import com.kanmenzhu.service.BaseService;
  *
  */
 public interface GoodsService extends BaseService<LuGoods> {
+	
+	public List<LuGoods> getGoodsByTag(int deltag);
 
 }

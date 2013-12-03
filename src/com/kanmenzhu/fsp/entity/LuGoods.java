@@ -20,6 +20,9 @@ public class LuGoods extends BaseBean {
 	private Date createTime;
 	private String memo;
 	private String deptName;
+	private int delTag;
+	public static final int OK = 0;
+	public static final int DELETE = 1;
 
 	public LuGoods() {
 	}
@@ -105,7 +108,13 @@ public class LuGoods extends BaseBean {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-	
-	
+
+	public int getDelTag() {
+		return delTag;
+	}
+
+	public void setDelTag(int delTag) {
+		this.delTag = delTag;
+	}
 
 }

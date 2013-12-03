@@ -73,7 +73,7 @@ public class GoodsAction extends BaseAction {
 	}
 	
 	public String list(){
-		goodsList = goodsService.getAll(-1, -1);
+		goodsList = goodsService.getGoodsByTag(LuGoods.OK);
 		for (LuGoods gd : goodsList) {
 			LuDepartment dp = departmentService.get(gd.getDeptId(), LuDepartment.class);
 			gd.setDeptName(dp.getName());
@@ -99,6 +99,17 @@ public class GoodsAction extends BaseAction {
 				depList.add(dep);
 			}
 		}				
+    }
+    
+    public String delete(){
+    	if(null!=goods){
+    		if (goods.getId()!=null) {
+    			LuGoods ld=goodsService.get(goods.getId(), LuGoods.class);
+    			ld.setDelTag(LuGoods.DELETE);
+    			goodsService.update(ld);
+			}
+		}
+		return ajaxResp("0",0);
     }
 	
 	public String getdep(){
@@ -165,7 +176,5 @@ public class GoodsAction extends BaseAction {
 	public void setDepList(List<LuDepartment> depList) {
 		this.depList = depList;
 	}
-	
-	
 	
 }
