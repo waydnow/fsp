@@ -12,20 +12,26 @@ public class OrderServiceImpl extends BaseServiceImpl<LuOrder> implements OrderS
 
 	
 	@Override
-	public List<LuOrder> getOrdersByManager() {
-		List<LuOrder> orders  = ((OrderDao)dao).getOrdersByManager();
+	public List<LuOrder> getOrdersByManager(Date start,Date end) {
+		List<LuOrder> orders  = ((OrderDao)dao).getOrdersByManager(start,end);
 		return orders;
 	}
 
 	@Override
-	public List<LuOrder> getOrdersBySupplier() {
-		List<LuOrder> orders  = ((OrderDao)dao).getOrdersBySupplier();
+	public List<LuOrder> getOrdersBySupplier(Date start,Date end) {
+		List<LuOrder> orders  = ((OrderDao)dao).getOrdersBySupplier(start,end);
 		return orders;
 	}
 
 	@Override
 	public List<LuOrder> getOrdersByTimeAndStatus(Date start, Date end, String status) {
 		return null;
+	}
+
+	@Override
+	public List<LuOrder> getOrdersByTime(Date start, Date end) {
+		List<LuOrder> orders  = ((OrderDao)dao).getOrdersByTime(start, end);
+		return orders;
 	}
 
 

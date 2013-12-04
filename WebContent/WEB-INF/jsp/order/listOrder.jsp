@@ -43,7 +43,9 @@ html { overflow-x: auto; overflow-y: auto; border:0;}
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/xiangmu.js"></script>
-</head>
+<script language="javascript" src="js/jquery-1.10.0.min.js"></script>
+<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+
 <script language="JavaScript" type="text/javascript">
 
 function selectAll(){
@@ -85,28 +87,30 @@ function on_load(){
 	mainpage.style.display="";
 }
 </script>
-
+</head>
 <body onload="on_load()">
-<s:form action="listODshtml">
+<s:form action="listOD.shtml">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
-
   <tr>
-    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <td height="30">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td height="62" background="images/nav04.gif">
-          
-		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
 		  	<td>订单管理 >> 订单列表</td>
 			<td width="21"><img src="images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：按时间：
-              <input name="textfield" type="text" size="12" readonly="readonly"/><span class="newfont06">至</span>
-			 <input name="textfield" type="text" size="12" readonly="readonly"/>	
-			 <input name="Submit" type="button" class="right-button02" value="查 询" /></td>
+			<td width="80%">查看内容：按时间：
+             <s:textfield name="beginTime"  readonly="true" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+             <span class="newfont06">至</span>
+			 <s:textfield name="endTime"  readonly="true" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+			 <s:submit class="right-button02" value="查 询"/></td>
 		  </tr>
-        </table></td>
+        </table>
+        </td>
       </tr>
-    </table></td>
+    </table>
+    </td>
   </tr>
   <tr>
     <td><table id="subtree1" width="100%" border="0" cellspacing="0" cellpadding="0">

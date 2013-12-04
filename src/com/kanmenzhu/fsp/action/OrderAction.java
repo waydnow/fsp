@@ -173,40 +173,57 @@ public class OrderAction extends BaseAction {
 
 	public String list(){
 		//根据用户权限获取订单
-		roleList = roleService.getRoles(getCurrentUser());
-		if (roleList!=null) {
-			for (LuRole role : roleList) {
-				if (LuRole.SCHOOL.equals(role.getType())) {
-					//学校可查询所有状态订单
-					orderList = orderService.getAll(-1, -1);
-					for (LuOrder order : orderList) {
-						LuDepartment dep = departmentService.get(order.getDeptId(), LuDepartment.class);
-						order.setDeptName(dep.getName());
-						Date send = order.getCreateTime();
-						System.out.println("时间"+send.toString());
-						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						String time = format.format(send);
-						order.setCreate(time);
+		try {
+			SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+			Date start = null;
+			Date end = null;
+			if (StringUtils.isNotBlank(beginTime)) {
+				start = format2.parse(beginTime);
+			}
+			if (StringUtils.isNotBlank(endTime)) {
+				Calendar endtime = Calendar.getInstance();
+				endtime.setTime(format2.parse(endTime));
+				endtime.add(Calendar.DATE, 1);
+				end = endtime.getTime();
+			}
+			roleList = roleService.getRoles(getCurrentUser());
+			if (roleList!=null) {
+				for (LuRole role : roleList) {
+					if (LuRole.SCHOOL.equals(role.getType())) {
+						//学校可查询所有状态订单
+						orderList = orderService.getOrdersByTime(start, end);
+						for (LuOrder order : orderList) {
+							LuDepartment dep = departmentService.get(order.getDeptId(), LuDepartment.class);
+							order.setDeptName(dep.getName());
+							Date send = order.getCreateTime();
+							System.out.println("时间"+send.toString());
+							SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+							String time = format.format(send);
+							order.setCreate(time);
+						}
+						return "list";
+					}else if (LuRole.MANAGER.equals(role.getType())) {
+						orderList = orderService.getOrdersByManager(start,end);
+						//文教局可查询审核中及审核通过及审核未通过的订单
+					}else if (LuRole.SUPPLIER.equals(role.getType())) {
+						//供应商可查询审核通过的订单
+						orderList = orderService.getOrdersBySupplier(start,end);
 					}
-					return "list";
-				}else if (LuRole.MANAGER.equals(role.getType())) {
-					orderList = orderService.getOrdersByManager();
-					//文教局可查询审核中及审核通过及审核未通过的订单
-				}else if (LuRole.SUPPLIER.equals(role.getType())) {
-					//供应商可查询审核通过的订单
-					orderList = orderService.getOrdersBySupplier();
+				}
+				for (LuOrder order : orderList) {
+					LuDepartment dep = departmentService.get(order.getDeptId(), LuDepartment.class);
+					order.setDeptName(dep.getName());
+					Date send = order.getCreateTime();
+					System.out.println("时间"+send.toString());
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String time = format.format(send);
+					order.setCreate(time);
 				}
 			}
-			for (LuOrder order : orderList) {
-				LuDepartment dep = departmentService.get(order.getDeptId(), LuDepartment.class);
-				order.setDeptName(dep.getName());
-				Date send = order.getCreateTime();
-				System.out.println("时间"+send.toString());
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String time = format.format(send);
-				order.setCreate(time);
-			}
+		} catch (ParseException e) {
+			logger.error("时间转换错误",e);
 		}
+		
 		return "list";
 	}
 	
@@ -325,12 +342,17 @@ public class OrderAction extends BaseAction {
 	public String exportList(){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			Date start = format.parse(beginTime);
-			Date end = format.parse(endTime);
-			Calendar endtime = Calendar.getInstance();
-			endtime.setTime(end);
-			endtime.add(Calendar.DATE, 1);
-			end = endtime.getTime();
+			Date start = null;
+			Date end = null;
+			if (StringUtils.isNotBlank(beginTime)) {
+				start = format.parse(beginTime);
+			}
+			if (StringUtils.isNotBlank(endTime)) {
+				Calendar endtime = Calendar.getInstance();
+				endtime.setTime(format.parse(endTime));
+				endtime.add(Calendar.DATE, 1);
+				end = endtime.getTime();
+			}
 			if(null!=depId){
 				odetailList = odetailService.getOrderDetailsByTimeStatusType(start, end, status, depId);
 			}else{
@@ -364,12 +386,17 @@ public class OrderAction extends BaseAction {
 		InputStream is=null;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			Date start = format.parse(beginTime);
-			Date end = format.parse(endTime);
-			Calendar endtime = Calendar.getInstance();
-			endtime.setTime(end);
-			endtime.add(Calendar.DATE, 1);
-			end = endtime.getTime();
+			Date start = null;
+			Date end = null;
+			if (StringUtils.isNotBlank(beginTime)) {
+				start = format.parse(beginTime);
+			}
+			if (StringUtils.isNotBlank(endTime)) {
+				Calendar endtime = Calendar.getInstance();
+				endtime.setTime(format.parse(endTime));
+				endtime.add(Calendar.DATE, 1);
+				end = endtime.getTime();
+			}
 			if(null!=depId){
 				odetailList = odetailService.getOrderDetailsByTimeStatusType(start, end, status, depId);
 			}else{
@@ -398,12 +425,17 @@ public class OrderAction extends BaseAction {
 	public String showXls(){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			Date start = format.parse(beginTime);
-			Date end = format.parse(endTime);
-			Calendar endtime = Calendar.getInstance();
-			endtime.setTime(end);
-			endtime.add(Calendar.DATE, 1);
-			end = endtime.getTime();
+			Date start = null;
+			Date end = null;
+			if (StringUtils.isNotBlank(beginTime)) {
+				start = format.parse(beginTime);
+			}
+			if (StringUtils.isNotBlank(endTime)) {
+				Calendar endtime = Calendar.getInstance();
+				endtime.setTime(format.parse(endTime));
+				endtime.add(Calendar.DATE, 1);
+				end = endtime.getTime();
+			}
 			if(null!=depId){
 				odetailList = odetailService.getOrderDetailsByTimeStatusType(start, end, status, depId);
 			}else{
@@ -447,10 +479,10 @@ public class OrderAction extends BaseAction {
 			}
 		}
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		beginTime = format.format(new Date());
+		endTime = format.format(new Date());
 		Calendar now = Calendar.getInstance();
-		now.add(Calendar.WEEK_OF_MONTH, 1);
-		endTime = format.format(now.getTime());
+		now.add(Calendar.WEEK_OF_MONTH, -1);
+		beginTime = format.format(now.getTime());
 		this.setStatus("");
 		odetailList= new ArrayList<LuOrderDetail>();
 		return "export";
@@ -459,9 +491,12 @@ public class OrderAction extends BaseAction {
 	
 	public InputStream exportXls(List<LuOrderDetail> list){
 		fileName = "";
-		LuDepartment dep = departmentService.get(depId, LuDepartment.class);
-		if (null!=dep) {
-			fileName = fileName+dep.getName();
+		LuDepartment dep = null;
+		if (depId!=null) {
+			dep = departmentService.get(depId, LuDepartment.class);
+			if (null!=dep) {
+				fileName = fileName+dep.getName();
+			}
 		}
 		fileName = fileName+beginTime+"至"+endTime+"采购计划";
 		try {
@@ -502,6 +537,8 @@ public class OrderAction extends BaseAction {
 		String xuexiao = "学校：";
 		if (null!=dep) {
 			xuexiao = xuexiao+dep.getName();
+		}else {
+			xuexiao = xuexiao+"全部";
 		}
 		row1Cell0.setCellValue(xuexiao);
 		sheet.addMergedRegion(new Region(1, (short)3, 1, (short)4));

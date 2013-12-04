@@ -13,9 +13,11 @@ import com.kanmenzhu.service.BaseService;
  */
 public interface OrderService extends BaseService<LuOrder> {
 
-	public List<LuOrder> getOrdersByManager();
+	public List<LuOrder> getOrdersByTime(Date start,Date end);
 	
-	public List<LuOrder> getOrdersBySupplier();
+	public List<LuOrder> getOrdersByManager(Date start,Date end);
+	
+	public List<LuOrder> getOrdersBySupplier(Date start,Date end);
 	
 	public List<LuOrder> getOrdersByTimeAndStatus(Date start, Date end, String status);
 	

@@ -20,6 +20,7 @@ body {
 -->
 </style>
 <link href="css/css.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 </head>
 <SCRIPT language="JavaScript">

@@ -1,5 +1,6 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
@@ -115,7 +116,7 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String regist(){
-		dps = departmentService.getAll();
+		deptList();
 		user = getCurrentUser();
 		if (user!=null) {
 			if ("admin".equals(user.getLoginName())) {
@@ -206,6 +207,26 @@ public class UserAction extends BaseAction {
 		}
 		return list();
 	}
+	
+	public void deptList(){
+    	//判断当前用户是否为文教部门
+		dps = new ArrayList<LuDepartment>();
+		List<LuRole> roles = roleService.getRoles(getCurrentUser());
+		boolean isTrue = false;
+		for (LuRole role:roles) {
+			if (LuRole.MANAGER.equals(role.getType())) {
+				isTrue = true;
+			}
+		}
+		if (isTrue) {
+			dps = departmentService.getAll();		
+		}else {
+			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
+			if (null!=dep) {
+				dps.add(dep);
+			}
+		}				
+    }
 
 	public void setVerifyCode(String verifyCode) {
 		this.verifyCode = verifyCode;

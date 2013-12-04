@@ -1,5 +1,7 @@
 package com.kanmenzhu.fsp.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.kanmenzhu.dao.impl.BaseDaoImpl;
@@ -12,18 +14,73 @@ public class OrderDaoImpl extends BaseDaoImpl<LuOrder> implements OrderDao {
 	public String getEntityName() {
 		return "LuOrder";
 	}
-
+	
 	@Override
-	public List<LuOrder> getOrdersByManager() {
-		String hql = "from LuOrder d where d.status in (1,2,3,4)";
-		List<LuOrder> orders = getHibernateTemplate().find(hql);
+	public List<LuOrder> getOrdersByManager(Date start,Date end) {
+		String hql = "from LuOrder d where d.status != ?";
+		List<LuOrder> orders = new ArrayList<LuOrder>();
+		if (start!=null&&end!=null) {
+			hql = hql+" and d.createTime between ? and ? order by d.createTime desc";
+			orders = findByHql(hql, -1, -1, LuOrder.UNSUBMIT_ADUIT,start,end);
+		}
+		if (start!=null&&end==null) {
+			hql = hql+" and d.createTime >= ? order by d.createTime desc";
+			orders = findByHql(hql, -1, -1, LuOrder.UNSUBMIT_ADUIT,start);
+		}
+		if (start==null&&end!=null) {
+			hql = hql+" and d.createTime <= ? order by d.createTime desc";
+			orders = findByHql(hql, -1, -1, LuOrder.UNSUBMIT_ADUIT,end);
+		}
+		if (start==null&&end==null) {
+			hql = hql+" order by d.createTime desc";
+			orders = findByHql(hql, -1, -1, LuOrder.UNSUBMIT_ADUIT);
+		}
 		return orders;
 	}
 
 	@Override
-	public List<LuOrder> getOrdersBySupplier() {
-		String hql = "from LuOrder d where d.status in (2,4)";
-		List<LuOrder> orders = getHibernateTemplate().find(hql);
+	public List<LuOrder> getOrdersBySupplier(Date start,Date end) {
+		String hql = "from LuOrder d where and d.status in (?,?)";
+		List<LuOrder> orders = new ArrayList<LuOrder>();
+		if (start!=null&&end!=null) {
+			hql = hql+" and d.createTime between ? and ? order by d.createTime desc";
+			orders = findByHql(hql, -1, -1, LuOrder.ADUIT_SUCCESS,LuOrder.ADUIT_END,start,end);
+		}
+		if (start!=null&&end==null) {
+			hql = hql+" and d.createTime >= ? order by d.createTime desc";
+			orders = findByHql(hql, -1, -1, LuOrder.ADUIT_SUCCESS,LuOrder.ADUIT_END,start);
+		}
+		if (start==null&&end!=null) {
+			hql = hql+" and d.createTime <= ? order by d.createTime desc";
+			orders = findByHql(hql, -1, -1, LuOrder.ADUIT_SUCCESS,LuOrder.ADUIT_END,end);
+		}
+		if (start==null&&end==null) {
+			hql = hql+" order by d.createTime desc";
+			orders = findByHql(hql, -1, -1,LuOrder.ADUIT_SUCCESS,LuOrder.ADUIT_END);
+		}
+		return orders;
+	}
+
+	@Override
+	public List<LuOrder> getOrdersByTime(Date start, Date end) {
+		String hql = "from LuOrder d ";
+		List<LuOrder> orders = new ArrayList<LuOrder>();
+		if (start!=null&&end!=null) {
+			hql = hql+" where d.createTime between ? and ? order by d.createTime desc";
+			orders = findByHql(hql, -1, -1,start,end);
+		}
+		if (start!=null&&end==null) {
+			hql = hql+" where d.createTime >= ? order by d.createTime desc";
+			orders = findByHql(hql, -1, -1,start);
+		}
+		if (start==null&&end!=null) {
+			hql = hql+" where d.createTime <= ? order by d.createTime desc";
+			orders = findByHql(hql, -1, -1,end);
+		}
+		if (start==null&&end==null) {
+			hql = hql+" order by d.createTime desc";
+			orders = findByHql(hql, -1, -1);
+		}
 		return orders;
 	}
 
