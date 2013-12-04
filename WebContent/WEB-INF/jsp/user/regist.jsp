@@ -60,7 +60,9 @@ body {
         <td width="69%">
         	<s:select list="dps" var="department" listValue="name" listKey="id" name="user.deptId">
         	</s:select>
+			<s:if test="%{getCurrentUser().loginName=='admin'}">
 			<a href="registDP.shtml">添加新单位</a>
+			</s:if>
         </td>
         </tr>
       <tr>

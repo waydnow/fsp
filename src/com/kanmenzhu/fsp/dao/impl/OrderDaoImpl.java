@@ -40,23 +40,23 @@ public class OrderDaoImpl extends BaseDaoImpl<LuOrder> implements OrderDao {
 
 	@Override
 	public List<LuOrder> getOrdersBySupplier(Date start,Date end) {
-		String hql = "from LuOrder d where and d.status in (?,?)";
+		String hql = "from LuOrder d where d.status in ("+LuOrder.ADUIT_END+","+LuOrder.ADUIT_SUCCESS+")";
 		List<LuOrder> orders = new ArrayList<LuOrder>();
 		if (start!=null&&end!=null) {
 			hql = hql+" and d.createTime between ? and ? order by d.createTime desc";
-			orders = findByHql(hql, -1, -1, LuOrder.ADUIT_SUCCESS,LuOrder.ADUIT_END,start,end);
+			orders = findByHql(hql, -1, -1,start,end);
 		}
 		if (start!=null&&end==null) {
 			hql = hql+" and d.createTime >= ? order by d.createTime desc";
-			orders = findByHql(hql, -1, -1, LuOrder.ADUIT_SUCCESS,LuOrder.ADUIT_END,start);
+			orders = findByHql(hql, -1, -1,start);
 		}
 		if (start==null&&end!=null) {
 			hql = hql+" and d.createTime <= ? order by d.createTime desc";
-			orders = findByHql(hql, -1, -1, LuOrder.ADUIT_SUCCESS,LuOrder.ADUIT_END,end);
+			orders = findByHql(hql, -1, -1,end);
 		}
 		if (start==null&&end==null) {
 			hql = hql+" order by d.createTime desc";
-			orders = findByHql(hql, -1, -1,LuOrder.ADUIT_SUCCESS,LuOrder.ADUIT_END);
+			orders = findByHql(hql, -1, -1);
 		}
 		return orders;
 	}
