@@ -39,11 +39,12 @@ body {
 </script>
 <%
 Map mapStatus = new HashMap();
-mapStatus.put(LuOrder.UNSUBMIT_ADUIT,"未提交");
-mapStatus.put(LuOrder.ADUIT_ING,"审核中");
-mapStatus.put(LuOrder.ADUIT_SUCCESS,"审核通过");
-mapStatus.put(LuOrder.ADUIT_FAIL,"审核失败");
-mapStatus.put(LuOrder.ADUIT_END,"重新修改");
+mapStatus.put(LuOrder.UNSUBMIT_ADUIT,"未提交订单");
+mapStatus.put(LuOrder.ADUIT_ING,"审核中订单");
+mapStatus.put(LuOrder.ADUIT_SUCCESS,"审核通过订单");
+mapStatus.put(LuOrder.ADUIT_FAIL,"审核失败订单");
+mapStatus.put(LuOrder.ADUIT_END,"供应商提供订单");
+mapStatus.put(LuOrder.ADUIT_REAL,"最终订单");
 request.setAttribute("mapStatus",mapStatus);
 %>
 </head>

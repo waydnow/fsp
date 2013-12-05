@@ -23,6 +23,8 @@ public class LuOrder extends BaseBean {
 	public static final int ADUIT_FAIL = 3;
 	/**供应商提交真实订单给学校*/
 	public static final int ADUIT_END = 4;
+	/**学校确认供应商的订单*/
+	public static final int ADUIT_REAL = 5;
 	
 	private int deptId;
 	private int createUserId;
@@ -148,6 +150,20 @@ public class LuOrder extends BaseBean {
 
 	public void setAuditMemo(String auditMemo) {
 		this.auditMemo = auditMemo;
+	}
+	
+	public String toString(){
+		String order = "ID="+this.getId()+
+				",创建人："+this.createUserId+
+				",创建时间："+this.createTime+
+				",学校:"+this.deptId+
+				",提交时间："+this.submitTime+
+				",状态："+this.status+
+				",审核人"+this.auditUserId+
+				",审核时间："+this.auditTime+
+				",备注："+this.memo;
+		return order;
+		
 	}
 
 }

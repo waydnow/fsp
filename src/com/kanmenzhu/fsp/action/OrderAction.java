@@ -116,13 +116,18 @@ public class OrderAction extends BaseAction {
 					}
 				}
 			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"创建订单ID="+order.getId()+"学校ID"+order.getDeptId());
+			logger.info("用户"+getCurrentUser().getLoginName()+"创建订单"+order.toString());
 		}else {
 			logger.error("保存订单时，订单为NULL，操作人："+getCurrentUser().getLoginName());
 		}		
 		return list();
 	}
 	
+	/**
+	 * 更新订单
+	 * @return
+	 * @throws Exception
+	 */
 	public String update() throws Exception{
 		if (order!=null) {
 			orderService.update(order);
@@ -138,7 +143,7 @@ public class OrderAction extends BaseAction {
 					odetailService.update(detail);
 				}
 			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"更新订单ID="+order.getId());
+			logger.info("用户"+getCurrentUser().getLoginName()+"更新订单"+order.toString());
 		}
 		return show();
 	}
@@ -164,7 +169,7 @@ public class OrderAction extends BaseAction {
 					}
 				}
 			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"创建并送审订单ID="+order.getId());
+			logger.info("用户"+getCurrentUser().getLoginName()+"创建并送审订单"+order.toString());
 		}else {
 			logger.error("保存订单时，订单为NULL，操作人："+getCurrentUser().getLoginName());
 		}		
@@ -266,6 +271,10 @@ public class OrderAction extends BaseAction {
 		return "show";
 	}
 	
+	/**
+	 * 删除订单
+	 * @return
+	 */
 	public String delete(){
 		if (order!=null) {
 			order = orderService.get(order.getId(), LuOrder.class);
@@ -274,22 +283,29 @@ public class OrderAction extends BaseAction {
 				odetailService.delete(detail);
 			}
 			orderService.delete(order);
-			logger.info("用户"+getCurrentUser().getLoginName()+"将订单ID="+order.getId()+"删除！");
+			logger.info("用户"+getCurrentUser().getLoginName()+"将订单"+order.toString()+"删除！");
 		}
 		return list();
 	}
 	
-	
+	/**
+	 * 提交到文教局审核
+	 * @return
+	 */
 	public String audit(){
 		if (order!=null) {
 			order.setSubmitTime(new Date());
 			order.setStatus(LuOrder.ADUIT_ING);
 			orderService.update(order);
-			logger.info("用户"+getCurrentUser().getLoginName()+"送审订单ID="+order.getId());
+			logger.info("用户"+getCurrentUser().getLoginName()+"送审订单"+order.toString());
 		}
 		return list();
 	}
 	
+	/**
+	 * 保存订单，并提交到文教局审核
+	 * @return
+	 */
 	public String updateAudit(){
 		if (order!=null) {
 			order.setSubmitTime(new Date());
@@ -306,11 +322,15 @@ public class OrderAction extends BaseAction {
 					odetailService.update(detail);
 				}
 			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"更新并送审订单ID="+order.getId());
+			logger.info("用户"+getCurrentUser().getLoginName()+"更新并送审订单"+order.toString());
 		}
 		return "show";
 	}
 	
+	/**
+	 * 文教局审核订单通过
+	 * @return
+	 */
 	public String auditPass(){
 		if (order!=null) {
 			order.setAuditTime(new Date());
@@ -320,11 +340,15 @@ public class OrderAction extends BaseAction {
 				detail.setStatus(LuOrder.ADUIT_SUCCESS);
 				odetailService.update(detail);
 			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单ID="+order.getId()+"通过!");
+			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单"+order.toString()+"通过!");
 		}
 		return list();
 	}
 	
+	/**
+	 * 文教局审核订单，不通过
+	 * @return
+	 */
 	public String auditNoPass(){
 		if (order!=null) {
 			order.setAuditTime(new Date());
@@ -334,7 +358,61 @@ public class OrderAction extends BaseAction {
 				detail.setStatus(LuOrder.ADUIT_FAIL);
 				odetailService.update(detail);
 			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单ID="+order.getId()+"不通过，返回提交用户!");
+			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单"+order.toString()+"不通过，返回提交用户!");
+		}
+		return list();
+	}
+	
+	/**
+	 * 供应商提供真实订单给学校确认
+	 * @return
+	 */
+	public String updateReal(){
+		if (order!=null) {
+			order.setStatus(LuOrder.ADUIT_END);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				if (null == detail.getId()) {
+					detail.setCreateTime(new Date());
+					detail.setOrderId(order.getId());
+					detail.setStatus(LuOrder.ADUIT_END);
+					detail.setUserId(getCurrentUser().getId());
+					odetailService.save(detail);
+				}else {
+					odetailService.update(detail);
+				}
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
+		}
+		return list();
+	}
+	
+	/**
+	 * 学校确认供应商提供的真实订单，没有问题
+	 * @return
+	 */
+	public String auditReal(){
+		if (order!=null) {
+			order.setStatus(LuOrder.ADUIT_REAL);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				detail.setStatus(LuOrder.ADUIT_REAL);
+				odetailService.update(detail);
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
+		}
+		return list();
+	}
+	
+	public String auditNoReal(){
+		if (order!=null) {
+			order.setStatus(LuOrder.ADUIT_SUCCESS);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				detail.setStatus(LuOrder.ADUIT_SUCCESS);
+				odetailService.update(detail);
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
 		}
 		return list();
 	}

@@ -54,6 +54,15 @@ body {
 		} else if (type == 'auditPass') {
 			$("#showOrder").attr("action","auditPassOD.shtml");
 			$("#showOrder").submit();
+		}else if (type == 'auditReal') {
+			$("#showOrder").attr("action","auditRealOD.shtml");
+			$("#showOrder").submit();
+		}else if (type == 'auditNoReal') {
+			$("#showOrder").attr("action","auditNoRealOD.shtml");
+			$("#showOrder").submit();
+		}else if (type == 'updateReal') {
+			$("#showOrder").attr("action","updateRealOD.shtml");
+			$("#showOrder").submit();
 		}
 	}
 	
@@ -232,7 +241,8 @@ body {
 	                    <input name="add" type="button"  class="right-button08"  value="保存并提交订单" onClick="checkSubmit('updateAudit')" />
 	              	 	</s:if>
 	              	 	<s:if test = "%{order.status ==4}">
-	              	 	<input name="add" type="button" class="right-button08"  value="确认供应订单" onClick="checkSubmit('auditReal')" />
+	              	 	<input name="add" type="button" class="right-button08" title="供货订单正确，进行确认"  value="确认供货订单" onClick="checkSubmit('auditReal')" />
+	              	 	<input name="add" type="button" class="right-button08" title="供货订单不正确，返回供应商修改"  value="返回供应商" onClick="checkSubmit('auditNoReal')" />
 	              	 	</s:if>
               	 	</s:if>
               	 	<s:if test="#role.type=='SUPPLIER'">

@@ -148,7 +148,8 @@ function on_load(){
 					<s:elseif test="%{#od.status == 1}">审核中</s:elseif>
 					<s:elseif test="%{#od.status == 2}">审核通过</s:elseif>
 					<s:elseif test="%{#od.status == 3}">审核不通过</s:elseif>
-					<s:elseif test="%{#od.status == 4}">最终订单</s:elseif>
+					<s:elseif test="%{#od.status == 4}">供应商提供订单</s:elseif>
+					<s:elseif test="%{#od.status == 5}">最终订单</s:elseif>
 					</td>
                     <td bgcolor="#FFFFFF"><a href="javascript:del(${od.id});">删除</a></td>
                   </tr>
