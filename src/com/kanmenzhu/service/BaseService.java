@@ -3,6 +3,7 @@ package com.kanmenzhu.service;
 import java.util.List;
 
 import com.kanmenzhu.bean.BaseBean;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 public interface BaseService<T extends BaseBean> {
 
@@ -11,6 +12,22 @@ public interface BaseService<T extends BaseBean> {
 	void update(Object o);
 	void saveOrUpdate(Object o);
 	T  get(Integer id,Class<T> clz);
+	/**
+	 * 根据sql查询
+	 * @param hql
+	 * @param startRow 开始行 -1表示无视
+	 * @param endRow 结束行 -1表示无视
+	 * @param params 查询条件中的参数
+	 * @return
+	 */
+	public List<T> findByHql(String hql,PageBean pb,Object... params);
+	/**
+	 * 获取指定表中所有数据
+	 * @param startRow 开始行 -1表示无视
+	 * @param endRow 结束行 -1表示无视
+	 * @return
+	 */
+	public List<T> getAll(PageBean pb);
 	/**
 	 * 根据sql查询
 	 * @param hql

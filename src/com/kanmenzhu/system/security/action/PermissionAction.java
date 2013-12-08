@@ -11,6 +11,7 @@ import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.service.MenuService;
 import com.kanmenzhu.system.security.service.PermissionService;
 import com.kanmenzhu.system.security.service.RoleService;
+import com.kanmenzhu.utils.pagination.PageBean;
 import com.kanmenzhu.web.BaseAction;
 
 /**
@@ -45,6 +46,7 @@ public class PermissionAction extends BaseAction {
 	 * @return
 	 */
 	public String init(){
+		PageBean pb=getPgReq();
 		//#########################测试代码
 		rid=rid==null?-1:rid;
 		//####################

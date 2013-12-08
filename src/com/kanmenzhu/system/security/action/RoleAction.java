@@ -5,8 +5,10 @@ import java.util.List;
 import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.service.RoleService;
 import com.kanmenzhu.system.security.service.RoleUserService;
+import com.kanmenzhu.utils.pagination.PageBean;
+import com.kanmenzhu.web.BaseAction;
 
-public class RoleAction {
+public class RoleAction extends BaseAction{
 	
 	private RoleUserService ruService;
 	
@@ -32,7 +34,8 @@ public class RoleAction {
 	}
 	
 	public String list(){
-		rolelist = roleService.getAll(-1, -1);
+		PageBean pb=getPgReq();
+		rolelist = roleService.getAll(pb);
 		return "list";
 	}
 	

@@ -16,6 +16,4 @@ public class GoodsServiceImpl extends BaseServiceImpl<LuGoods> implements	GoodsS
 		List<LuGoods> goods  = ((GoodsDao)dao).getGoodsByTag(deltag);
 		return goods;
 	}
-
-
 }
