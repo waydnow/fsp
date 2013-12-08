@@ -62,6 +62,7 @@ public class OrderAction extends BaseAction {
 	/** 订单状态 */
 	private String status;
 	private Integer depId;
+	private String detailId;
 	
 	private OrderService orderService;
 	private OrderDetailService odetailService;
@@ -286,6 +287,20 @@ public class OrderAction extends BaseAction {
 			logger.info("用户"+getCurrentUser().getLoginName()+"将订单"+order.toString()+"删除！");
 		}
 		return list();
+	}
+	
+	public String delDetail(){
+		if (StringUtils.isNotBlank(detailId)) {
+			int id = Integer.parseInt(detailId);
+			LuOrderDetail detail = odetailService.get(id, LuOrderDetail.class);
+			if (detail!=null) {
+				detail.setStatus(LuOrder.ADUIT_DEL);
+				detail.setMemo(detail.getMemo()+" 订单已经被用户"+getCurrentUser().getName()+"在"+new Date()+"删除");
+				odetailService.update(detail);
+				return ajaxResp("0",0);
+			}		
+		}
+		return ajaxResp("1",0);
 	}
 	
 	/**
@@ -874,6 +889,14 @@ public class OrderAction extends BaseAction {
 
 	public void setDepId(Integer depId) {
 		this.depId = depId;
+	}
+
+	public String getDetailId() {
+		return detailId;
+	}
+
+	public void setDetailId(String detailId) {
+		this.detailId = detailId;
 	}
 
 }

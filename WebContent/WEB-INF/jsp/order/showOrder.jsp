@@ -109,6 +109,19 @@ body {
 				  '});'+
 			  '});'+
 			  '';
+			  js = js +  '$("#del-'+l+'").click(function(){'+
+				  'var did = $("#del-'+l+'").attr("odid");'+
+				  'if(confirm("确认删除详单？")){'+
+					'$.post("delDetailOD.shtml?detailId="+did,function(data){'+
+						'if(0==data){'+
+						'$(#odetail-'+l+').remove();'+
+						'alert("删除成功!");'+
+					'	}else{'+
+					'		alert("删除失败!");'+
+					'	}'+
+				    '});'+
+				  '}'+
+		   	   ' });';
 			$("<scri"+"pt>"+js+"</scr"+"ipt>").attr({id:'jschangepost'+l,type:'text/javascript'}).insertAfter($("#mainjs"));
 		}
 		  
@@ -151,6 +164,7 @@ body {
 		$("<scri"+"pt>"+js+"</scr"+"ipt>").attr({id:'js'+i,type:'text/javascript'}).insertAfter($("#mainjs"));
       
      	 $("#del-"+i).click(function(){
+     		 alert("删除="+i);
      	 	$(this).closest("td").closest("tr").remove();
   	    });
     }//end addLine()
@@ -210,7 +224,9 @@ body {
 					</s:textfield>
 					</td>
                     <td bgcolor="#FFFFFF"><s:textfield id="memo-%{#status.index}" name="odetailList[%{#status.index}].memo" /></td>
-                    <td bgcolor="#FFFFFF"><input id="del-<s:property value='#status.index'/>" type="button" value="删除" /> </td>
+                    <td bgcolor="#FFFFFF"><a id="del-<s:property value='#status.index'/>"
+						odid='<s:text name="odetailList[%{#status.index}].id"/>'>
+                    	删除</a> </td>
                   </tr>
 				  </s:iterator>
              	<tr align="center" id="odetail-last"></tr>

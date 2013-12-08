@@ -19,7 +19,7 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 
 	@Override
 	public List<LuOrderDetail> getOrderDetailByOrderId(Integer orderId) {
-		String hql = "from LuOrderDetail d where d.orderId = ?";
+		String hql = "from LuOrderDetail d where d.orderId = ? and d.status != 99";
 		List<LuOrderDetail> list = findByHql(hql, -1, -1, orderId);
 		return list;
 	}
@@ -30,10 +30,10 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
 		if (StringUtils.isNotBlank(status)) {
 			int s = Integer.parseInt(status);
-			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime between ? and ? and d.status=? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime between ? and ? and d.status=? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, deptId,start,end,s);
 		}else {
-			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime between ? and ? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime between ? and ? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, deptId,start,end);
 		}
 		return list;
@@ -45,10 +45,10 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
 		if (StringUtils.isNotBlank(status)) {
 			int s = Integer.parseInt(status);
-			hql = "from LuOrderDetail d where d.sendTime between ? and ? and d.status=? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.sendTime between ? and ? and d.status=? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, start,end,s);
 		}else {
-			hql = "from LuOrderDetail d where d.sendTime between ? and ? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.sendTime between ? and ? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, start,end);
 		}
 		return list;
@@ -60,10 +60,10 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
 		if (StringUtils.isNotBlank(status)) {
 			int s = Integer.parseInt(status);
-			hql = "from LuOrderDetail d where d.deptId=? and d.status=? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.deptId=? and d.status=? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, deptId,s);
 		}else {
-			hql = "from LuOrderDetail d where d.deptId=? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.deptId=? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, deptId);
 		}
 		return list;
@@ -75,10 +75,10 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
 		if (StringUtils.isNotBlank(status)) {
 			int s = Integer.parseInt(status);
-			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime >= ? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.deptId=? and d.status!=99 and d.sendTime >= ? order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, deptId,start,s);
 		}else {
-			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime >= ? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.deptId=? and d.status!=99 and d.sendTime >= ? order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, deptId,start);
 		}
 		return list;
@@ -90,10 +90,10 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
 		if (StringUtils.isNotBlank(status)) {
 			int s = Integer.parseInt(status);
-			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime <= ? d.status=? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime <= ? and d.status=? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, deptId,end,s);
 		}else {
-			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime <= ? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.deptId=? and d.sendTime <= ? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, deptId,end);
 		}
 		return list;
@@ -105,10 +105,10 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
 		if (StringUtils.isNotBlank(status)) {
 			int s = Integer.parseInt(status);
-			hql = "from LuOrderDetail d where d.sendTime <= ? and d.status=? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.sendTime <= ? and d.status=? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, end,s);
 		}else {
-			hql = "from LuOrderDetail d where d.sendTime <= ? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.sendTime <= ? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, end);
 		}
 		return list;
@@ -120,10 +120,10 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
 		if (StringUtils.isNotBlank(status)) {
 			int s = Integer.parseInt(status);
-			hql = "from LuOrderDetail d where d.sendTime >= ? and d.status=? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.sendTime >= ? and d.status=? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, start,s);
 		}else {
-			hql = "from LuOrderDetail d where d.sendTime >= ? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.sendTime >= ? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, start);
 		}
 		return list;
@@ -135,10 +135,10 @@ public class OrderDetailDaoImpl extends BaseDaoImpl<LuOrderDetail> implements Or
 		List<LuOrderDetail> list = new ArrayList<LuOrderDetail>();
 		if (StringUtils.isNotBlank(status)) {
 			int s = Integer.parseInt(status);
-			hql = "from LuOrderDetail d where d.status=? order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.status=? and d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1, s);
 		}else {
-			hql = "from LuOrderDetail d order by d.sendTime asc";
+			hql = "from LuOrderDetail d where d.status!=99 order by d.sendTime asc";
 			list = findByHql(hql, -1, -1);
 		}
 		return list;
