@@ -170,17 +170,20 @@ html {
           <td height="6"><img src="images/spacer.gif" width="1" height="1" /></td>
         </tr>
         <tr>
-          <td height="33"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">
+          <td height="33">
+          <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">
               <tr>
                 <td width="50%">共 <span class="right-text09">${pb.totalPage}</span> 页 | 第 <span class="right-text09">${pb.curPage }</span> 页</td>
                 <td width="49%" align="right">[<a href="${pb.firstUrl }" class="right-font08">首页</a> | <a href="${pb.prevUrl}" class="right-font08">上一页</a> | <a href="${pb.nextUrl}" class="right-font08">下一页</a> | <a href="${pb.lastUrl}" class="right-font08">末页</a>] </td>
                 <td width="1%"></td>
               </tr>
-          </table></td>
+          </table>
+          </td>
         </tr>
-      </table></td>
-			</tr>
-		</table>
+      </table>
+     </td>
+	</tr>
+</table>
 
 	<div id="loadingmsg"
 		style="width: 100px; height: 18px; top: 0px; display: none;">

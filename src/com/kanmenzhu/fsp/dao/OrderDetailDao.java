@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.kanmenzhu.dao.BaseDao;
 import com.kanmenzhu.fsp.entity.LuOrderDetail;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 /**
  * 订单详情dao
@@ -41,5 +42,17 @@ public interface OrderDetailDao extends BaseDao<LuOrderDetail> {
 	List<LuOrderDetail> getOrderDetailsByStartAndStatus(Date start,	String status);
 
 	List<LuOrderDetail> getOrderDetailsByStatus(String status);
+
+	List<LuOrderDetail> getOrderDetailsByStatusType(PageBean pb, String status,
+			int deptId);
+
+	List<LuOrderDetail> getOrderDetailsByStartStatusType(PageBean pb,
+			Date start, String status, int deptId);
+
+	List<LuOrderDetail> getOrderDetailsByEndStatusType(PageBean pb, Date end,
+			String status, int deptId);
+
+	List<LuOrderDetail> getOrderDetailsByTimeStatusType(PageBean pb,
+			Date start, Date end, String status, int deptId);
 
 }

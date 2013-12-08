@@ -103,18 +103,19 @@ public class OrderAction extends BaseAction {
 		if(order != null){
 			order.setCreateTime(new Date());
 			order.setCreateUserId(getCurrentUser().getId());
-//			order.setDeptId(getCurrentUser().getDeptId());
 			order.setStatus(LuOrder.UNSUBMIT_ADUIT);
 			orderService.save(order);
 			if (odetailList!=null) {
 				for (LuOrderDetail orderDetail : odetailList) {
-					if (null!=orderDetail) {
+					if (null==orderDetail.getId()) {
 						orderDetail.setCreateTime(new Date());
 						orderDetail.setOrderId(order.getId());
 						orderDetail.setStatus(order.getStatus());
-						orderDetail.setUserId(getCurrentUser().getId());
 						orderDetail.setDeptId(order.getDeptId());
+						orderDetail.setUserId(getCurrentUser().getId());
 						odetailService.save(orderDetail);
+					}else {
+						odetailService.update(orderDetail);
 					}
 				}
 			}
@@ -135,12 +136,14 @@ public class OrderAction extends BaseAction {
 			orderService.update(order);
 			for (LuOrderDetail detail : odetailList) {
 				if (null == detail.getId()) {
-					detail.setCreateTime(new Date());
-					detail.setOrderId(order.getId());
-					detail.setStatus(order.getStatus());
-					detail.setUserId(getCurrentUser().getId());
-					detail.setDeptId(order.getDeptId());
-					odetailService.save(detail);
+					if (detail.getGoodNum()!=0) {
+						detail.setCreateTime(new Date());
+						detail.setOrderId(order.getId());
+						detail.setStatus(order.getStatus());
+						detail.setUserId(getCurrentUser().getId());
+						detail.setDeptId(order.getDeptId());
+						odetailService.save(detail);
+					}
 				}else {
 					odetailService.update(detail);
 				}
@@ -161,13 +164,15 @@ public class OrderAction extends BaseAction {
 			orderService.save(order);
 			if (odetailList!=null) {
 				for (LuOrderDetail orderDetail : odetailList) {
-					if (null!=orderDetail) {
+					if (null==orderDetail.getId()) {
 						orderDetail.setCreateTime(new Date());
 						orderDetail.setOrderId(order.getId());
 						orderDetail.setStatus(order.getStatus());
 						orderDetail.setDeptId(order.getDeptId());
 						orderDetail.setUserId(getCurrentUser().getId());
 						odetailService.save(orderDetail);
+					}else {
+						odetailService.update(orderDetail);
 					}
 				}
 			}
@@ -179,6 +184,7 @@ public class OrderAction extends BaseAction {
 	}
 
 	public String list(){
+		PageBean pb = getPgReq();
 		//根据用户权限获取订单
 		try {
 			SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -198,7 +204,7 @@ public class OrderAction extends BaseAction {
 				for (LuRole role : roleList) {
 					if (LuRole.SCHOOL.equals(role.getType())) {
 						//学校可查询所有状态订单
-						orderList = orderService.getOrdersByTime(start, end);
+						orderList = orderService.getOrdersByTime(pb, start, end);
 						for (LuOrder order : orderList) {
 							LuDepartment dep = departmentService.get(order.getDeptId(), LuDepartment.class);
 							order.setDeptName(dep.getName());
@@ -210,11 +216,11 @@ public class OrderAction extends BaseAction {
 						}
 						return "list";
 					}else if (LuRole.MANAGER.equals(role.getType())) {
-						orderList = orderService.getOrdersByManager(start,end);
+						orderList = orderService.getOrdersByManager(pb,start,end);
 						//文教局可查询审核中及审核通过及审核未通过的订单
 					}else if (LuRole.SUPPLIER.equals(role.getType())) {
 						//供应商可查询审核通过的订单
-						orderList = orderService.getOrdersBySupplier(start,end);
+						orderList = orderService.getOrdersBySupplier(pb,start,end);
 					}
 				}
 				for (LuOrder order : orderList) {
@@ -299,6 +305,12 @@ public class OrderAction extends BaseAction {
 				detail.setStatus(LuOrder.ADUIT_DEL);
 				detail.setMemo(detail.getMemo()+" 订单已经被用户"+getCurrentUser().getName()+"在"+new Date()+"删除");
 				odetailService.update(detail);
+				for (int i=0;i < odetailList.size();i++) {
+					if (odetailList.get(i).getId().equals(detail.getId())) {
+						odetailList.remove(i);
+						break;
+					}
+				}
 				return ajaxResp("0",0);
 			}		
 		}

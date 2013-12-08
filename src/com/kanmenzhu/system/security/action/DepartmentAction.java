@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.service.DepartmentService;
+import com.kanmenzhu.utils.pagination.PageBean;
 import com.kanmenzhu.web.BaseAction;
 
 public class DepartmentAction extends BaseAction {
@@ -72,7 +73,14 @@ public class DepartmentAction extends BaseAction {
 	}
 	
 	public String list(){
-		dplist = departmentService.getAll(-1, -1);
+		PageBean pb=getPgReq();
+		if (department!=null) {
+			if (StringUtils.isNotBlank(department.getName())) {
+				dplist = departmentService.getByName(pb, department.getName());
+				return "list";
+			}
+		}
+		dplist = departmentService.getAll(pb);
 		return "list";
 	}
 

@@ -47,7 +47,8 @@ body {
 			$("#showOrder").attr("action","auditOD.shtml");
 			$("#showOrder").submit();
 		} else if (type == 'updateAudit') {
-			document.updateAuditOD.submit();
+			$("#showOrder").attr("action","addAudit.shtml");
+			$("#showOrder").submit();
 		} else if (type == 'auditNoPass') {
 			$("#showOrder").attr("action","auditNoPassOD.shtml");
 			$("#showOrder").submit();
@@ -114,7 +115,7 @@ body {
 				  'if(confirm("确认删除详单？")){'+
 					'$.post("delDetailOD.shtml?detailId="+did,function(data){'+
 						'if(0==data){'+
-						'$(#odetail-'+l+').remove();'+
+						'$("#odetail-'+l+'").remove();'+
 						'alert("删除成功!");'+
 					'	}else{'+
 					'		alert("删除失败!");'+

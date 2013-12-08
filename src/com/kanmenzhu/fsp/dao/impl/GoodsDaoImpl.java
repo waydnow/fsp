@@ -2,10 +2,15 @@ package com.kanmenzhu.fsp.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import com.kanmenzhu.dao.impl.BaseDaoImpl;
 import com.kanmenzhu.fsp.dao.GoodsDao;
 import com.kanmenzhu.fsp.entity.LuGoods;
 import com.kanmenzhu.fsp.entity.LuOrder;
+import com.kanmenzhu.system.security.entity.LuDepartment;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 public class GoodsDaoImpl extends BaseDaoImpl<LuGoods> implements GoodsDao {
 
@@ -15,9 +20,16 @@ public class GoodsDaoImpl extends BaseDaoImpl<LuGoods> implements GoodsDao {
 	}
 
 	@Override
-	public List<LuGoods> getGoodsByTag(int deltag) {
+	public List<LuGoods> getGoodsByTag(PageBean pb, int deltag) {
 		String hql = "from LuGoods g where g.delTag = ? order by g.createTime desc";
-		List<LuGoods> goods = findByHql(hql, -1, -1, deltag);
+		List<LuGoods> goods = findByHql(hql, pb, deltag);
+		return goods;
+	}
+
+	@Override
+	public List<LuGoods> getGoodsByTag(int ok) {
+		String hql = "from LuGoods g where g.delTag = ? order by g.createTime desc";
+		List<LuGoods> goods = findByHql(hql,-1,-1, ok);
 		return goods;
 	}
 

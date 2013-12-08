@@ -10,6 +10,7 @@ import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.RoleService;
+import com.kanmenzhu.utils.pagination.PageBean;
 import com.kanmenzhu.web.BaseAction;
 
 public class GoodsAction extends BaseAction {
@@ -73,7 +74,8 @@ public class GoodsAction extends BaseAction {
 	}
 	
 	public String list(){
-		goodsList = goodsService.getGoodsByTag(LuGoods.OK);
+		PageBean pb = getPgReq();
+		goodsList = goodsService.getGoodsByTag(pb,LuGoods.OK);
 		for (LuGoods gd : goodsList) {
 			LuDepartment dp = departmentService.get(gd.getDeptId(), LuDepartment.class);
 			gd.setDeptName(dp.getName());

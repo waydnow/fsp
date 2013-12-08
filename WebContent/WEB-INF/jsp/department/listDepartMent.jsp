@@ -78,18 +78,10 @@ function unselectAll(){
 		
 	}
 
-function on_load(){
-	var loadingmsg=document.getElementById("loadingmsg");
-	var mainpage=document.getElementById("mainpage");
-	loadingmsg.style.display="";
-	mainpage.style.display="none";
-	
-	loadingmsg.style.display="none";
-	mainpage.style.display="";
-}
+
 </script>
 </head>
-<body onload="on_load()">
+<body>
 <s:form action="listDP.shtml">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -101,9 +93,8 @@ function on_load(){
 		  <tr>
 		  <td width="25%" align="left">单位管理  >> 单位列表 </td>
 			<td width="5%"><img src="images/ico07.gif" width="20" height="18" /></td>
-			<td width="70%">查看内容：按时间：
-              <input name="textfield" type="text" size="12" readonly="readonly"/><span class="newfont06">至</span>
-			 <input name="textfield" type="text" size="12" readonly="readonly"/>	
+			<td width="70%">查看内容：单位名称
+             <s:textfield name="department.name"></s:textfield>
 			 <input name="Submit" type="button" class="right-button02" value="查 询" /></td>
 		  </tr>
         </table></td>
@@ -114,14 +105,8 @@ function on_load(){
     <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
 
         <tr>
-          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-
-          	 <tr>
-               <td height="20">
-               <span>
-	              <input name="Submit2" type="button" class="right-button08" value="添加单位" onclick="javascript:window.location='registDP.shtml';"/></td>
-          	 	</span>
-          	 </tr>
+          <td>
+          <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 				<tr>
@@ -146,6 +131,9 @@ function on_load(){
                   
                 </table></td>
               </tr>
+              <span>
+	              <input name="Submit2" type="button" class="right-button08" value="添加单位" onclick="javascript:window.location='registDP.shtml';"/>
+          	  </span>
             </table></td>
         </tr>
       </table>
@@ -154,21 +142,18 @@ function on_load(){
           <td height="6"><img src="images/spacer.gif" width="1" height="1" /></td>
         </tr>
         <tr>
-          <td height="33"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">
+          <td height="33">
+          <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">
               <tr>
-                <td width="50%">共 <span class="right-text09">5</span> 页 | 第 <span class="right-text09">1</span> 页</td>
-                <td width="49%" align="right">[<a href="#" class="right-font08">首页</a> | <a href="#" class="right-font08">上一页</a> | <a href="#" class="right-font08">下一页</a> | <a href="#" class="right-font08">末页</a>] 转至：</td>
-                <td width="1%"><table width="20" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td width="1%"><input name="textfield3" type="text" class="right-textfield03" size="1" /></td>
-                      <td width="87%"><input name="Submit23222" type="submit" class="right-button06" value=" " />
-                      </td>
-                    </tr>
-                </table></td>
+                <td width="50%">共 <span class="right-text09">${pb.totalPage}</span> 页 | 第 <span class="right-text09">${pb.curPage }</span> 页</td>
+                <td width="49%" align="right">[<a href="${pb.firstUrl }" class="right-font08">首页</a> | <a href="${pb.prevUrl}" class="right-font08">上一页</a> | <a href="${pb.nextUrl}" class="right-font08">下一页</a> | <a href="${pb.lastUrl}" class="right-font08">末页</a>] </td>
+                <td width="1%"></td>
               </tr>
-          </table></td>
+          </table>
+          </td>
         </tr>
-      </table></td>
+      </table>
+    </td>
   </tr>
 </table>
 </s:form>
