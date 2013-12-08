@@ -3,7 +3,6 @@ package com.kanmenzhu.system.security.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +22,6 @@ import com.kanmenzhu.utils.pagination.PageBean;
 import com.kanmenzhu.web.BaseAction;
 import com.kanmenzhu.web.RandomImageAction;
 import com.opensymphony.xwork2.ActionContext;
-import com.wonders.pdcdc.common.pagination.PaginationRequest;
 
 public class UserAction extends BaseAction {
 	private static final long serialVersionUID = 1L;

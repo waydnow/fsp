@@ -1,7 +1,6 @@
 package com.kanmenzhu.web;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,9 +12,6 @@ import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.utils.pagination.PageBean;
 import com.kanmenzhu.utils.pagination.PageUtil;
 import com.opensymphony.xwork2.ActionSupport;
-import com.wonders.pdcdc.common.pagination.PaginationRequest;
-import com.wonders.pdcdc.common.pagination.PaginationResult;
-import com.wonders.pdcdc.common.pagination.PaginationWebUtil;
 
 /**
  * 基础action
