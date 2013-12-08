@@ -1,7 +1,6 @@
 package com.kanmenzhu.system.security.action;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -19,10 +18,10 @@ import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.RoleService;
 import com.kanmenzhu.system.security.service.RoleUserService;
 import com.kanmenzhu.system.security.service.UserService;
+import com.kanmenzhu.utils.pagination.PageBean;
 import com.kanmenzhu.web.BaseAction;
 import com.kanmenzhu.web.RandomImageAction;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 
 public class UserAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
@@ -118,9 +117,10 @@ public class UserAction extends BaseAction {
 	public String regist(){
 		deptList();
 		user = getCurrentUser();
+		PageBean pb=getPgReq();
 		if (user!=null) {
 			if ("admin".equals(user.getLoginName())) {
-				roleList = roleService.getAll(-1, -1);
+				roleList = roleService.getAll(pb);
 			}else {
 				roleList = roleService.getRoles(user);
 			}
@@ -134,10 +134,11 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String list(){
+		PageBean pb=getPgReq();
 		if(user!=null&&StringUtils.isNotBlank(user.getName())){
 			userList=userService.findByName(user.getName());
 		}else{
-			userList=userService.getAll(-1, -1);
+			userList=userService.getAll(pb);
 		}
 		for (LuUser u : userList) {
 			LuDepartment d = departmentService.get(u.getDeptId(), LuDepartment.class);

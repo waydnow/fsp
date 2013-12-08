@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.kanmenzhu.bean.BaseBean;
 import com.kanmenzhu.dao.BaseDao;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSupport implements BaseDao<T> {
 
@@ -43,6 +44,34 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 		session.close();
 		return rt;
 	}
+	@Override
+	public List<T> findByHql(String hql,PageBean pb,Object... params){
+		Session session=getSession();
+		Query query=session.createQuery(hql);
+		for (int i = 0; i < params.length; i++) {
+			query.setParameter(i, params[i]);
+		}
+		query.setFirstResult(pb.getStartRow());
+		query.setMaxResults(pb.getPageSize());
+		List<T> rt=(List<T>)query.list();
+		pb.setTotal(getCount(hql, params));
+		session.close();
+		return rt;
+	}
+	private int getCount(String hql,Object... params){
+		hql="select count(*) "+hql;
+		Session session=getSession();
+		Query query=session.createQuery(hql);
+		for (int i = 0; i < params.length; i++) {
+			query.setParameter(i, params[i]);
+		}
+		List rt=query.list();
+		if(rt!=null){
+			Object o=rt.get(0);
+			return ((Long)rt.get(0)).intValue();
+		}
+		return 0;
+	}
 	
 	public List<T> getAll(int startRow,int endRow){
 		Session session=getSession();
@@ -52,6 +81,20 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 		if(endRow>startRow)
 			query.setMaxResults(endRow);
 		List<T> rt=(List<T>)query.list();
+		session.close();
+		return rt;
+	}
+	public List<T> getAll(PageBean pb){
+		Session session=getSession();
+		String hql=" from "+getEntityName()+" s order by s.id desc";
+		Query query=session.createQuery(hql);
+		if(pb.getStartRow()>0)
+			query.setFirstResult(pb.getStartRow());
+		query.setMaxResults(pb.getPageSize());
+		List<T> rt=(List<T>)query.list();
+		if(rt!=null){
+			pb.setTotal(getCount(hql));
+		}
 		session.close();
 		return rt;
 	}

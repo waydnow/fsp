@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.kanmenzhu.system.security.entity.LuUser;
+import com.kanmenzhu.utils.pagination.PageBean;
+import com.kanmenzhu.utils.pagination.PageUtil;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -19,6 +21,8 @@ import com.opensymphony.xwork2.ActionSupport;
 public class BaseAction extends ActionSupport {
 	public final String SUCC="success";
 	public final String FAIL="fail";
+	
+	private PageBean pb;
 	
 	
 	private LuUser currentUser;
@@ -53,5 +57,28 @@ public class BaseAction extends ActionSupport {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	/**
+	 * 需要用分页的Action需要调用此方法获得页面的分页信息。
+	 * @return 分页信息
+	 */
+	protected PageBean getPgReq(){
+		pb= PageUtil.getPbReq(ServletActionContext.getRequest());
+		return pb;
+	}
+	/**
+	 * 保存分页结果,在返回前调用
+	 * @param count 总数量
+	 * @param pr 通过getPgReq获取的分页信息
+	 */
+	protected void savePgResult(int count,PageBean pr){
+		pr.setTotal(count);
+		pb=pr;
+	}
+	public PageBean getPb() {
+		if(null==pb){
+			return getPgReq();
+		}
+		return pb;
 	}
 }

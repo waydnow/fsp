@@ -34,6 +34,7 @@ import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuRole;
 import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.system.security.service.RoleService;
+import com.kanmenzhu.utils.pagination.PageBean;
 import com.kanmenzhu.web.BaseAction;
 
 @SuppressWarnings("deprecation")
@@ -234,6 +235,7 @@ public class OrderAction extends BaseAction {
 	}
 	
 	public String show() throws Exception{
+		PageBean pb=getPgReq();
 		//判断当前用户是否为文教部门
 		depList = new ArrayList<LuDepartment>();
 		List<LuRole> roles = roleService.getRoles(getCurrentUser());
@@ -252,7 +254,7 @@ public class OrderAction extends BaseAction {
 			}
 		}				
 		roleList = roleService.getRoles(getCurrentUser());
-		goodsList = goodsService.getAll(-1, -1);
+		goodsList = goodsService.getAll(pb);
 		for (LuGoods goods : goodsList) {
 			if (goods.getDelTag()==LuGoods.DELETE) {
 				goods.setName(goods.getName()+"(已删除)");
