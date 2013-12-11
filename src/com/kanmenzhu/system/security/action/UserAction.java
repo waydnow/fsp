@@ -106,6 +106,10 @@ public class UserAction extends BaseAction {
 		return ERROR;
 	}
 	
+	public String logout(){
+		return "login";
+	}
+	
 	public String welcome(){
 		logger.info("####进入登录页面#####");
 		return "login";
