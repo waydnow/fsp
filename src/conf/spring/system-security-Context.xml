@@ -57,19 +57,16 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
-	
-	
-	
-	
-	
-	
-	
 	<bean id="departmentAction" class="com.kanmenzhu.system.security.action.DepartmentAction" scope="request">
 		<property name="departmentService" ref="departmentService"></property>
 	</bean>
 	
-	<bean id="departmentService" class="com.kanmenzhu.system.security.service.impl.DepartmentServiceImpl">
-		<property name="dao" ref="departmentDao"></property>
+	<bean id="departmentService"   parent="abstractTxDefinition">
+		<property name="target">
+					<bean class="com.kanmenzhu.system.security.service.impl.DepartmentServiceImpl">
+								<property name="dao" ref="departmentDao"></property>
+					</bean>
+			</property>
 	</bean>
 	
 	<bean id="departmentDao" class="com.kanmenzhu.system.security.dao.impl.DepartmentDaoImpl">
@@ -80,17 +77,26 @@
 		<property name="roleService" ref="roleService"></property>
 		<property name="ruService" ref="roleUserService"></property>
 	</bean>
-	<bean id="roleService" class="com.kanmenzhu.system.security.service.impl.RoleServiceImpl">
-		<property name="dao" ref="roleDao"></property> 
-		<property name="rudao" ref="roleUserDao"></property>
+	<bean id="roleService"  parent="abstractTxDefinition">
+			<property name="target">
+					<bean  class="com.kanmenzhu.system.security.service.impl.RoleServiceImpl">
+								<property name="dao" ref="roleDao"></property> 
+								<property name="rudao" ref="roleUserDao"></property>
+					</bean>
+			</property>
 	</bean>
 	<bean id="roleDao" class="com.kanmenzhu.system.security.dao.impl.RoleDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
 	
-	<bean id="roleUserService" class="com.kanmenzhu.system.security.service.impl.RoleUserServiceImpl">
-		<property name="dao" ref="roleUserDao"></property>
+	
+	<bean id="roleUserService"     parent="abstractTxDefinition">
+				<property name="target">
+					<bean  class="com.kanmenzhu.system.security.service.impl.RoleUserServiceImpl">
+							<property name="dao" ref="roleUserDao"></property>
+					</bean>
+			</property>
 	</bean>
 	
 	<bean id="roleUserDao" class="com.kanmenzhu.system.security.dao.impl.RoleUserDaoImpl">
