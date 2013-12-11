@@ -1,9 +1,13 @@
 package com.kanmenzhu.dao.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.kanmenzhu.bean.BaseBean;
@@ -29,9 +33,24 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 		getHibernateTemplate().update(o);
 		
 	}
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> findByHql(String hql,int startRow,int endRow,Object... params){
+	public List<T> findByHql(final String hql,final int startRow,final int endRow,final Object... params){
+		/*List<T> list = (List<T>)getHibernateTemplate().executeFind(new HibernateCallback() {
+			public Object doInHibernate(Session session)
+			throws HibernateException, SQLException {
+				Query query = session.createQuery(hql);
+				for (int i = 0; i < params.length; i++) {
+					query.setParameter(i, params[i]);
+				}
+				query.setFirstResult(startRow);
+				query.setMaxResults(endRow);
+				List<T> list = query.list();
+				return list;
+			}
+		}); */
 		Session session=getSession();
+		//HibernateTemplate  ht=getHibernateTemplate();
 		Query query=session.createQuery(hql);
 		for (int i = 0; i < params.length; i++) {
 			query.setParameter(i, params[i]);
@@ -41,7 +60,6 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 		if(endRow>startRow)
 			query.setMaxResults(endRow);
 		List<T> rt=(List<T>)query.list();
-		session.close();
 		return rt;
 	}
 	@Override
@@ -55,7 +73,7 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 		query.setMaxResults(pb.getPageSize());
 		List<T> rt=(List<T>)query.list();
 		pb.setTotal(getCount(hql, params));
-		session.close();
+		//session.close();
 		return rt;
 	}
 	private int getCount(String hql,Object... params){
@@ -81,7 +99,7 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 		if(endRow>startRow)
 			query.setMaxResults(endRow);
 		List<T> rt=(List<T>)query.list();
-		session.close();
+		//session.close();
 		return rt;
 	}
 	public List<T> getAll(PageBean pb){
@@ -95,7 +113,7 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 		if(rt!=null){
 			pb.setTotal(getCount(hql));
 		}
-		session.close();
+		//session.close();
 		return rt;
 	}
 
@@ -113,7 +131,7 @@ public abstract class BaseDaoImpl<T extends BaseBean> extends HibernateDaoSuppor
 			query.sete
 		}*/
 		List<T> rt=(List<T>)query.list();
-		session.close();
+		//session.close();
 		return rt;
 	}
 	

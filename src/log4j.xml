@@ -12,7 +12,10 @@
     <logger name="com.opensymphony">
     	<level value="WARN" />
     </logger>
-
+  <!--   <logger name="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    	<level value="trace" />
+    </logger>
+--> 
     <logger name="org.apache.struts2">
     	 <level value="WARN" />
     </logger>

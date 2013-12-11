@@ -14,10 +14,22 @@
 		<property name="roleService" ref="roleService"></property>
 	</bean>
 	
-	<bean name="goodsService" class="com.kanmenzhu.fsp.service.impl.GoodsServiceImpl">
-		<property name="dao" ref="goodsDao"></property>
+	<bean name="goodsService"  parent="abstractTxDefinition">
+		<property name="target">
+				<bean class="com.kanmenzhu.fsp.service.impl.GoodsServiceImpl">
+						<property name="dao" ref="goodsDao"></property>
+				</bean>
+		</property>
 	</bean>
 	
+	<!--  <bean id="userRoleService" parent="abstractTxDefinition">
+<property name="target">
+<bean class="com.kanmenzhu.system.security.service.impl.UserRoleServiceImpl">
+<property name="userRoleDao" ref="userRoleDao"></property>
+</bean>
+</property>
+</bean>
+	-->
 	<bean name="goodsDao" class="com.kanmenzhu.fsp.dao.impl.GoodsDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
@@ -30,12 +42,20 @@
 		<property name="roleService" ref="roleService"></property>
 	</bean>
 	
-	<bean name="orderService" class="com.kanmenzhu.fsp.service.impl.OrderServiceImpl">
-		<property name="dao" ref="orderDao"></property>
+	<bean name="orderService" parent="abstractTxDefinition" >
+		<property name="target">
+					<bean class="com.kanmenzhu.fsp.service.impl.OrderServiceImpl">
+							<property name="dao" ref="orderDao"></property>
+					</bean>
+		</property>
 	</bean>
 	
-	<bean name="orderDetailService" class="com.kanmenzhu.fsp.service.impl.OrderDetailServiceImpl">
-		<property name="dao" ref="orderDetailDao"></property>
+	<bean name="orderDetailService" parent="abstractTxDefinition">
+			<property name="target">
+					<bean  class="com.kanmenzhu.fsp.service.impl.OrderDetailServiceImpl">
+							<property name="dao" ref="orderDetailDao"></property>
+					</bean>
+			</property>
 	</bean>
 	
 	<bean name="orderDao" class="com.kanmenzhu.fsp.dao.impl.OrderDaoImpl">
