@@ -25,6 +25,8 @@ public class LuOrder extends BaseBean {
 	public static final int ADUIT_END = 4;
 	/**学校确认供应商的订单*/
 	public static final int ADUIT_REAL = 5;
+	/**已经删除的订单*/
+	public static final int ADUIT_DEL = 99;
 	
 	private int deptId;
 	private int createUserId;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kanmenzhu.dao.BaseDao;
 import com.kanmenzhu.fsp.entity.LuGoods;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 /**
  * 货物相关dao
@@ -12,6 +13,8 @@ import com.kanmenzhu.fsp.entity.LuGoods;
  */
 public interface GoodsDao extends BaseDao<LuGoods> {
 
-	public List<LuGoods> getGoodsByTag(int deltag);
+	public List<LuGoods> getGoodsByTag(PageBean pb, int deltag);
+
+	public List<LuGoods> getGoodsByTag(int ok);
 
 }

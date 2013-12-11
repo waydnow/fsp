@@ -62,7 +62,7 @@ body {
       <tr>
         <td width="31%" height="35" class="login-text02">单位类型：</td>
         <td width="69%">
-      	<s:select list="mapType"></s:select>
+      	<s:select list="mapType" name="department.type"></s:select>
         </td>
       </tr>
       <tr>

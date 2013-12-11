@@ -7,6 +7,7 @@ import com.kanmenzhu.system.security.dao.DepartmentDao;
 import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuUser;
 import com.kanmenzhu.system.security.service.DepartmentService;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 public class DepartmentServiceImpl extends BaseServiceImpl<LuDepartment> implements DepartmentService{
 
@@ -26,6 +27,12 @@ public class DepartmentServiceImpl extends BaseServiceImpl<LuDepartment> impleme
 	@Override
 	public List<LuDepartment> getByType(String type) {
 		List<LuDepartment> departments = ((DepartmentDao)dao).getByType(type);
+		return departments;
+	}
+
+	@Override
+	public List<LuDepartment> getByName(PageBean pb, String name) {
+		List<LuDepartment> departments = ((DepartmentDao)dao).getByName(pb, name);
 		return departments;
 	}
 

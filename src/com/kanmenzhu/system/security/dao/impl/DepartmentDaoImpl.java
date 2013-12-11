@@ -2,10 +2,14 @@ package com.kanmenzhu.system.security.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import com.kanmenzhu.dao.impl.BaseDaoImpl;
 import com.kanmenzhu.system.security.dao.DepartmentDao;
 import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuUser;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements DepartmentDao{
 
@@ -32,7 +36,13 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 		return null;
 	}
 
-
+	@Override
+	public List<LuDepartment> getByName(PageBean pb, String name) {
+		String hql=" from "+getEntityName()+" s where s.name like '?' order by s.id desc";
+		List<LuDepartment> dplist = findByHql(hql, pb, name);
+		return dplist;
+	}
+	
 	@Override
 	public String getEntityName() {
 		return "LuDepartment";

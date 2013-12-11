@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.kanmenzhu.dao.BaseDao;
 import com.kanmenzhu.fsp.entity.LuOrder;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 /**
  * 订单相关dao
@@ -13,10 +14,10 @@ import com.kanmenzhu.fsp.entity.LuOrder;
  */
 public interface OrderDao extends BaseDao<LuOrder> {
 
-	public List<LuOrder> getOrdersByManager(Date start,Date end);
+	public List<LuOrder> getOrdersByManager(PageBean pb, Date start,Date end);
 	
-	public List<LuOrder> getOrdersBySupplier(Date start,Date end);
+	public List<LuOrder> getOrdersBySupplier(PageBean pb,Date start,Date end);
 	
-	public List<LuOrder> getOrdersByTime(Date start,Date end);
+	public List<LuOrder> getOrdersByTime(PageBean pb,Date start,Date end);
 	
 }

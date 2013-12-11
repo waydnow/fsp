@@ -8,6 +8,7 @@ import com.kanmenzhu.fsp.dao.OrderDetailDao;
 import com.kanmenzhu.fsp.entity.LuOrderDetail;
 import com.kanmenzhu.fsp.service.OrderDetailService;
 import com.kanmenzhu.service.impl.BaseServiceImpl;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 public class OrderDetailServiceImpl extends BaseServiceImpl<LuOrderDetail> implements OrderDetailService {
 
@@ -33,6 +34,24 @@ public class OrderDetailServiceImpl extends BaseServiceImpl<LuOrderDetail> imple
 		}
 		if (start!=null&&end!=null) {
 			orderDetailList = ((OrderDetailDao)dao).getOrderDetailsByTimeStatusType(start, end, status,deptId);
+		}
+		return orderDetailList;
+	}
+	
+	@Override
+	public List<LuOrderDetail> getOrderDetailsByTimeStatusType(PageBean pb, Date start, Date end, String status,int deptId) {
+		List<LuOrderDetail> orderDetailList = new ArrayList<LuOrderDetail>();
+		if (start==null&&end==null) {
+			orderDetailList = ((OrderDetailDao)dao).getOrderDetailsByStatusType(pb,status,deptId);
+		}
+		if (start!=null&&end==null) {
+			orderDetailList = ((OrderDetailDao)dao).getOrderDetailsByStartStatusType(pb,start,status,deptId);
+		}
+		if (start==null&&end!=null) {
+			orderDetailList = ((OrderDetailDao)dao).getOrderDetailsByEndStatusType(pb,end,status,deptId);
+		}
+		if (start!=null&&end!=null) {
+			orderDetailList = ((OrderDetailDao)dao).getOrderDetailsByTimeStatusType(pb,start, end, status,deptId);
 		}
 		return orderDetailList;
 	}

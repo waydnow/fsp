@@ -19,7 +19,7 @@ public class PageBean {
 	private int total;
 	private int startRow;
 	private int endRow;
-	private int pageSize=3;
+	private int pageSize=15;
 	
 	private int curPage;
 	

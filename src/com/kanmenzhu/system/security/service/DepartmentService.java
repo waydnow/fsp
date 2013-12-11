@@ -5,6 +5,7 @@ import java.util.List;
 import com.kanmenzhu.service.BaseService;
 import com.kanmenzhu.system.security.entity.LuDepartment;
 import com.kanmenzhu.system.security.entity.LuUser;
+import com.kanmenzhu.utils.pagination.PageBean;
 
 public interface DepartmentService extends BaseService<LuDepartment> {
 	
@@ -14,5 +15,7 @@ public interface DepartmentService extends BaseService<LuDepartment> {
 	public List<LuDepartment> getAll();
 	
 	public List<LuDepartment> getByType(String type);
+	
+	public List<LuDepartment> getByName(PageBean pb, String name);
 
 }
