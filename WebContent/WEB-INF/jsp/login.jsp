@@ -57,7 +57,7 @@ body {
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td height="147" background="images/top02.gif" align="center"><font size="30">武强县文教局审核系统</font><br/></td>
+    <td height="147" background="images/top02.gif" align="center"><img height="90" width="800" src="images/logo.png"></td>
   </tr>
 </table>
 <table width="562" border="0" align="center" cellpadding="0" cellspacing="0" class="right-table03">
