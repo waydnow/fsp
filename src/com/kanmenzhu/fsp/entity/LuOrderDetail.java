@@ -2,6 +2,7 @@ package com.kanmenzhu.fsp.entity;
 
 // Generated 2013-5-29 22:00:52 by Hibernate Tools 3.4.0.CR1
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.kanmenzhu.bean.BaseBean;
@@ -27,6 +28,8 @@ public class LuOrderDetail extends BaseBean {
 	private Date createTime;
 	private String depName;
 	private String price;
+	private BigDecimal orderPrice;
+	private String orderUnit;
 
 	public LuOrderDetail() {
 	}
@@ -164,6 +167,22 @@ public class LuOrderDetail extends BaseBean {
 
 	public void setDeptId(int deptId) {
 		this.deptId = deptId;
+	}
+
+	public String getOrderUnit() {
+		return orderUnit;
+	}
+
+	public void setOrderUnit(String orderUnit) {
+		this.orderUnit = orderUnit;
+	}
+
+	public BigDecimal getOrderPrice() {
+		return orderPrice;
+	}
+
+	public void setOrderPrice(BigDecimal orderPrice) {
+		this.orderPrice = orderPrice;
 	}
 
 }

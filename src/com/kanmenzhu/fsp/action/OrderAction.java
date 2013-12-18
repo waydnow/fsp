@@ -107,7 +107,10 @@ public class OrderAction extends BaseAction {
 			orderService.save(order);
 			if (odetailList!=null) {
 				for (LuOrderDetail orderDetail : odetailList) {
+					LuGoods good = goodsService.get(orderDetail.getGoodId(), LuGoods.class);
 					if (null==orderDetail.getId()) {
+						orderDetail.setOrderPrice(good.getPrice());
+						orderDetail.setOrderUnit(good.getUnit());
 						orderDetail.setCreateTime(new Date());
 						orderDetail.setOrderId(order.getId());
 						orderDetail.setStatus(order.getStatus());
@@ -115,6 +118,8 @@ public class OrderAction extends BaseAction {
 						orderDetail.setUserId(getCurrentUser().getId());
 						odetailService.save(orderDetail);
 					}else {
+						orderDetail.setOrderPrice(good.getPrice());
+						orderDetail.setOrderUnit(good.getUnit());
 						odetailService.update(orderDetail);
 					}
 				}
@@ -135,8 +140,11 @@ public class OrderAction extends BaseAction {
 		if (order!=null) {
 			orderService.update(order);
 			for (LuOrderDetail detail : odetailList) {
+				LuGoods good = goodsService.get(detail.getGoodId(), LuGoods.class);
 				if (null == detail.getId()) {
 					if (detail.getGoodNum()!=0) {
+						detail.setOrderPrice(good.getPrice());
+						detail.setOrderUnit(good.getUnit());
 						detail.setCreateTime(new Date());
 						detail.setOrderId(order.getId());
 						detail.setStatus(order.getStatus());
@@ -145,6 +153,8 @@ public class OrderAction extends BaseAction {
 						odetailService.save(detail);
 					}
 				}else {
+					detail.setOrderPrice(good.getPrice());
+					detail.setOrderUnit(good.getUnit());
 					odetailService.update(detail);
 				}
 			}
@@ -164,7 +174,10 @@ public class OrderAction extends BaseAction {
 			orderService.save(order);
 			if (odetailList!=null) {
 				for (LuOrderDetail orderDetail : odetailList) {
+					LuGoods good = goodsService.get(orderDetail.getGoodId(), LuGoods.class);
 					if (null==orderDetail.getId()) {
+						orderDetail.setOrderPrice(good.getPrice());
+						orderDetail.setOrderUnit(good.getUnit());
 						orderDetail.setCreateTime(new Date());
 						orderDetail.setOrderId(order.getId());
 						orderDetail.setStatus(order.getStatus());
@@ -172,6 +185,8 @@ public class OrderAction extends BaseAction {
 						orderDetail.setUserId(getCurrentUser().getId());
 						odetailService.save(orderDetail);
 					}else {
+						orderDetail.setOrderPrice(good.getPrice());
+						orderDetail.setOrderUnit(good.getUnit());
 						odetailService.update(orderDetail);
 					}
 				}
@@ -182,6 +197,127 @@ public class OrderAction extends BaseAction {
 		}		
 		return list();
 	}
+	
+	/**
+	 * 保存订单，并提交到文教局审核
+	 * @return
+	 */
+	public String updateAudit(){
+		if (order!=null) {
+			order.setSubmitTime(new Date());
+			order.setStatus(LuOrder.ADUIT_ING);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				LuGoods good = goodsService.get(detail.getGoodId(), LuGoods.class);
+				if (null == detail.getId()) {
+					detail.setOrderPrice(good.getPrice());
+					detail.setOrderUnit(good.getUnit());
+					detail.setCreateTime(new Date());
+					detail.setOrderId(order.getId());
+					detail.setStatus(LuOrder.ADUIT_ING);
+					detail.setUserId(getCurrentUser().getId());
+					odetailService.save(detail);
+				}else {
+					detail.setOrderPrice(good.getPrice());
+					detail.setOrderUnit(good.getUnit());
+					odetailService.update(detail);
+				}
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"更新并送审订单"+order.toString());
+		}
+		return "show";
+	}
+	
+	/**
+	 * 文教局审核订单通过
+	 * @return
+	 */
+	public String auditPass(){
+		if (order!=null) {
+			order.setAuditTime(new Date());
+			order.setStatus(LuOrder.ADUIT_SUCCESS);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				detail.setStatus(LuOrder.ADUIT_SUCCESS);
+				odetailService.update(detail);
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单"+order.toString()+"通过!");
+		}
+		return list();
+	}
+	
+	/**
+	 * 文教局审核订单，不通过
+	 * @return
+	 */
+	public String auditNoPass(){
+		if (order!=null) {
+			order.setAuditTime(new Date());
+			order.setStatus(LuOrder.ADUIT_FAIL);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				detail.setStatus(LuOrder.ADUIT_FAIL);
+				odetailService.update(detail);
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单"+order.toString()+"不通过，返回提交用户!");
+		}
+		return list();
+	}
+	
+	/**
+	 * 供应商提供真实订单给学校确认
+	 * @return
+	 */
+	public String updateReal(){
+		if (order!=null) {
+			order.setStatus(LuOrder.ADUIT_END);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				if (null == detail.getId()) {
+					detail.setCreateTime(new Date());
+					detail.setOrderId(order.getId());
+					detail.setStatus(LuOrder.ADUIT_END);
+					detail.setUserId(getCurrentUser().getId());
+					odetailService.save(detail);
+				}else {
+					odetailService.update(detail);
+				}
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
+		}
+		return list();
+	}
+	
+	/**
+	 * 学校确认供应商提供的真实订单，没有问题
+	 * @return
+	 */
+	public String auditReal(){
+		if (order!=null) {
+			order.setStatus(LuOrder.ADUIT_REAL);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				detail.setStatus(LuOrder.ADUIT_REAL);
+				odetailService.update(detail);
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
+		}
+		return list();
+	}
+	
+	public String auditNoReal(){
+		if (order!=null) {
+			order.setStatus(LuOrder.ADUIT_SUCCESS);
+			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				detail.setStatus(LuOrder.ADUIT_SUCCESS);
+				odetailService.update(detail);
+			}
+			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
+		}
+		return list();
+	}
+	
 
 	public String list(){
 		PageBean pb = getPgReq();
@@ -326,125 +462,15 @@ public class OrderAction extends BaseAction {
 			order.setSubmitTime(new Date());
 			order.setStatus(LuOrder.ADUIT_ING);
 			orderService.update(order);
+			for (LuOrderDetail detail : odetailList) {
+				detail.setStatus(LuOrder.ADUIT_ING);
+				odetailService.update(detail);
+			}
 			logger.info("用户"+getCurrentUser().getLoginName()+"送审订单"+order.toString());
 		}
 		return list();
 	}
 	
-	/**
-	 * 保存订单，并提交到文教局审核
-	 * @return
-	 */
-	public String updateAudit(){
-		if (order!=null) {
-			order.setSubmitTime(new Date());
-			order.setStatus(LuOrder.ADUIT_ING);
-			orderService.update(order);
-			for (LuOrderDetail detail : odetailList) {
-				if (null == detail.getId()) {
-					detail.setCreateTime(new Date());
-					detail.setOrderId(order.getId());
-					detail.setStatus(LuOrder.ADUIT_ING);
-					detail.setUserId(getCurrentUser().getId());
-					odetailService.save(detail);
-				}else {
-					odetailService.update(detail);
-				}
-			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"更新并送审订单"+order.toString());
-		}
-		return "show";
-	}
-	
-	/**
-	 * 文教局审核订单通过
-	 * @return
-	 */
-	public String auditPass(){
-		if (order!=null) {
-			order.setAuditTime(new Date());
-			order.setStatus(LuOrder.ADUIT_SUCCESS);
-			orderService.update(order);
-			for (LuOrderDetail detail : odetailList) {
-				detail.setStatus(LuOrder.ADUIT_SUCCESS);
-				odetailService.update(detail);
-			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单"+order.toString()+"通过!");
-		}
-		return list();
-	}
-	
-	/**
-	 * 文教局审核订单，不通过
-	 * @return
-	 */
-	public String auditNoPass(){
-		if (order!=null) {
-			order.setAuditTime(new Date());
-			order.setStatus(LuOrder.ADUIT_FAIL);
-			orderService.update(order);
-			for (LuOrderDetail detail : odetailList) {
-				detail.setStatus(LuOrder.ADUIT_FAIL);
-				odetailService.update(detail);
-			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单"+order.toString()+"不通过，返回提交用户!");
-		}
-		return list();
-	}
-	
-	/**
-	 * 供应商提供真实订单给学校确认
-	 * @return
-	 */
-	public String updateReal(){
-		if (order!=null) {
-			order.setStatus(LuOrder.ADUIT_END);
-			orderService.update(order);
-			for (LuOrderDetail detail : odetailList) {
-				if (null == detail.getId()) {
-					detail.setCreateTime(new Date());
-					detail.setOrderId(order.getId());
-					detail.setStatus(LuOrder.ADUIT_END);
-					detail.setUserId(getCurrentUser().getId());
-					odetailService.save(detail);
-				}else {
-					odetailService.update(detail);
-				}
-			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
-		}
-		return list();
-	}
-	
-	/**
-	 * 学校确认供应商提供的真实订单，没有问题
-	 * @return
-	 */
-	public String auditReal(){
-		if (order!=null) {
-			order.setStatus(LuOrder.ADUIT_REAL);
-			orderService.update(order);
-			for (LuOrderDetail detail : odetailList) {
-				detail.setStatus(LuOrder.ADUIT_REAL);
-				odetailService.update(detail);
-			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
-		}
-		return list();
-	}
-	
-	public String auditNoReal(){
-		if (order!=null) {
-			order.setStatus(LuOrder.ADUIT_SUCCESS);
-			orderService.update(order);
-			for (LuOrderDetail detail : odetailList) {
-				detail.setStatus(LuOrder.ADUIT_SUCCESS);
-				odetailService.update(detail);
-			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
-		}
-		return list();
-	}
 	
 	public String exportList(){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
