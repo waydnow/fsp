@@ -20,6 +20,8 @@ public class LuGoods extends BaseBean {
 	private Date createTime;
 	private String memo;
 	private String deptName;
+	private String factory;
+	private String standard;
 	private int delTag;
 	public static final int OK = 0;
 	public static final int DELETE = 1;
@@ -115,6 +117,22 @@ public class LuGoods extends BaseBean {
 
 	public void setDelTag(int delTag) {
 		this.delTag = delTag;
+	}
+
+	public String getFactory() {
+		return factory;
+	}
+
+	public void setFactory(String factory) {
+		this.factory = factory;
+	}
+
+	public String getStandard() {
+		return standard;
+	}
+
+	public void setStandard(String standard) {
+		this.standard = standard;
 	}
 
 }

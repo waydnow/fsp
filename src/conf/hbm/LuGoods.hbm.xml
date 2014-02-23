@@ -20,6 +20,12 @@
         <property name="price" type="big_decimal">
             <column name="PRICE" precision="10" />
         </property>
+        <property name="factory" type="string">
+            <column name="FACTORY"/>
+        </property>
+        <property name="standard" type="string">
+            <column name="STANDARD" />
+        </property>
         <property name="createUserId" type="int">
             <column name="CREATE_USER_ID" not-null="true" />
         </property>

@@ -74,11 +74,20 @@ body {
       </tr>
       <tr>
         <td height="35" class="login-text02">单位：</td>
-        <td><s:select name="goods.unit"  list="{'两','斤','公斤','袋'}">
+        <td width="69%"><s:select name="goods.unit"  list="{'两','斤','公斤','袋'}">
         </s:select>
         </td>
       </tr>
-      
+      <tr>
+        <td height="35" class="login-text02">规格：</td>
+        <td width="69%"><s:textfield name="goods.standard" id="standard"/>
+        </td>
+      </tr>
+      <tr>
+        <td height="35" class="login-text02">厂家品牌：</td>
+        <td width="69%"><s:textfield name="goods.factory" id="factory"/>
+        </td>
+      </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">备注：</td>
         <td width="69%"><s:textfield name="goods.memo" id="memo"/></td>
