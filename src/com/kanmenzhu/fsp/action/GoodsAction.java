@@ -1,6 +1,8 @@
 package com.kanmenzhu.fsp.action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,8 @@ public class GoodsAction extends BaseAction {
 	
 	private List<LuGoods> goodsList;
 	private List<LuDepartment> depList;
+	
+	public static String[] unitList = {"两","斤","公斤","毫升","升","瓶","盒","袋","箱","桶"};
 	
 	public String regist(){
 		deptList();
@@ -118,7 +122,7 @@ public class GoodsAction extends BaseAction {
 		Integer id = Integer.valueOf(goodid);
 		LuGoods good = goodsService.get(id, LuGoods.class);
 		LuDepartment dep = departmentService.get(good.getDeptId(), LuDepartment.class);
-		String data = "{\"name\":\""+dep.getName()+"\",\"price\":\""+good.getPrice()+"元/"+good.getUnit()+"\"}";
+		String data = "{\"factory\":\""+good.getFactory()+"\",\"standard\":\""+good.getStandard()+"\",\"name\":\""+dep.getName()+"\",\"unit\":\""+good.getUnit()+"\",\"price\":\""+good.getPrice()+"\"}";
 		System.out.println(good.getName()+"="+data);
 		return ajaxResp(data,1);
 	}
@@ -177,6 +181,10 @@ public class GoodsAction extends BaseAction {
 
 	public void setDepList(List<LuDepartment> depList) {
 		this.depList = depList;
+	}
+
+	public List<String> getUnitList() {
+		return Arrays.asList(unitList);
 	}
 	
 }

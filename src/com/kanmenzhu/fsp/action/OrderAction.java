@@ -10,6 +10,7 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +71,8 @@ public class OrderAction extends BaseAction {
 	private DepartmentService departmentService;
 	private GoodsService goodsService;
 	private RoleService roleService;
+	
+	public static String[] unitList = {"两","斤","公斤","毫升","升","瓶","盒","袋","箱","桶"};
 	
 	public String regist(){
 		order = null;
@@ -938,5 +941,10 @@ public class OrderAction extends BaseAction {
 	public void setDetailId(String detailId) {
 		this.detailId = detailId;
 	}
+	
+	public List<String> getUnitList() {
+		return Arrays.asList(unitList);
+	}
+	
 
 }

@@ -81,7 +81,7 @@ body {
       <tr>
         <td height="35" class="login-text02">单位：</td>
         <td>
-        <s:select name="goods.unit"  list="{'两','斤','公斤','袋'}">
+        <s:select name="goods.unit"  list="unitList">
         </s:select>
         </td>
       </tr>

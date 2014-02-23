@@ -20,7 +20,7 @@ body {
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
-<script language="javascript" type="text/javascript">
+<script language="javascript" type="text/javascript" id="mainjs">
  var i= 0;
  var name = "odetail-0";
 	function checkSubmit(type){
@@ -50,12 +50,35 @@ body {
 		$.post("getdepGD.shtml?goodid="+$("#goodid-0").val(),function(data){
 			  $("#price-0").text(data.price);
 			  $("#dep-0").text(data.name);
+			  $("#standard-0").text(data.standard);
+	  		  $("#factory-0").text(data.factory);
+	  		  $("#unit-0").text(data.unit);
+	  		  var num = $("#num-0").val();
+			  var price = $("#price-0").text();
+			  var sum = num * price;
+			  $("#sum-0").text(sum);
+			  sumAll();
 			  });
 		  $("#goodid-0").change(function(){
 		  $.post("getdepGD.shtml?goodid="+$("#goodid-0").val(),function(data){
 			  $("#price-0").text(data.price);
 			  $("#dep-0").text(data.name);
+			  $("#standard-0").text(data.standard);
+	  		  $("#factory-0").text(data.factory);
+	  		  $("#unit-0").text(data.unit);
+	  		  var num = $("#num-0").val();
+			  var price = $("#price-0").text();
+			  var sum = num * price;
+			  $("#sum-0").text(sum);
+			  sumAll();
 			  });
+		  });
+		  $("#num-0").change(function(){
+			  var num = $("#num-0").val();
+			  var price = $("#price-0").text();
+			  var sum = num * price;
+			  $("#sum-0").text(sum);
+			  sumAll();
 		  });
 		});
 	
@@ -69,12 +92,16 @@ body {
         $("#goodid-"+i).attr("name","odetailList["+i+"].goodId");
         $("#"+name+" #price-0").attr("id","price-"+i);
         $("#"+name+" #dep-0").attr("id","dep-"+i);
+        $("#"+name+" #factory-0").attr("id","factory-"+i);
+        $("#"+name+" #standard-0").attr("id","standard-"+i);
         $("#"+name+" #del-0").attr("id","del-"+i);
         $("#"+name+" #num-0").attr("id","num-"+i);
-        $("#num-"+i).attr("name","odetailList["+i+"].goodNum");
         $("#num-"+i).val("");
         $("#"+name+" #unit-0").attr("id","unit-"+i);
-        $("#unit-"+i).attr("name","odetailList["+i+"].goodUnit");
+        $("#"+name+" #sum-0").attr("id","sum-"+i);
+        $("#sum-"+i).text("");
+        $("#num-"+i).attr("name","odetailList["+i+"].goodNum");
+        $("#num-"+i).val("");
         $("#"+name+" #time-0").attr("id","time-"+i);
         $("#time-"+i).attr("name","odetailList["+i+"].sendTime");
         $("#time-"+i).val("");
@@ -86,21 +113,50 @@ body {
 		$.post("getdepGD.shtml?goodid="+$("#goodid-"+i).val(),function(data){
 			  $("#price-"+i).text(data.price);
 			  $("#dep-"+i).text(data.name);
+			  $("#standard"+i).text(data.standard);
+	  		  $("#factory"+i).text(data.factory);
+	  		  $("#unit"+i).text(data.unit);
 			  });
 		var js = '$("#goodid-'+i+'").change(function(){'+
 	  		  '$.post("getdepGD.shtml?goodid="+$("#goodid-'+i+'").val(),function(data){'+
 	  			 ' $("#price-'+i+'").text(data.price);'+
 	  			  '$("#dep-'+i+'").text(data.name);'+
+	  			'$("#standard-'+i+'").text(data.standard);'+
+	  			'$("#factory-'+i+'").text(data.factory);'+
+	  			'$("#unit-'+i+'").text(data.unit);'+
+	  			' var num = $("#num-'+i+'").val();'+
+				' var price = $("#price-'+i+'").text();'+
+				' var sum = num * price;'+
+				 ' $("#sum-'+i+'").text(sum);sumAll();'+
 	  			  '});'+
 	  		  '});'+
 	  		  '';
 		$("<scri"+"pt>"+js+"</scr"+"ipt>").attr({id:'js'+i,type:'text/javascript'}).insertAfter($("#mainjs"));
       
+		var change = '$("#num-'+i+'").change(function(){'+
+			' var num = $("#num-'+i+'").val();'+
+			' var price = $("#price-'+i+'").text();'+
+			' var sum = num * price;'+
+			 ' $("#sum-'+i+'").text(sum);sumAll();'+
+			  '});';
+		$("<scri"+"pt>"+change+"</scr"+"ipt>").attr({id:'change'+i,type:'text/javascript'}).insertAfter($("#mainjs"));
+	  
+		
      	 $("#del-"+i).click(function(){
      	 	$(this).closest("td").closest("tr").remove();
+     	 	sumAll();
   	    });
     }//end addLine()
-
+    
+	function sumAll(){
+		var total=0;
+		$("div[id^='sum-']").each(function(i){  
+		    if($(this).text()!=""){
+		    	total=total+parseFloat($(this).text());
+		    }
+		  });  
+		$("#divTotal").text("总金额:"+total+"元      ");
+	}
 </script>
 </head>
 <body>
@@ -128,14 +184,18 @@ body {
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
 					 <tr>
-                    <td height="20" colspan="7" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单明细</td>
+                    <td height="20" colspan="11" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单明细</td>
                     </tr>
                   <tr>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">物品</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">物品单价</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">物品数量</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">厂家名称</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">规格</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">单价(元)</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">单位</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">供货单位</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">送货时间</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">总价金额(元)</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
@@ -145,13 +205,18 @@ body {
 				   <s:select list="goodsList" var="good" listValue="name"  name="odetailList[%{#status.index}].goodId" listKey="id"  id="goodid-0">
         			</s:select>
 				   </td>
-                   <td height="20" bgcolor="#FFFFFF"><div id="price-0"></div></td>
-                   <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-0" cssStyle="width:60px;"/>
-                   		<s:select id="unit-0"  name="odetailList[%{#status.index}].goodUnit"  list="{'两','斤','公斤','袋'}">
-        				</s:select>
+                   <td bgcolor="#FFFFFF">
+                   <s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-0" cssStyle="width:40px;"/>
+                   <!-- <s:select id="unit-0"  name="odetailList[%{#status.index}].goodUnit" list="unitList">
+        				</s:select> -->
 					</td>
+					<td height="20" bgcolor="#FFFFFF"><div id="factory-0"></div></td>
+					<td height="20" bgcolor="#FFFFFF"><div id="standard-0"></div></td>
+					<td height="20" bgcolor="#FFFFFF"><font id="price-0"></font></td>
+					<td height="20" bgcolor="#FFFFFF"><font id="unit-0"></font></td>
 					<td height="20" bgcolor="#FFFFFF"><div id="dep-0"></div></td>
 					<td bgcolor="#FFFFFF"><s:textfield  name="odetailList[%{#status.index}].sendTime"  id="time-0"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
+					<td height="20" bgcolor="#FFFFFF"><div id="sum-0"></div></td>
                     <td bgcolor="#FFFFFF"><s:textfield id="memo-0" name="odetailList[%{#status.index}].memo" /></td>
                     <td bgcolor="#FFFFFF"><input id="del-0" type="button" value="删除" /> </td>
                   </tr>
@@ -161,7 +226,7 @@ body {
               </tr>
               <tr>
               <td height="60"  width="10%" align="center"  class="newfont02">
-              	学校： <s:select name="order.deptId" list="depList" listValue="name" listKey="id">
+              	<font id="divTotal"></font>&nbsp;&nbsp;&nbsp;学校： <s:select name="order.deptId" list="depList" listValue="name" listKey="id">
 			 </s:select>&nbsp;&nbsp;&nbsp;
               	订单备注：<s:textarea  name="order.memo" />  </td>
           	 </tr>

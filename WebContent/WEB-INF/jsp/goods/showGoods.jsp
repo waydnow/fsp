@@ -67,12 +67,12 @@ body {
       </tr>
       <tr>
         <td height="35" class="login-text02">规格：</td>
-        <td width="69%"><s:textfield name="goods.standard" id="standard"/>
+        <td width="69%"><s:property value="goods.standard"/>
         </td>
       </tr>
       <tr>
         <td height="35" class="login-text02">厂家品牌：</td>
-        <td width="69%"><s:textfield name="goods.factory" id="factory"/>
+        <td width="69%"><s:property value="goods.factory"/>
         </td>
       </tr>
       <tr>

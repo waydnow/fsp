@@ -34,7 +34,6 @@ body {
 </script>
 </head>
 <body>
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -74,7 +73,8 @@ body {
       </tr>
       <tr>
         <td height="35" class="login-text02">单位：</td>
-        <td width="69%"><s:select name="goods.unit"  list="{'两','斤','公斤','袋'}">
+        <td width="69%">
+        <s:select name="goods.unit"  list="unitList">
         </s:select>
         </td>
       </tr>

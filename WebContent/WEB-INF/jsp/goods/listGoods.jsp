@@ -45,7 +45,7 @@ html { overflow-x: auto; overflow-y: auto; border:0;}
 <script type="text/javascript" src="js/xiangmu.js"></script>
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 </head>
-<Script language="JavaScript">
+<script language="javascript">
 
 function addGD() {
 	window.location.href = "registGD.shtml";
@@ -74,7 +74,7 @@ function on_load(){
 	loadingmsg.style.display="none";
 	mainpage.style.display="";
 }
-</Script>
+</script>
 
 <body onload="on_load()">
 <s:form action="listGD.shtml">
@@ -113,12 +113,14 @@ function on_load(){
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
 					                  <tr>
-                    <td height="20" colspan="6" align="center" bgcolor="#EEEEEE" class="tablestyle_title">物品列表</td>
+                    <td height="20" colspan="8" align="center" bgcolor="#EEEEEE" class="tablestyle_title">物品列表</td>
                     </tr>
                   <tr>
 				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">物品名称</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">价格</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">规格</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">厂商品牌</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">供应商</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
@@ -128,6 +130,8 @@ function on_load(){
 				   <td bgcolor="#FFFFFF"><input type="checkbox" name="gd.id"/></td>
                     <td height="20" bgcolor="#FFFFFF"><a href="showGD.shtml?goods.id=${gd.id}"><s:property value="#gd.name"/></a></td>
                   	<td bgcolor="#FFFFFF"><s:property value="#gd.price"/>/<s:property value="#gd.unit"/></td>
+					<td bgcolor="#FFFFFF"><s:property value="#gd.standard"/></td>              
+                  	<td bgcolor="#FFFFFF"><s:property value="#gd.factory"/></td>
                    	<td bgcolor="#FFFFFF"><s:property value="#gd.deptName"/></td>
                     <td bgcolor="#FFFFFF"><s:property value="#gd.memo"/></td>
                     <td bgcolor="#FFFFFF"><a id="${gd.id}" href="javascript:doDelete(${gd.id});">删除</a></td>

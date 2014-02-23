@@ -4,6 +4,7 @@ package com.kanmenzhu.fsp.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.kanmenzhu.bean.BaseBean;
 
@@ -25,6 +26,7 @@ public class LuGoods extends BaseBean {
 	private int delTag;
 	public static final int OK = 0;
 	public static final int DELETE = 1;
+	
 
 	public LuGoods() {
 	}
