@@ -79,6 +79,14 @@ body {
 				success:function(data){
 					$("#price-"+idx).text(data.price);
 					$("#dep-"+idx).text(data.name);
+			  		$("#standard-"+idx).text(data.standard);
+	  		  		$("#factory-"+idx).text(data.factory);
+	  		  		$("#unit-"+idx).text(data.unit);
+	  		  		var num = $("#num-"+idx).val();
+			  		var price = $("#price-"+idx).text();
+			  		var sum = num * price;
+			  		$("#sum-"+idx).text(sum);
+			  		sumAll();
 					if(length<index){
 						post(length);
 						length++;
@@ -95,6 +103,15 @@ body {
 			success:function(data){
 				$("#price-0").text(data.price);
 				$("#dep-0").text(data.name);
+			  $("#standard-0").text(data.standard);
+	  		  $("#factory-0").text(data.factory);
+	  		  $("#unit-0").text(data.unit);
+	  		  var num = $("#num-0").val();
+			  var price = $("#price-0").text();
+			  var sum = num * price;
+			  $("#sum-0").text(sum);
+			  sumAll();
+
 				if(length<index){
 					post(length);
 					length++;
@@ -107,6 +124,13 @@ body {
 			  '$.post("getdepGD.shtml?goodid="+$("#goodid-'+l+'").val(),function(data){'+
 				 ' $("#price-'+l+'").text(data.price);'+
 				  '$("#dep-'+l+'").text(data.name);'+
+	  			'$("#standard-'+l+'").text(data.standard);'+
+	  			'$("#factory-'+l+'").text(data.factory);'+
+	  			'$("#unit-'+l+'").text(data.unit);'+
+	  			' var num = $("#num-'+l+'").val();'+
+				' var price = $("#price-'+l+'").text();'+
+				' var sum = num * price;'+
+				 ' $("#sum-'+l+'").text(sum);sumAll();'+
 				  '});'+
 			  '});'+
 			  '';
@@ -123,6 +147,13 @@ body {
 				    '});'+
 				  '}'+
 		   	   ' });';
+		   	js = js + '$("#num-'+i+'").change(function(){'+
+			' var num = $("#num-'+i+'").val();'+
+			' var price = $("#price-'+i+'").text();'+
+			' var sum = num * price;'+
+			 ' $("#sum-'+i+'").text(sum);sumAll();'+
+			  '});';
+     	
 			$("<scri"+"pt>"+js+"</scr"+"ipt>").attr({id:'jschangepost'+l,type:'text/javascript'}).insertAfter($("#mainjs"));
 		}
 		  
@@ -142,7 +173,11 @@ body {
         $("#num-"+i).attr("name","odetailList["+i+"].goodNum");
         $("#num-"+i).val("");
         $("#"+name+" #unit-0").attr("id","unit-"+i);
+        $("#"+name+" #sum-0").attr("id","sum-"+i);
+        $("#sum-"+i).text("");
         $("#unit-"+i).attr("name","odetailList["+i+"].goodUnit");
+        $("#num-"+i).attr("name","odetailList["+i+"].goodNum");
+        $("#num-"+i).val("");
         $("#"+name+" #time-0").attr("id","time-"+i);
         $("#time-"+i).attr("name","odetailList["+i+"].sendTime");
         $("#time-"+i).val("");
@@ -154,22 +189,48 @@ body {
 		$.post("getdepGD.shtml?goodid="+$("#goodid-"+i).val(),function(data){
 			  $("#price-"+i).text(data.price);
 			  $("#dep-"+i).text(data.name);
+			  $("#standard"+i).text(data.standard);
+	  		  $("#factory"+i).text(data.factory);
+	  		  $("#unit"+i).text(data.unit);
 			  });
 		var js = '$("#goodid-'+i+'").change(function(){'+
 	  		  '$.post("getdepGD.shtml?goodid="+$("#goodid-'+i+'").val(),function(data){'+
 	  			 ' $("#price-'+i+'").text(data.price);'+
 	  			  '$("#dep-'+i+'").text(data.name);'+
+	  			'$("#standard-'+i+'").text(data.standard);'+
+	  			'$("#factory-'+i+'").text(data.factory);'+
+	  			'$("#unit-'+i+'").text(data.unit);'+
+	  			' var num = $("#num-'+i+'").val();'+
+				' var price = $("#price-'+i+'").text();'+
+				' var sum = num * price;'+
+				 ' $("#sum-'+i+'").text(sum);sumAll();'+
 	  			  '});'+
 	  		  '});'+
 	  		  '';
 		$("<scri"+"pt>"+js+"</scr"+"ipt>").attr({id:'js'+i,type:'text/javascript'}).insertAfter($("#mainjs"));
       
+		var change = '$("#num-'+i+'").change(function(){'+
+			' var num = $("#num-'+i+'").val();'+
+			' var price = $("#price-'+i+'").text();'+
+			' var sum = num * price;'+
+			 ' $("#sum-'+i+'").text(sum);sumAll();'+
+			  '});';
+		$("<scri"+"pt>"+change+"</scr"+"ipt>").attr({id:'change'+i,type:'text/javascript'}).insertAfter($("#mainjs"));
      	 $("#del-"+i).click(function(){
      		 alert("删除="+i);
      	 	$(this).closest("td").closest("tr").remove();
+     	 	sumAll();
   	    });
     }//end addLine()
-
+	function sumAll(){
+		var total=0;
+		$("div[id^='sum-']").each(function(i){  
+		    if($(this).text()!=""){
+		    	total=total+parseFloat($(this).text());
+		    }
+		  });  
+		$("#divTotal").text("总金额:"+total+"元      ");
+	}
 </script>
 </head>
 <body>
@@ -197,14 +258,18 @@ body {
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
 					 <tr>
-                    <td height="20" colspan="7" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单明细</td>
+                    <td height="20" colspan="12" align="center" bgcolor="#EEEEEE" class="tablestyle_title">订单明细</td>
                     </tr>
                   <tr>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">物品</td>
-                    <td width="10%" align="center" bgcolor="#EEEEEE">物品单价</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">物品数量</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">厂家名称</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">规格</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">单价(元)</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">单位</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">供货单位</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">送货时间</td>
+                    <td width="10%" align="center" bgcolor="#EEEEEE">总价金额(元)</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
@@ -213,17 +278,19 @@ body {
 				   <td height="20" bgcolor="#FFFFFF">
 					<s:select list="goodsList" var="good" listValue="name"  name="odetailList[%{#status.index}].goodId" listKey="id"  id="goodid-%{#status.index}"> </s:select>
 				   </td>
-                   <td height="20" bgcolor="#FFFFFF"><div id="price-<s:property value='#status.index'/>"></div></td>
-                   <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-%{#status.index}" cssStyle="width:60px;"/>
-                   		<s:select id="unit-%{#status.index}"  name="odetailList[%{#status.index}].goodUnit"  list="{'两','斤','公斤','袋'}">
-        				</s:select>
+                   <td bgcolor="#FFFFFF" ><s:textfield name="odetailList[%{#status.index}].goodNum"  id="num-%{#status.index}" cssStyle="width:40px;"/>
 					</td>
+					<td height="20" bgcolor="#FFFFFF"><div id="factory-<s:property value='#status.index'/>"></div></td>
+					<td height="20" bgcolor="#FFFFFF"><div id="standard-<s:property value='#status.index'/>"></div></td>
+					<td height="20" bgcolor="#FFFFFF"><div id="price-<s:property value='#status.index'/>"></div></td>
+					<td height="20" bgcolor="#FFFFFF"><font id="unit-<s:property value='#status.index'/>"></font></td>
 					<td height="20" bgcolor="#FFFFFF"><div id="dep-<s:property value='#status.index'/>"></div></td>
 					<td bgcolor="#FFFFFF">
 					<s:textfield name="odetailList[%{#status.index}].sendTime"   id="time-%{#status.index}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
 						<s:param name="value"><s:text name="odetailList[%{#status.index}].send"/></s:param>
 					</s:textfield>
 					</td>
+					<td height="20" bgcolor="#FFFFFF"><div id="sum-<s:property value='#status.index'/>"></div></td>
                     <td bgcolor="#FFFFFF"><s:textfield id="memo-%{#status.index}" name="odetailList[%{#status.index}].memo" /></td>
                     <td bgcolor="#FFFFFF"><a id="del-<s:property value='#status.index'/>"
 						odid='<s:text name="odetailList[%{#status.index}].id"/>'>
@@ -235,6 +302,7 @@ body {
               </tr>
               <tr>
               <td height="60"  width="10%" align="center"  class="newfont02">
+              <font id="divTotal"></font>&nbsp;&nbsp;&nbsp;
               	学校： <s:select name="order.deptId" list="depList" listValue="name" listKey="id" disabled="true">
 			 </s:select>&nbsp;&nbsp;&nbsp;
               	订单备注：<s:textarea  name="order.memo" />  </td>

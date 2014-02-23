@@ -23,8 +23,8 @@
         <property name="goodUnit" type="string">
             <column name="GOOD_UNIT" length="32" not-null="true" />
         </property>
-        <property name="orderPrice" type="int">
-            <column name="ORDER_PRICE" not-null="true" />
+        <property name="orderPrice" type="big_decimal">
+            <column name="ORDER_PRICE" precision="10"/>
         </property>
         <property name="orderUnit" type="string">
             <column name="ORDER_UNIT" length="32" not-null="true" />
