@@ -72,8 +72,6 @@ public class OrderAction extends BaseAction {
 	private GoodsService goodsService;
 	private RoleService roleService;
 	
-	public static String[] unitList = {"两","斤","公斤","毫升","升","瓶","盒","袋","箱","桶"};
-	
 	public String regist(){
 		order = null;
 		//判断当前用户是否为文教部门

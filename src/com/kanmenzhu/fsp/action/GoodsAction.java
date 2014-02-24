@@ -27,8 +27,6 @@ public class GoodsAction extends BaseAction {
 	private List<LuGoods> goodsList;
 	private List<LuDepartment> depList;
 	
-	public static String[] unitList = {"两","斤","公斤","毫升","升","瓶","盒","袋","箱","桶"};
-	
 	public String regist(){
 		deptList();
 		goods = null;

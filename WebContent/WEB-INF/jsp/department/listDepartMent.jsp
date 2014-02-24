@@ -110,10 +110,11 @@ function unselectAll(){
               <tr>
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 				<tr>
-                    <td height="20" colspan="5" align="center" bgcolor="#EEEEEE" class="tablestyle_title">单位列表</td>
+                    <td height="20" colspan="6" align="center" bgcolor="#EEEEEE" class="tablestyle_title">单位列表</td>
                   </tr>
                   <tr>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">单位名称</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">单位类型</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">负责人</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">地址</td>
                     <td width="5%" align="center" bgcolor="#EEEEEE">联系电话</td>
@@ -122,6 +123,17 @@ function unselectAll(){
                   <s:iterator value="dplist" var="dp">
                   <tr align="center" id="tr${dp.id}">
                     <td height="20" bgcolor="#FFFFFF"><a href="showDP.shtml?department.id=${dp.id}"><s:property value="#dp.name"/></a></td>
+                    <td bgcolor="#FFFFFF">
+                    <s:if test="%{#dp.type == 'SUPPLIER'}" >
+                    	供应商
+                    </s:if>
+                    <s:if test="%{#dp.type == 'SCHOOL'}" >
+                    	学校
+                    </s:if>
+                    <s:if test="%{#dp.type == 'MANAGER'}" >
+                    	文教局
+                    </s:if>
+                    </td>
                     <td bgcolor="#FFFFFF"><s:property value="#dp.manager"/></td>
                     <td bgcolor="#FFFFFF"><s:property value="#dp.address"/></td>
                     <td bgcolor="#FFFFFF"><s:property value="#dp.phone"/></td>

@@ -21,6 +21,26 @@ body {
 <link href="css/style.css" rel="stylesheet" type="text/css" >
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script language="javascript">
+
+	$(document).ready(function(){
+		$("#school").hide();
+		$("#dtype").change(function(){
+			var type = $("#dtype").val();
+			if(type=='SUPPLIER'){
+				$("#school").show();
+			}else{
+				$("#school").hide();
+			}
+			
+		});
+		$("#checksAll").change(function(){
+			var cf=$("#checksAll").prop("checked");
+			$('input[name="listSchool"]').each(function(){
+				$(this).prop("checked",cf);
+			});
+		});
+	});
+	
 	function checkSubmit(){
 		if($("#name").val()==""){
 			alert("请输入单位名称!");
@@ -29,9 +49,19 @@ body {
 		if($("#manager").val()==""){
 			alert("请输入负责人!");
 			return false;
-			}
-		document.addDP.submit();
 		}
+		getSelectDepts();
+		document.addDP.submit();
+	}
+	
+	function getSelectDepts(){
+		var checkIds="";
+		$('input[name="listSchool"]:checked').each(function(){
+			checkIds=checkIds+$(this).val()+",";
+		});
+		$("#openDeptIds").val(checkIds);
+	}
+	
 </script>
 </head>
 <body>
@@ -62,7 +92,7 @@ body {
       <tr>
         <td width="31%" height="35" class="login-text02">单位类型：</td>
         <td width="69%">
-      	<s:select list="mapType" name="department.type"></s:select>
+      	<s:select list="mapType" name="department.type" id="dtype"></s:select>
         </td>
       </tr>
       <tr>
@@ -77,11 +107,21 @@ body {
         <td width="31%" height="35" class="login-text02">联系电话：</td>
         <td width="69%"><s:textfield name="department.phone" id="phone"/></td>
       </tr>
+      <tr id="school">
+      	<td width="31%" height="35" class="login-text02">供应学校：</td>
+        <td width="69%">
+        	<input type="checkbox" id="checksAll" />全选<br/>
+        	<s:iterator value="schools" var="s" >
+        	<input type="checkbox" name="listSchool" value="${s.id}"/>${s.name}
+        	</s:iterator>
+        </td>
+      </tr>
       <tr>
         <td height="35">&nbsp;</td>
         <td><input type="button" value="保存" class="right-button02" onclick="checkSubmit();"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="right-button02"  value="重置"/></td>
       </tr>
     </table>
+    <s:hidden name="department.openDepts" id="openDeptIds"/>
     </s:form>
 	</td>
   </tr>

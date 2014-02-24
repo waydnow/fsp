@@ -20,6 +20,9 @@
         <property name="phone" type="string">
             <column name="PHONE" length="128" />
         </property>
+        <property name="openDepts" type="string">
+            <column name="OPENDEPTS" length="256" />
+        </property>
         <property name="type" type="string">
             <column name="TYPE" length="32" not-null="true" />
         </property>

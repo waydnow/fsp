@@ -1,5 +1,6 @@
 package com.kanmenzhu.system.security.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,18 +21,28 @@ public class DepartmentAction extends BaseAction {
 	
 	private List<LuDepartment> dplist;
 	
+	private List<LuDepartment> schools;
+	
 	private Map<String, String> mapType = new HashMap<String, String>();
 	
 	private Integer id;
 
 	public String regist(){
 		logger.info("####添加单位####");
+		schools = departmentService.getByType(LuRole.SCHOOL);
 		return "regist";
 	}
 	
 	public String add(){
 		if(null!=department){
 			if (StringUtils.isNotBlank(department.getName())&&StringUtils.isNotBlank(department.getManager())) {
+				if(StringUtils.isNotBlank(department.getOpenDepts())){
+					String deps = department.getOpenDepts();
+					if (deps.endsWith(",")) {
+						deps = deps.substring(0, (deps.length()-1));
+						department.setOpenDepts(deps);
+					}
+				}
 				departmentService.save(department);
 				return list();
 			}
@@ -43,6 +54,15 @@ public class DepartmentAction extends BaseAction {
 	public String show(){
 		if (null!=department) {
 			department = departmentService.get(department.getId(), LuDepartment.class);
+			schools = new ArrayList<LuDepartment>();
+			String deps = department.getOpenDepts();
+			if (StringUtils.isNotBlank(deps)) {
+				String[] dps = deps.split(",");
+				for (String d : dps) {
+					LuDepartment dp = departmentService.get(Integer.valueOf(d), LuDepartment.class);
+					schools.add(dp);
+				}
+			}
 		}
 		return "show";
 	}
@@ -122,6 +142,13 @@ public class DepartmentAction extends BaseAction {
 	public void setMapType(Map<String, String> mapType) {
 		this.mapType = mapType;
 	}
-	
-	
+
+	public List<LuDepartment> getSchools() {
+		return schools;
+	}
+
+	public void setSchools(List<LuDepartment> schools) {
+		this.schools = schools;
+	}
+
 }

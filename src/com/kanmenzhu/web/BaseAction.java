@@ -24,6 +24,7 @@ public class BaseAction extends ActionSupport {
 	
 	private PageBean pb;
 	
+	public static String[] unitList = {"两","斤","公斤","毫升","升","瓶","盒","袋","箱","桶"};
 	
 	private LuUser currentUser;
 	/**用户登录信息*/

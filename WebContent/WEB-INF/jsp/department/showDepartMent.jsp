@@ -19,6 +19,24 @@ body {
 <link href="css/css.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" >
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#school").hide();
+	if ($("#dtype").val()=='SUPPLIER') {
+		$("#school").show();
+	}
+	$("#dtype").change(function(){
+		var type = $("#dtype").val();
+		if(type=='SUPPLIER'){
+			$("#school").show();
+		}else{
+			$("#school").hide();
+		}
+		
+	});
+});
+
+</script>
 </head>
 <body>
 
@@ -47,7 +65,7 @@ body {
       </tr>
       <tr>
       <td width="31%" height="35" class="login-text02">单位类型：</td>
-        <td width="69%"><s:select list="mapType" name="department.type" disabled="true"></s:select></td>
+        <td width="69%"><s:select list="mapType" name="department.type" id="dtype" disabled="true"></s:select></td>
       </tr>
       <tr>
         <td height="35" class="login-text02">地址：</td>
@@ -60,6 +78,14 @@ body {
       <tr>
         <td width="31%" height="35" class="login-text02">联系电话：</td>
         <td width="69%"><s:property value="department.phone"/></td>
+      </tr>
+      <tr id="school">
+      	<td width="31%" height="35" class="login-text02">供应学校：</td>
+        <td width="69%">
+        	<s:iterator value="schools" var="s">
+        	${s.name}
+        	</s:iterator>
+        </td>
       </tr>
       <tr>
         <td height="35"> &nbsp;
