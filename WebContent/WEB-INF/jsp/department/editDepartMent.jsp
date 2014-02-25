@@ -20,10 +20,17 @@ body {
 <link href="css/style.css" rel="stylesheet" type="text/css" >
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script language="javascript">
+
 	$(document).ready(function(){
 		$("#school").hide();
 		if ($("#dtype").val()=='SUPPLIER') {
 			$("#school").show();
+		}
+		var ids = $("#openDeptIds").val();
+		var chid = ids.split(',');
+		for(var i=0;i<chid.length;i++){
+			var ck = 'ck'+chid[i];
+			$("#"+ck).prop("checked",true);
 		}
 		$("#dtype").change(function(){
 			var type = $("#dtype").val();
@@ -34,19 +41,35 @@ body {
 			}
 			
 		});
+		$("#checksAll").change(function(){
+			var cf=$("#checksAll").prop("checked");
+			$('input[name="listSchool"]').each(function(){
+				$(this).prop("checked",cf);
+			});
+		});
 	});
+
 
 	function checkSubmit(){
 		if($("#name").val()==""){
 			alert("请输入单位名称!");
 			return false;
-			}
+		}
 		if($("#manager").val()==""){
 			alert("请输入负责人!");
 			return false;
-			}
-		document.updateDP.submit();
 		}
+		getSelectDepts();
+		document.updateDP.submit();
+	}
+	
+	function getSelectDepts(){
+		var checkIds="";
+		$('input[name="listSchool"]:checked').each(function(){
+			checkIds=checkIds+$(this).val()+",";
+		});
+		$("#openDeptIds").val(checkIds);
+	}
 </script>
 </head>
 <body>
@@ -94,8 +117,9 @@ body {
       <tr id="school">
       	<td width="31%" height="35" class="login-text02">供应学校：</td>
         <td width="69%">
-        	<s:iterator value="schools" var="s">
-        	<input type="checkbox" value="${s.id}"/>${s.name}
+        	<input type="checkbox" id="checksAll" />全选<br/>
+        	<s:iterator value="schools" var="s" >
+        	<input type="checkbox" name="listSchool" id="ck${s.id}" value="${s.id}"/>${s.name}
         	</s:iterator>
         </td>
       </tr>
@@ -107,6 +131,7 @@ body {
         <!-- <input type="reset" class="right-button02"  value="重置"/> --></td>
       </tr>
     </table>
+    <s:hidden name="department.openDepts" id="openDeptIds"/>
     </s:form>
 	</td>
   </tr>

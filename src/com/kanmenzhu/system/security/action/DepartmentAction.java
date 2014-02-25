@@ -69,8 +69,16 @@ public class DepartmentAction extends BaseAction {
 	
 	public String update(){
 		if (null!=department) {
-			if (StringUtils.isNotBlank(department.getName())) {
+			if (StringUtils.isNotBlank(department.getName())&&StringUtils.isNotBlank(department.getManager())) {
+				if(StringUtils.isNotBlank(department.getOpenDepts())){
+					String deps = department.getOpenDepts();
+					if (deps.endsWith(",")) {
+						deps = deps.substring(0, (deps.length()-1));
+						department.setOpenDepts(deps);
+					}
+				}
 				departmentService.update(department);
+				return list();
 			}
 		}
 		return list();
@@ -88,6 +96,7 @@ public class DepartmentAction extends BaseAction {
 	public String edit(){
 		if (null!=department) {
 			department = departmentService.get(department.getId(), LuDepartment.class);
+			schools = departmentService.getByType(LuRole.SCHOOL);
 		}
 		return "edit";
 	}

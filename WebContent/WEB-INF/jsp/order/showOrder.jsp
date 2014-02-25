@@ -85,7 +85,7 @@ body {
 	  		  		var num = $("#num-"+idx).val();
 			  		var price = $("#price-"+idx).text();
 			  		var sum = num * price;
-			  		$("#sum-"+idx).text(sum);
+			  		$("#sum-"+idx).text(sum.toFixed(2));
 			  		sumAll();
 					if(length<index){
 						post(length);
@@ -109,7 +109,7 @@ body {
 	  		  var num = $("#num-0").val();
 			  var price = $("#price-0").text();
 			  var sum = num * price;
-			  $("#sum-0").text(sum);
+			  $("#sum-0").text(sum.toFixed(2));
 			  sumAll();
 
 				if(length<index){
@@ -130,7 +130,7 @@ body {
 	  			' var num = $("#num-'+l+'").val();'+
 				' var price = $("#price-'+l+'").text();'+
 				' var sum = num * price;'+
-				 ' $("#sum-'+l+'").text(sum);sumAll();'+
+				 ' $("#sum-'+l+'").text(sum.toFixed(2));sumAll();'+
 				  '});'+
 			  '});'+
 			  '';
@@ -151,7 +151,7 @@ body {
 			' var num = $("#num-'+i+'").val();'+
 			' var price = $("#price-'+i+'").text();'+
 			' var sum = num * price;'+
-			 ' $("#sum-'+i+'").text(sum);sumAll();'+
+			 ' $("#sum-'+i+'").text(sum.toFixed(2));sumAll();'+
 			  '});';
      	
 			$("<scri"+"pt>"+js+"</scr"+"ipt>").attr({id:'jschangepost'+l,type:'text/javascript'}).insertAfter($("#mainjs"));
@@ -203,7 +203,7 @@ body {
 	  			' var num = $("#num-'+i+'").val();'+
 				' var price = $("#price-'+i+'").text();'+
 				' var sum = num * price;'+
-				 ' $("#sum-'+i+'").text(sum);sumAll();'+
+				 ' $("#sum-'+i+'").text(sum.toFixed(2));sumAll();'+
 	  			  '});'+
 	  		  '});'+
 	  		  '';
@@ -213,7 +213,7 @@ body {
 			' var num = $("#num-'+i+'").val();'+
 			' var price = $("#price-'+i+'").text();'+
 			' var sum = num * price;'+
-			 ' $("#sum-'+i+'").text(sum);sumAll();'+
+			 ' $("#sum-'+i+'").text(sum.toFixed(2));sumAll();'+
 			  '});';
 		$("<scri"+"pt>"+change+"</scr"+"ipt>").attr({id:'change'+i,type:'text/javascript'}).insertAfter($("#mainjs"));
      	 $("#del-"+i).click(function(){
@@ -229,7 +229,7 @@ body {
 		    	total=total+parseFloat($(this).text());
 		    }
 		  });  
-		$("#divTotal").text("总金额:"+total+"元      ");
+		$("#divTotal").text("总金额:"+total.toFixed(2)+"元      ");
 	}
 </script>
 </head>

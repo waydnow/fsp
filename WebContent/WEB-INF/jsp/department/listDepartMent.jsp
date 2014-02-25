@@ -95,7 +95,7 @@ function unselectAll(){
 			<td width="5%"><img src="images/ico07.gif" width="20" height="18" /></td>
 			<td width="70%">查看内容：单位名称
              <s:textfield name="department.name"></s:textfield>
-			 <input name="Submit" type="button" class="right-button02" value="查 询" /></td>
+			 <input name="Submit" type="submit" class="right-button02" value="查 询" /></td>
 		  </tr>
         </table></td>
       </tr>

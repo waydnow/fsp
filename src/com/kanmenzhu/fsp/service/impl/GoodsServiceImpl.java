@@ -8,10 +8,11 @@ import com.kanmenzhu.fsp.entity.LuGoods;
 import com.kanmenzhu.fsp.entity.LuOrder;
 import com.kanmenzhu.fsp.service.GoodsService;
 import com.kanmenzhu.service.impl.BaseServiceImpl;
+import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.utils.pagination.PageBean;
 
 public class GoodsServiceImpl extends BaseServiceImpl<LuGoods> implements	GoodsService {
-
+	
 	@Override
 	public List<LuGoods> getGoodsByTag(PageBean pb, int deltag) {
 		List<LuGoods> goods  = ((GoodsDao)dao).getGoodsByTag(pb,deltag);
@@ -23,4 +24,11 @@ public class GoodsServiceImpl extends BaseServiceImpl<LuGoods> implements	GoodsS
 		List<LuGoods> goods  = ((GoodsDao)dao).getGoodsByTag(ok);
 		return goods;
 	}
+
+	@Override
+	public List<LuGoods> getByDept(int id) {
+		List<LuGoods> goods  = ((GoodsDao)dao).getGoodsByTagAndDept(LuGoods.OK,id);
+		return goods;
+	}
+
 }

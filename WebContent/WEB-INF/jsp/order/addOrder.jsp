@@ -69,7 +69,7 @@ body {
 	  		  var num = $("#num-0").val();
 			  var price = $("#price-0").text();
 			  var sum = num * price;
-			  $("#sum-0").text(sum);
+			  $("#sum-0").text(sum.toFixed(2));
 			  sumAll();
 			  });
 		  });
@@ -77,7 +77,7 @@ body {
 			  var num = $("#num-0").val();
 			  var price = $("#price-0").text();
 			  var sum = num * price;
-			  $("#sum-0").text(sum);
+			  $("#sum-0").text(sum.toFixed(2));
 			  sumAll();
 		  });
 		});
@@ -127,7 +127,7 @@ body {
 	  			' var num = $("#num-'+i+'").val();'+
 				' var price = $("#price-'+i+'").text();'+
 				' var sum = num * price;'+
-				 ' $("#sum-'+i+'").text(sum);sumAll();'+
+				 ' $("#sum-'+i+'").text(sum.toFixed(2));sumAll();'+
 	  			  '});'+
 	  		  '});'+
 	  		  '';
@@ -137,7 +137,7 @@ body {
 			' var num = $("#num-'+i+'").val();'+
 			' var price = $("#price-'+i+'").text();'+
 			' var sum = num * price;'+
-			 ' $("#sum-'+i+'").text(sum);sumAll();'+
+			 ' $("#sum-'+i+'").text(sum.toFixed(2));sumAll();'+
 			  '});';
 		$("<scri"+"pt>"+change+"</scr"+"ipt>").attr({id:'change'+i,type:'text/javascript'}).insertAfter($("#mainjs"));
 	  
@@ -155,7 +155,7 @@ body {
 		    	total=total+parseFloat($(this).text());
 		    }
 		  });  
-		$("#divTotal").text("总金额:"+total+"元      ");
+		$("#divTotal").text("总金额:"+total.toFixed(2)+"元      ");
 	}
 </script>
 </head>
@@ -199,9 +199,11 @@ body {
                     <td width="10%" align="center" bgcolor="#EEEEEE">备注</td>
                     <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
+                  <s:if test="%{goodsList.size()>0}">
                   <s:iterator value="odetailList"  status="status" >
                   <tr align="center" id="odetail-0">
 				   <td height="20" bgcolor="#FFFFFF">
+				   
 				   <s:select list="goodsList" var="good" listValue="name"  name="odetailList[%{#status.index}].goodId" listKey="id"  id="goodid-0">
         			</s:select>
 				   </td>
@@ -221,9 +223,15 @@ body {
                     <td bgcolor="#FFFFFF"><input id="del-0" type="button" value="删除" /> </td>
                   </tr>
 				  </s:iterator>
+				  </s:if>
              	  <tr align="center" id="odetail-last"></tr>
                 </table></td>
               </tr>
+              <tr align="center">
+              <s:if test="%{goodsList==null}">
+				  	暂无供应商向学校提供货源！
+			  </s:if>
+			  </tr>
               <tr>
               <td height="60"  width="10%" align="center"  class="newfont02">
               	<font id="divTotal"></font>&nbsp;&nbsp;&nbsp;学校： <s:select name="order.deptId" list="depList" listValue="name" listKey="id">

@@ -16,5 +16,7 @@ public interface GoodsService extends BaseService<LuGoods> {
 	public List<LuGoods> getGoodsByTag(PageBean pb, int deltag);
 
 	public List<LuGoods> getGoodsByTag(int ok);
+	
+	public List<LuGoods> getByDept(int id);
 
 }

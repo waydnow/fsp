@@ -15,4 +15,6 @@ public interface DepartmentDao extends BaseDao<LuDepartment> {
 
 	public List<LuDepartment> getByName(PageBean pb, String name);
 
+	public List<LuDepartment> getSupperBySchool(int id);
+
 }

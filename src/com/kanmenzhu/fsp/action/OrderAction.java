@@ -50,7 +50,7 @@ public class OrderAction extends BaseAction {
 	
 	private List<LuOrder> orderList;
 	private List<LuOrderDetail> odetailList;
-	private List<LuGoods> goodsList;
+	private List<LuGoods> goodsList = new ArrayList<LuGoods>();
 	private List<LuRole> roleList;
 	private List<LuDepartment> depList;
 	private Map<Integer, LuDepartment> goodDept;
@@ -78,6 +78,8 @@ public class OrderAction extends BaseAction {
 		depList = new ArrayList<LuDepartment>();
 		List<LuRole> roles = roleService.getRoles(getCurrentUser());
 		boolean isTrue = false;
+		boolean isSchool = false;
+		LuDepartment dep = new LuDepartment();
 		for (LuRole role:roles) {
 			if (LuRole.MANAGER.equals(role.getType())) {
 				isTrue = true;
@@ -86,13 +88,31 @@ public class OrderAction extends BaseAction {
 		if (isTrue) {
 			depList = departmentService.getByType(LuRole.SCHOOL);		
 		}else {
-			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
+			dep = departmentService.getDepartmentByUser(getCurrentUser());
 			if (null!=dep) {
+				if (LuRole.SCHOOL.equals(dep.getType())) {
+					isSchool = true;
+				}
 				depList.add(dep);
 			}
 		}		
 		roleList = roleService.getRoles(getCurrentUser());
-		goodsList = goodsService.getGoodsByTag(LuGoods.OK);
+		//用户所属单位，如果用户是学校，则对物品进行权限查询
+		if (isSchool) {
+			List<LuDepartment> dps = new ArrayList<LuDepartment>();
+			dps = departmentService.getSupperBySchool(dep.getId());
+			for (LuDepartment dp : dps) {
+				List<LuGoods> glist = goodsService.getByDept(dp.getId());
+				if (glist!=null&&(glist.size()>0)) {
+					goodsList.addAll(glist);
+				}
+			}
+		}else{
+			goodsList = goodsService.getGoodsByTag(LuGoods.OK);
+			for (LuGoods goods : goodsList) {
+				goods.setName(goods.getName()+"("+goods.getFactory()+")");
+			}
+		}
 		odetailList = new ArrayList<LuOrderDetail>();
 		LuOrderDetail detail = new LuOrderDetail();
 		odetailList.add(detail);		
@@ -146,6 +166,7 @@ public class OrderAction extends BaseAction {
 					if (detail.getGoodNum()!=0) {
 						detail.setOrderPrice(good.getPrice());
 						detail.setOrderUnit(good.getUnit());
+						detail.setGoodUnit(good.getUnit());
 						detail.setCreateTime(new Date());
 						detail.setOrderId(order.getId());
 						detail.setStatus(order.getStatus());
@@ -399,6 +420,7 @@ public class OrderAction extends BaseAction {
 		roleList = roleService.getRoles(getCurrentUser());
 		goodsList = goodsService.getAll(pb);
 		for (LuGoods goods : goodsList) {
+			goods.setName(goods.getName()+"("+goods.getFactory()+")");
 			if (goods.getDelTag()==LuGoods.DELETE) {
 				goods.setName(goods.getName()+"(已删除)");
 			}

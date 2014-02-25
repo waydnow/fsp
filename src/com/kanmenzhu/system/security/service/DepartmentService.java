@@ -17,5 +17,7 @@ public interface DepartmentService extends BaseService<LuDepartment> {
 	public List<LuDepartment> getByType(String type);
 	
 	public List<LuDepartment> getByName(PageBean pb, String name);
+	
+	public List<LuDepartment> getSupperBySchool(int id);
 
 }

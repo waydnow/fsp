@@ -117,12 +117,15 @@ public class GoodsAction extends BaseAction {
     }
 	
 	public String getdep(){
-		Integer id = Integer.valueOf(goodid);
-		LuGoods good = goodsService.get(id, LuGoods.class);
-		LuDepartment dep = departmentService.get(good.getDeptId(), LuDepartment.class);
-		String data = "{\"factory\":\""+good.getFactory()+"\",\"standard\":\""+good.getStandard()+"\",\"name\":\""+dep.getName()+"\",\"unit\":\""+good.getUnit()+"\",\"price\":\""+good.getPrice()+"\"}";
-		System.out.println(good.getName()+"="+data);
-		return ajaxResp(data,1);
+		if (!goodid.equals("undefined")) {
+			Integer id = Integer.valueOf(goodid);
+			LuGoods good = goodsService.get(id, LuGoods.class);
+			LuDepartment dep = departmentService.get(good.getDeptId(), LuDepartment.class);
+			String data = "{\"factory\":\""+good.getFactory()+"\",\"standard\":\""+good.getStandard()+"\",\"name\":\""+dep.getName()+"\",\"unit\":\""+good.getUnit()+"\",\"price\":\""+good.getPrice()+"\"}";
+			System.out.println(good.getName()+"="+data);
+			return ajaxResp(data,1);
+		}
+		return ajaxResp("undefined",0);
 	}
 
 	public GoodsService getGoodsService() {

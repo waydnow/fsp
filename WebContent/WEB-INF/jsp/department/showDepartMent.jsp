@@ -96,6 +96,7 @@ $(document).ready(function(){
         </td>
       </tr>
     </table>
+    <s:hidden name="department.openDepts" id="openDeptIds"/>
     </s:form>
 	</td>
   </tr>

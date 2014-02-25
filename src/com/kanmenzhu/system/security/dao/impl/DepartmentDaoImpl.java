@@ -1,5 +1,6 @@
 package com.kanmenzhu.system.security.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -38,14 +39,22 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 
 	@Override
 	public List<LuDepartment> getByName(PageBean pb, String name) {
-		String hql=" from "+getEntityName()+" s where s.name like '?' order by s.id desc";
-		List<LuDepartment> dplist = findByHql(hql, pb, name);
+		String hql=" from "+getEntityName()+" s where s.name like ? order by s.id desc";
+		List<LuDepartment> dplist = findByHql(hql, pb, "%"+name+"%");
 		return dplist;
 	}
 	
 	@Override
 	public String getEntityName() {
 		return "LuDepartment";
+	}
+
+	@Override
+	public List<LuDepartment> getSupperBySchool(int id) {
+		String hql=" from "+getEntityName()+" s where s.openDepts like '%"+id+",%' or s.openDepts like '%,"+id+",%' or s.openDepts like '%,"+id+"' or s.openDepts = '"+id+"' order by s.id desc";
+		List<LuDepartment> dplist = new ArrayList<LuDepartment>();
+		dplist = getHibernateTemplate().find(hql);
+		return dplist;
 	}
 
 }

@@ -36,5 +36,11 @@ public class DepartmentServiceImpl extends BaseServiceImpl<LuDepartment> impleme
 		return departments;
 	}
 
+	@Override
+	public List<LuDepartment> getSupperBySchool(int id) {
+		List<LuDepartment> depts = ((DepartmentDao)dao).getSupperBySchool(id);
+		return depts;
+	}
+
 	
 }
