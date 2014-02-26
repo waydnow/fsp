@@ -41,5 +41,13 @@ public class GoodsDaoImpl extends BaseDaoImpl<LuGoods> implements GoodsDao {
 		goods = findByHql(hql,-1,-1,ok,id);
 		return goods;
 	}
+	
+	@Override
+	public List<LuGoods> getGoodsByDept(int id) {
+		String hql = "from LuGoods g where g.deptId =? order by g.name,g.createTime desc";
+		List<LuGoods> goods = new ArrayList<LuGoods>();
+		goods = findByHql(hql,-1,-1,id);
+		return goods;
+	}
 
 }

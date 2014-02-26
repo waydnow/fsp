@@ -50,7 +50,7 @@ public class OrderAction extends BaseAction {
 	
 	private List<LuOrder> orderList;
 	private List<LuOrderDetail> odetailList;
-	private List<LuGoods> goodsList = new ArrayList<LuGoods>();
+	private List<LuGoods> goodsList;
 	private List<LuRole> roleList;
 	private List<LuDepartment> depList;
 	private Map<Integer, LuDepartment> goodDept;
@@ -74,6 +74,7 @@ public class OrderAction extends BaseAction {
 	
 	public String regist(){
 		order = null;
+		goodsList = new ArrayList<LuGoods>();
 		//判断当前用户是否为文教部门
 		depList = new ArrayList<LuDepartment>();
 		List<LuRole> roles = roleService.getRoles(getCurrentUser());
@@ -102,7 +103,7 @@ public class OrderAction extends BaseAction {
 			List<LuDepartment> dps = new ArrayList<LuDepartment>();
 			dps = departmentService.getSupperBySchool(dep.getId());
 			for (LuDepartment dp : dps) {
-				List<LuGoods> glist = goodsService.getByDept(dp.getId());
+				List<LuGoods> glist = goodsService.getGoodsByTagAndDept(LuGoods.OK, dp.getId());
 				if (glist!=null&&(glist.size()>0)) {
 					goodsList.addAll(glist);
 				}
@@ -119,6 +120,67 @@ public class OrderAction extends BaseAction {
 		logger.info("####订单页面####");
 		return "regist";
 	}
+	
+	public String show() throws Exception{
+		PageBean pb=getPgReq();
+		goodsList = new ArrayList<LuGoods>();
+		//判断当前用户是否为文教部门
+		depList = new ArrayList<LuDepartment>();
+		List<LuRole> roles = roleService.getRoles(getCurrentUser());
+		boolean isTrue = false;
+		boolean isSchool = false;
+		LuDepartment dep = new LuDepartment();
+		for (LuRole role:roles) {
+			if (LuRole.MANAGER.equals(role.getType())) {
+				isTrue = true;
+			}
+		}
+		if (isTrue) {
+			depList = departmentService.getByType(LuRole.SCHOOL);		
+		}else {
+			dep = departmentService.getDepartmentByUser(getCurrentUser());
+			if (null!=dep) {
+				if (LuRole.SCHOOL.equals(dep.getType())) {
+					isSchool = true;
+				}
+				depList.add(dep);
+			}
+		}				
+		roleList = roleService.getRoles(getCurrentUser());
+		//用户所属单位，如果用户是学校，则对物品进行权限查询
+		if (isSchool) {
+			List<LuDepartment> dps = new ArrayList<LuDepartment>();
+			dps = departmentService.getSupperBySchool(dep.getId());
+			for (LuDepartment dp : dps) {
+				List<LuGoods> glist = goodsService.getByDept(dp.getId());
+				if (glist!=null&&(glist.size()>0)) {
+					goodsList.addAll(glist);
+				}
+			}
+		}else{
+			//用户所属单位不是学校将展示所有的物品
+			goodsList = goodsService.getAll(-1, -1);
+			for (LuGoods goods : goodsList) {
+				goods.setName(goods.getName()+"("+goods.getFactory()+")");
+				if (goods.getDelTag()==LuGoods.DELETE) {
+					goods.setName(goods.getName()+"(已删除)");
+				}
+			}
+		}
+		if (order!=null) {
+			order = orderService.get(order.getId(), LuOrder.class);
+			odetailList = odetailService.getOrderDetailByOrderId(order.getId());
+			for (LuOrderDetail detail : odetailList) {
+				Date send = detail.getSendTime();
+				System.out.println("时间"+send.toString());
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String time = format.format(send);
+				detail.setSend(time);
+			}
+		}
+		return "show";
+	}
+	
 	
 	public String add(){
 		if(order != null){
@@ -398,46 +460,6 @@ public class OrderAction extends BaseAction {
 		return "list";
 	}
 	
-	public String show() throws Exception{
-		PageBean pb=getPgReq();
-		//判断当前用户是否为文教部门
-		depList = new ArrayList<LuDepartment>();
-		List<LuRole> roles = roleService.getRoles(getCurrentUser());
-		boolean isTrue = false;
-		for (LuRole role:roles) {
-			if (LuRole.MANAGER.equals(role.getType())) {
-				isTrue = true;
-			}
-		}
-		if (isTrue) {
-			depList = departmentService.getByType(LuRole.SCHOOL);		
-		}else {
-			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
-			if (null!=dep) {
-				depList.add(dep);
-			}
-		}				
-		roleList = roleService.getRoles(getCurrentUser());
-		goodsList = goodsService.getAll(pb);
-		for (LuGoods goods : goodsList) {
-			goods.setName(goods.getName()+"("+goods.getFactory()+")");
-			if (goods.getDelTag()==LuGoods.DELETE) {
-				goods.setName(goods.getName()+"(已删除)");
-			}
-		}
-		if (order!=null) {
-			order = orderService.get(order.getId(), LuOrder.class);
-			odetailList = odetailService.getOrderDetailByOrderId(order.getId());
-			for (LuOrderDetail detail : odetailList) {
-				Date send = detail.getSendTime();
-				System.out.println("时间"+send.toString());
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String time = format.format(send);
-				detail.setSend(time);
-			}
-		}
-		return "show";
-	}
 	
 	/**
 	 * 删除订单

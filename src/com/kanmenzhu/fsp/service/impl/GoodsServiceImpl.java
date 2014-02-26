@@ -3,12 +3,9 @@ package com.kanmenzhu.fsp.service.impl;
 import java.util.List;
 
 import com.kanmenzhu.fsp.dao.GoodsDao;
-import com.kanmenzhu.fsp.dao.OrderDao;
 import com.kanmenzhu.fsp.entity.LuGoods;
-import com.kanmenzhu.fsp.entity.LuOrder;
 import com.kanmenzhu.fsp.service.GoodsService;
 import com.kanmenzhu.service.impl.BaseServiceImpl;
-import com.kanmenzhu.system.security.service.DepartmentService;
 import com.kanmenzhu.utils.pagination.PageBean;
 
 public class GoodsServiceImpl extends BaseServiceImpl<LuGoods> implements	GoodsService {
@@ -25,8 +22,15 @@ public class GoodsServiceImpl extends BaseServiceImpl<LuGoods> implements	GoodsS
 		return goods;
 	}
 
+
 	@Override
 	public List<LuGoods> getByDept(int id) {
+		List<LuGoods> goods  = ((GoodsDao)dao).getGoodsByDept(id);
+		return goods;
+	}
+
+	@Override
+	public List<LuGoods> getGoodsByTagAndDept(int ok, int id) {
 		List<LuGoods> goods  = ((GoodsDao)dao).getGoodsByTagAndDept(LuGoods.OK,id);
 		return goods;
 	}

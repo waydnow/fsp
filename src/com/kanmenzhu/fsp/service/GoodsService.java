@@ -18,5 +18,7 @@ public interface GoodsService extends BaseService<LuGoods> {
 	public List<LuGoods> getGoodsByTag(int ok);
 	
 	public List<LuGoods> getByDept(int id);
+	
+	public List<LuGoods> getGoodsByTagAndDept(int ok,int id);
 
 }

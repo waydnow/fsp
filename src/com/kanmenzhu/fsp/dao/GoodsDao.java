@@ -18,5 +18,7 @@ public interface GoodsDao extends BaseDao<LuGoods> {
 	public List<LuGoods> getGoodsByTag(int ok);
 
 	public List<LuGoods> getGoodsByTagAndDept(int ok,int id);
+	
+	public List<LuGoods> getGoodsByDept(int id);
 
 }
