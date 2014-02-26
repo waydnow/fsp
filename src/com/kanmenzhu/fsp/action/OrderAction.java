@@ -104,6 +104,9 @@ public class OrderAction extends BaseAction {
 			dps = departmentService.getSupperBySchool(dep.getId());
 			for (LuDepartment dp : dps) {
 				List<LuGoods> glist = goodsService.getGoodsByTagAndDept(LuGoods.OK, dp.getId());
+				for (LuGoods goods : glist) {
+					goods.setName(goods.getName()+"("+goods.getFactory()+")");
+				}
 				if (glist!=null&&(glist.size()>0)) {
 					goodsList.addAll(glist);
 				}
@@ -153,6 +156,9 @@ public class OrderAction extends BaseAction {
 			dps = departmentService.getSupperBySchool(dep.getId());
 			for (LuDepartment dp : dps) {
 				List<LuGoods> glist = goodsService.getByDept(dp.getId());
+				for (LuGoods goods : glist) {
+					goods.setName(goods.getName()+"("+goods.getFactory()+")");
+				}
 				if (glist!=null&&(glist.size()>0)) {
 					goodsList.addAll(glist);
 				}
