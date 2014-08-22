@@ -20,7 +20,6 @@ public class LoginInterceptor implements Interceptor {
 
 	@Override
 	public String intercept(ActionInvocation arg0) throws Exception {
-		logger.info(ServletActionContext.getRequest().getSession().getId());
 		Map<String, Object> session=ActionContext.getContext().getSession();
 		LuUser user=(LuUser)session.get(BaseAction.SESSION_USER_INFO);
 		if(null==user){
@@ -33,7 +32,6 @@ public class LoginInterceptor implements Interceptor {
 			}
 		}
 		
-		logger.info("进了我的拦截器");
 		return arg0.invoke();
 	}
 	

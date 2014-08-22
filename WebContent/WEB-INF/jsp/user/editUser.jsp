@@ -21,14 +21,14 @@ body {
 <script language="javascript" src="js/jquery-1.10.0.min.js"></script>
 <script language="javascript">
 function checkSubmit(){
-	if($("#pwd").val()==""){
-		alert("请输入密码!");
-		return false;
-	}
-	if($("#pwdcopy").val()==""){
-		alert("请输入确认密码!");
-		return false;
-	}
+	//if($("#pwd").val()==""){
+	//	alert("请输入密码!");
+	//	return false;
+	//}
+	//if($("#pwdcopy").val()==""){
+	//	alert("请输入确认密码!");
+	//	return false;
+	//}
 	if ($("#pwdcopy").val()!=$("#pwd").val()) {
 		alert("密码与确认密码不一致!");
 		return false;
@@ -73,7 +73,7 @@ function checkSubmit(){
       </tr>
       <tr>
         <td height="35" class="login-text02">密码：</td>
-        <td><s:password name="user.pwd" id="pwd"/></td>
+        <td><s:password name="user.pwd" id="pwd"/> 注:不修改密码，不需要填写</td>
       </tr>
       <tr>
         <td height="35" class="login-text02">确认密码：</td>

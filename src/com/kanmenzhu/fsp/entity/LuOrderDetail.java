@@ -47,6 +47,11 @@ public class LuOrderDetail extends BaseBean {
 		this.userId = userId;
 		this.createTime = createTime;
 	}
+	
+	public String toString() {
+		return "订单"+this.orderId+"详细，物品："+this.goodName+"，数量："+this.goodNum+"，单价："+this.orderPrice+"，单位："+this.orderUnit
+				+",送货时间："+this.sendTime;
+	}
 
 
 	public int getGoodId() {

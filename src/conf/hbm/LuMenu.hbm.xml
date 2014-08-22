@@ -3,7 +3,7 @@
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2013-5-29 22:00:53 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
- <class catalog="fsp" name="com.kanmenzhu.system.security.entity.LuMenu" table="lu_menu">
+ <class catalog="fsp" name="com.kanmenzhu.system.security.entity.LuMenu" table="LU_MENU">
   <id name="id" type="java.lang.Integer">
    <column name="ID"/>
    <generator class="identity"/>

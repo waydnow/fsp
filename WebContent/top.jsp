@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>武强县文教局审核系统</title>
+<title>武强县教育体育局食堂物料采购平台</title>
 <style type="text/css">
 <!--
 body {
@@ -22,8 +22,8 @@ body {
   <tr>
     <td height="59" background="images/top.gif"><table width="99%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="36%">&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.xn--tqqq1iw0i96c58jqnjr02bba.com/" target="_blank" style="color:#0099FF;font-size:24px;text-decoration:none;">武强县文教局审核系统<br/></a></td>
-        <td width="64%" align="right" style="font-size:12px;vertical-align:bottom;">&copy; 2013 <a href="http://www.xn--tqqq1iw0i96c58jqnjr02bba.com/" target="_blank" style="color:#0099FF;text-decoration:none;">武强县教育体育局</a></td>
+        <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#0099FF;font-size:24px;text-decoration:none;">武强县教育体育局食堂物料采购平台<br/></font></td>
+        <td width="20%" align="right" style="font-size:12px;vertical-align:bottom;">&copy; 2014 <font style="color:#0099FF;text-decoration:none;">武强县教育体育局</font></td>
       </tr>
     </table></td>
   </tr>

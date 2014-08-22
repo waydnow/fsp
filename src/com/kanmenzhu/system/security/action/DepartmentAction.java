@@ -28,6 +28,7 @@ public class DepartmentAction extends BaseAction {
 	private Integer id;
 
 	public String regist(){
+		clearMessages();
 		logger.info("####添加单位####");
 		schools = departmentService.getByType(LuRole.SCHOOL);
 		return "regist";
@@ -43,6 +44,7 @@ public class DepartmentAction extends BaseAction {
 						department.setOpenDepts(deps);
 					}
 				}
+				department.setStatus(0);
 				departmentService.save(department);
 				return list();
 			}
@@ -87,7 +89,10 @@ public class DepartmentAction extends BaseAction {
 		if(null!=id){
 			LuDepartment ld=departmentService.get(id, LuDepartment.class);
 			if(null!=ld){
-				departmentService.delete(ld);
+				ld.setStatus(1);
+				ld.setName(ld.getName()+"【已删除】");
+				departmentService.update(ld);
+				logger.info(getCurrentUser().getLoginName()+"删除单位："+ld.getName());
 				return ajaxResp("0",0);
 			}
 		}
@@ -110,6 +115,11 @@ public class DepartmentAction extends BaseAction {
 			}
 		}
 		dplist = departmentService.getAll(pb);
+		for (int i = dplist.size()-1; i >= 0; i--) {
+			if (dplist.get(i).getStatus()==1) {
+				dplist.remove(i);
+			}
+		}
 		return "list";
 	}
 

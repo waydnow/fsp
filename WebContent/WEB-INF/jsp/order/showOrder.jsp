@@ -217,7 +217,6 @@ body {
 			  '});';
 		$("<scri"+"pt>"+change+"</scr"+"ipt>").attr({id:'change'+i,type:'text/javascript'}).insertAfter($("#mainjs"));
      	 $("#del-"+i).click(function(){
-     		 alert("删除="+i);
      	 	$(this).closest("td").closest("tr").remove();
      	 	sumAll();
   	    });

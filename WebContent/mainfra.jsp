@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>武强县文教局审核系统</title>
+<title>武强县教育体育局食堂物料采购平台</title>
 <style type="text/css">
 <!--
 body {

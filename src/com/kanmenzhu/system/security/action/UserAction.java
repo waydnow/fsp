@@ -51,7 +51,10 @@ public class UserAction extends BaseAction {
 			LuUser olduser = userService.findByLoginName(user.getLoginName());
 			if (null!=olduser) {
 				msg="用户名"+olduser.getLoginName()+"已经被注册！";
+			}else if (!user.getPwd().equals(user.getPwdCopy())) {
+				msg = "密码与验证码不一致！";
 			}else {
+				user.setDeltag(0);
 				LuDepartment department = departmentService.get(user.getDeptId(), LuDepartment.class);
 				if (null!=department) {
 					user.setDeptId(department.getId());
@@ -65,7 +68,7 @@ public class UserAction extends BaseAction {
 						ruService.save(ru);
 					}
 					logger.info("注册用户"+user.getLoginName()+",ID="+user.getId()+"绑定角色ID={"+roleids+"}");
-					return welcome();
+					return list();
 				}else {
 					msg = "没有选择正确的单位信息";
 				}
@@ -86,7 +89,7 @@ public class UserAction extends BaseAction {
 		if(user!=null){
 			if(RandomImageAction.checkVerifyCode(session, verifyCode)){
 				LuUser dbUser=userService.findByLoginName(user.getLoginName());
-				if(dbUser!=null&&dbUser.pwdEquals(user)){
+				if(dbUser!=null&&dbUser.pwdEquals(user)&&(dbUser.getDeltag()==0)){
 					ActionContext.getContext().getSession().put(BaseAction.SESSION_USER_INFO,dbUser);
 					msg="登录成功!";
 					return SUCCESS;
@@ -119,6 +122,7 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String regist(){
+		clearMessages();
 		deptList();
 		user = getCurrentUser();
 		PageBean pb=getPgReq();
@@ -144,6 +148,11 @@ public class UserAction extends BaseAction {
 		}else{
 			userList=userService.getAll(pb);
 		}
+		for (int i = (userList.size()-1); i >= 0; i--) {
+			if (userList.get(i).getDeltag()==1) {
+				userList.remove(i);
+			}
+		}
 		for (LuUser u : userList) {
 			LuDepartment d = departmentService.get(u.getDeptId(), LuDepartment.class);
 			if (d!=null) {
@@ -163,6 +172,7 @@ public class UserAction extends BaseAction {
 				LuDepartment d = departmentService.get(user.getDeptId(), LuDepartment.class);
 				if (null!=d) {
 					user.setDepName(d.getName());
+					
 				}
 			}
 			List<LuRole> roles = roleService.getRoles(user);
@@ -185,15 +195,11 @@ public class UserAction extends BaseAction {
 		if (null!=user) {
 			//TODO 需要添加判断是否已经存在该用户名的用户
 			LuUser olduser = userService.findByLoginName(user.getLoginName());
-			if(StringUtils.isBlank(user.getPwd())){
-				msg="用户名"+olduser.getLoginName()+"密码为空，不能修改！";
-				user = olduser;
-			}else if(!user.getPwd().equals(user.getPwdCopy())){
-				msg="用户名"+olduser.getLoginName()+"2次输入密码不同，不能修改！";
-				user = olduser;
-			}else if (null!=olduser) {
-				olduser.setEmail(user.getEmail());
+			if(StringUtils.isNotBlank(user.getPwd())&&user.getPwd().equals(user.getPwdCopy())){
 				olduser.setPwd(user.getPwd());
+			}
+			if(null!=olduser) {
+				olduser.setEmail(user.getEmail());
 				olduser.setPhone(user.getPhone());
 				olduser.setMobile(user.getMobile());
 				olduser.setEmail(user.getEmail());
@@ -213,6 +219,21 @@ public class UserAction extends BaseAction {
 		return list();
 	}
 	
+	/**
+	 * 删除用户
+	 */
+	public String del(){
+		if (null!=user) {
+			user = userService.get(user.getId(), LuUser.class);
+			if (user!=null) {
+				user.setDeltag(1);
+				userService.update(user);
+			}
+			user = null;
+		}
+		return list();
+	}
+	
 	public void deptList(){
     	//判断当前用户是否为文教部门
 		dps = new ArrayList<LuDepartment>();
@@ -224,7 +245,12 @@ public class UserAction extends BaseAction {
 			}
 		}
 		if (isTrue) {
-			dps = departmentService.getAll();		
+			dps = departmentService.getAll();	
+			for (int i = (dps.size()-1); i >= 0; i--) {
+				if (dps.get(i).getStatus()==1) {
+					dps.remove(i);
+				}
+			}
 		}else {
 			LuDepartment dep = departmentService.getDepartmentByUser(getCurrentUser());
 			if (null!=dep) {

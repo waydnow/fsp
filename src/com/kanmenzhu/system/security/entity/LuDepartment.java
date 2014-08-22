@@ -15,6 +15,7 @@ public class LuDepartment extends BaseBean {
 	private String phone;
 	private String type;
 	private String openDepts;
+	private Integer status;
 
 	public LuDepartment() {
 	}
@@ -77,6 +78,14 @@ public class LuDepartment extends BaseBean {
 
 	public void setOpenDepts(String openDepts) {
 		this.openDepts = openDepts;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }

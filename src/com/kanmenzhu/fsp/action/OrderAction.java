@@ -200,16 +200,22 @@ public class OrderAction extends BaseAction {
 					if (null==orderDetail.getId()) {
 						orderDetail.setOrderPrice(good.getPrice());
 						orderDetail.setOrderUnit(good.getUnit());
+						orderDetail.setGoodUnit(good.getUnit());
+						orderDetail.setGoodName(good.getName());
 						orderDetail.setCreateTime(new Date());
 						orderDetail.setOrderId(order.getId());
 						orderDetail.setStatus(order.getStatus());
 						orderDetail.setDeptId(order.getDeptId());
 						orderDetail.setUserId(getCurrentUser().getId());
 						odetailService.save(orderDetail);
+						logger.info(getCurrentUser().getLoginName()+"添加"+orderDetail);
 					}else {
+						orderDetail.setGoodUnit(good.getUnit());
+						orderDetail.setGoodName(good.getName());
 						orderDetail.setOrderPrice(good.getPrice());
 						orderDetail.setOrderUnit(good.getUnit());
 						odetailService.update(orderDetail);
+						logger.info(getCurrentUser().getLoginName()+"修改"+orderDetail);
 					}
 				}
 			}
@@ -235,17 +241,24 @@ public class OrderAction extends BaseAction {
 						detail.setOrderPrice(good.getPrice());
 						detail.setOrderUnit(good.getUnit());
 						detail.setGoodUnit(good.getUnit());
+						detail.setGoodName(good.getName());
 						detail.setCreateTime(new Date());
 						detail.setOrderId(order.getId());
 						detail.setStatus(order.getStatus());
 						detail.setUserId(getCurrentUser().getId());
 						detail.setDeptId(order.getDeptId());
 						odetailService.save(detail);
+						logger.info(getCurrentUser().getLoginName()+"新增"+detail);
+
 					}
 				}else {
+					detail.setGoodUnit(good.getUnit());
+					detail.setGoodName(good.getName());
 					detail.setOrderPrice(good.getPrice());
 					detail.setOrderUnit(good.getUnit());
 					odetailService.update(detail);
+					logger.info(getCurrentUser().getLoginName()+"修改"+detail);
+
 				}
 			}
 			logger.info("用户"+getCurrentUser().getLoginName()+"更新订单"+order.toString());
@@ -268,16 +281,22 @@ public class OrderAction extends BaseAction {
 					if (null==orderDetail.getId()) {
 						orderDetail.setOrderPrice(good.getPrice());
 						orderDetail.setOrderUnit(good.getUnit());
+						orderDetail.setGoodUnit(good.getUnit());
+						orderDetail.setGoodName(good.getName());
 						orderDetail.setCreateTime(new Date());
 						orderDetail.setOrderId(order.getId());
 						orderDetail.setStatus(order.getStatus());
 						orderDetail.setDeptId(order.getDeptId());
 						orderDetail.setUserId(getCurrentUser().getId());
 						odetailService.save(orderDetail);
+						logger.info(getCurrentUser().getLoginName()+"创建"+orderDetail);
 					}else {
+						orderDetail.setGoodUnit(good.getUnit());
+						orderDetail.setGoodName(good.getName());
 						orderDetail.setOrderPrice(good.getPrice());
 						orderDetail.setOrderUnit(good.getUnit());
 						odetailService.update(orderDetail);
+						logger.info(getCurrentUser().getLoginName()+"修改"+orderDetail);
 					}
 				}
 			}
@@ -302,15 +321,21 @@ public class OrderAction extends BaseAction {
 				if (null == detail.getId()) {
 					detail.setOrderPrice(good.getPrice());
 					detail.setOrderUnit(good.getUnit());
+					detail.setGoodUnit(good.getUnit());
+					detail.setGoodName(good.getName());
 					detail.setCreateTime(new Date());
 					detail.setOrderId(order.getId());
 					detail.setStatus(LuOrder.ADUIT_ING);
 					detail.setUserId(getCurrentUser().getId());
 					odetailService.save(detail);
+					logger.info(getCurrentUser().getLoginName()+"修改"+detail);
 				}else {
+					detail.setGoodUnit(good.getUnit());
+					detail.setGoodName(good.getName());
 					detail.setOrderPrice(good.getPrice());
 					detail.setOrderUnit(good.getUnit());
 					odetailService.update(detail);
+					logger.info(getCurrentUser().getLoginName()+"修改"+detail);
 				}
 			}
 			logger.info("用户"+getCurrentUser().getLoginName()+"更新并送审订单"+order.toString());
@@ -330,6 +355,7 @@ public class OrderAction extends BaseAction {
 			for (LuOrderDetail detail : odetailList) {
 				detail.setStatus(LuOrder.ADUIT_SUCCESS);
 				odetailService.update(detail);
+				logger.info(getCurrentUser().getLoginName()+"审核通过"+detail);
 			}
 			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单"+order.toString()+"通过!");
 		}
@@ -348,6 +374,7 @@ public class OrderAction extends BaseAction {
 			for (LuOrderDetail detail : odetailList) {
 				detail.setStatus(LuOrder.ADUIT_FAIL);
 				odetailService.update(detail);
+				logger.info(getCurrentUser().getLoginName()+"审核不通过"+detail);
 			}
 			logger.info("用户"+getCurrentUser().getLoginName()+"审核订单"+order.toString()+"不通过，返回提交用户!");
 		}
@@ -369,8 +396,10 @@ public class OrderAction extends BaseAction {
 					detail.setStatus(LuOrder.ADUIT_END);
 					detail.setUserId(getCurrentUser().getId());
 					odetailService.save(detail);
+					logger.info(getCurrentUser().getLoginName()+"确认"+detail);
 				}else {
 					odetailService.update(detail);
+					logger.info(getCurrentUser().getLoginName()+"确认"+detail);
 				}
 			}
 			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
@@ -389,6 +418,7 @@ public class OrderAction extends BaseAction {
 			for (LuOrderDetail detail : odetailList) {
 				detail.setStatus(LuOrder.ADUIT_REAL);
 				odetailService.update(detail);
+				logger.info(getCurrentUser().getLoginName()+"提交最终"+detail);
 			}
 			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
 		}
@@ -402,8 +432,9 @@ public class OrderAction extends BaseAction {
 			for (LuOrderDetail detail : odetailList) {
 				detail.setStatus(LuOrder.ADUIT_SUCCESS);
 				odetailService.update(detail);
+				logger.info(getCurrentUser().getLoginName()+"确认"+detail);
 			}
-			logger.info("用户"+getCurrentUser().getLoginName()+"提交最终订单"+order.toString()+"，返回学校确认!");
+			logger.info("用户"+getCurrentUser().getLoginName()+"提交审核通过"+order.toString()+"，返回学校确认!");
 		}
 		return list();
 	}
@@ -433,9 +464,12 @@ public class OrderAction extends BaseAction {
 						orderList = orderService.getOrdersByTime(pb, start, end);
 						for (LuOrder order : orderList) {
 							LuDepartment dep = departmentService.get(order.getDeptId(), LuDepartment.class);
-							order.setDeptName(dep.getName());
+							if(dep==null){
+								order.setDeptName("单位被删除");
+							}else {
+								order.setDeptName(dep.getName());
+							}
 							Date send = order.getCreateTime();
-							System.out.println("时间"+send.toString());
 							SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 							String time = format.format(send);
 							order.setCreate(time);
@@ -476,7 +510,11 @@ public class OrderAction extends BaseAction {
 			order = orderService.get(order.getId(), LuOrder.class);
 			odetailList = odetailService.getOrderDetailByOrderId(order.getId());
 			for (LuOrderDetail detail : odetailList) {
+				if(detail.getOrderUnit()==null){
+					detail.setOrderUnit("");
+				}
 				odetailService.delete(detail);
+				logger.info(getCurrentUser().getLoginName()+"删除"+detail);
 			}
 			orderService.delete(order);
 			logger.info("用户"+getCurrentUser().getLoginName()+"将订单"+order.toString()+"删除！");
@@ -491,7 +529,11 @@ public class OrderAction extends BaseAction {
 			if (detail!=null) {
 				detail.setStatus(LuOrder.ADUIT_DEL);
 				detail.setMemo(detail.getMemo()+" 订单已经被用户"+getCurrentUser().getName()+"在"+new Date()+"删除");
+				if (detail.getOrderUnit()==null) {
+					detail.setOrderUnit("");
+				}
 				odetailService.update(detail);
+				logger.info(getCurrentUser().getLoginName()+"删除"+detail);
 				for (int i=0;i < odetailList.size();i++) {
 					if (odetailList.get(i).getId().equals(detail.getId())) {
 						odetailList.remove(i);

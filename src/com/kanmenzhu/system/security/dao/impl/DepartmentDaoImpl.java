@@ -16,7 +16,7 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 
 	@Override
 	public LuDepartment getDepartmentByUser(LuUser user) {
-		String hql = "from LuDepartment lu where lu.id = ?";
+		String hql = "from LuDepartment lu where lu.id = ? and lu.status=0";
 		List<LuDepartment> departments = getHibernateTemplate().find(hql,user.getDeptId());
 		if(departments!=null){
 			if(departments.size()>=1){
@@ -29,7 +29,7 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 	
 	@Override
 	public List<LuDepartment> getByType(String type) {
-		String hql = "from LuDepartment lu where lu.type = ?";
+		String hql = "from LuDepartment lu where lu.type = ? and lu.status=0";
 		List<LuDepartment> departments = getHibernateTemplate().find(hql,type);
 		if(departments!=null){
 			return departments;
@@ -39,7 +39,7 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 
 	@Override
 	public List<LuDepartment> getByName(PageBean pb, String name) {
-		String hql=" from "+getEntityName()+" s where s.name like ? order by s.id desc";
+		String hql=" from "+getEntityName()+" s where s.name like ? and s.status=0 order by s.id desc";
 		List<LuDepartment> dplist = findByHql(hql, pb, "%"+name+"%");
 		return dplist;
 	}
@@ -51,7 +51,7 @@ public class DepartmentDaoImpl extends BaseDaoImpl<LuDepartment> implements Depa
 
 	@Override
 	public List<LuDepartment> getSupperBySchool(int id) {
-		String hql=" from "+getEntityName()+" s where s.openDepts like '%"+id+",%' or s.openDepts like '%,"+id+",%' or s.openDepts like '%,"+id+"' or s.openDepts = '"+id+"' order by s.id desc";
+		String hql=" from "+getEntityName()+" s where s.openDepts like '%"+id+",%' or s.openDepts like '%,"+id+",%' or s.openDepts like '%,"+id+"' or s.openDepts = '"+id+"' and s.status=0 order by s.id desc";
 		List<LuDepartment> dplist = new ArrayList<LuDepartment>();
 		dplist = getHibernateTemplate().find(hql);
 		return dplist;

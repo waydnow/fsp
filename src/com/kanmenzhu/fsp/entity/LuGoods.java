@@ -48,6 +48,10 @@ public class LuGoods extends BaseBean {
 		this.createTime = createTime;
 		this.memo = memo;
 	}
+	
+	public String toString(){
+		return this.name+",价格："+this.price+",单位："+this.unit+",规格："+this.standard+",供应商："+this.deptId;
+	}
 
 	public int getDeptId() {
 		return this.deptId;

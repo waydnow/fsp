@@ -148,7 +148,7 @@ html {
 														<td bgcolor="#FFFFFF">${u.email}</td>
 														<td bgcolor="#FFFFFF">
 														<s:if test="#u.deptId!=0">
-														<a id="${u.id}"	href="javascript:doDelete(${u.id});">删除</a>
+														<a href="javascript:window.location='delUA.shtml?user.id=${u.id}';">删除</a>
 														</s:if>
 														</td>
 													</tr>

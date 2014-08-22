@@ -40,7 +40,9 @@ public class GoodsAction extends BaseAction {
 				goods.setCreateTime(new Date());
 				goods.setCreateUserId(getCurrentUser().getId());
 				goods.setDeptId(goods.getDeptId());
+				logger.info("用户"+getCurrentUser().getLoginName()+"创建物品"+goods.toString());
 				goodsService.save(goods);
+				logger.info("保存成功！用户："+getCurrentUser().getLoginName()+"，物品："+goods.toString());
 			}
 		}
 		return list();
@@ -49,7 +51,9 @@ public class GoodsAction extends BaseAction {
 	public String update(){
 		if (null!=goods) {
 			if (null!=goods.getName()) {
+				logger.info("用户"+getCurrentUser().getLoginName()+"修改物品"+goods.toString());
 				goodsService.update(goods);
+				logger.info("用户"+getCurrentUser().getLoginName()+"修改完成物品"+goods.toString());
 			}
 		}
 		return list();
@@ -80,7 +84,11 @@ public class GoodsAction extends BaseAction {
 		goodsList = goodsService.getGoodsByTag(pb,LuGoods.OK);
 		for (LuGoods gd : goodsList) {
 			LuDepartment dp = departmentService.get(gd.getDeptId(), LuDepartment.class);
-			gd.setDeptName(dp.getName());
+			if (dp==null) {
+				gd.setDeptName("供应商被删除");
+			}else {
+				gd.setDeptName(dp.getName());
+			}
 		}
 		return "list";
 	}
@@ -121,8 +129,12 @@ public class GoodsAction extends BaseAction {
 			Integer id = Integer.valueOf(goodid);
 			LuGoods good = goodsService.get(id, LuGoods.class);
 			LuDepartment dep = departmentService.get(good.getDeptId(), LuDepartment.class);
-			String data = "{\"factory\":\""+good.getFactory()+"\",\"standard\":\""+good.getStandard()+"\",\"name\":\""+dep.getName()+"\",\"unit\":\""+good.getUnit()+"\",\"price\":\""+good.getPrice()+"\"}";
-			System.out.println(good.getName()+"="+data);
+			String depname = "供应商被删除";
+			if (dep!=null) {
+				depname = dep.getName();
+			}
+			String data = "{\"factory\":\""+good.getFactory()+"\",\"standard\":\""+good.getStandard()+"\",\"name\":\""+depname+"\",\"unit\":\""+good.getUnit()+"\",\"price\":\""+good.getPrice()+"\"}";
+			logger.debug(good.getName()+"="+data);
 			return ajaxResp(data,1);
 		}
 		return ajaxResp("undefined",0);

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>武强县文教局审核系统-登录</title>
+<title>武强县教育体育局食堂物料采购平台-登录</title>
 <style type="text/css">
 <!--
 body {
@@ -57,7 +57,7 @@ body {
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td height="147" background="images/top02.gif" align="center"><img height="90" width="800" src="images/logo.png"></td>
+    <td height="147" background="images/top02.gif" align="center"><img height="100" width="1000" src="images/logo.png"></td>
   </tr>
 </table>
 <table width="562" border="0" align="center" cellpadding="0" cellspacing="0" class="right-table03">

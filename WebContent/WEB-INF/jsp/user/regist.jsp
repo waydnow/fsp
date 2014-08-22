@@ -75,7 +75,7 @@ body {
       </tr>
       <tr>
         <td height="35" class="login-text02">确认密码：</td>
-        <td><s:password name="user.pwd" id="pwd"/></td>
+        <td><s:password name="user.pwdCopy" id="pwdCopy"/></td>
       </tr>
       <tr>
         <td width="31%" height="35" class="login-text02">用户角色：</td>
